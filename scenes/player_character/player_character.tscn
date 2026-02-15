@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b38qgi3r8mm1v"]
+
+[ext_resource type="Texture2D" uid="uid://swfs8lkoc0ds" path="res://assets/tileset/rogues.png" id="1_m2hx6"]
+[ext_resource type="Script" uid="uid://cj3vsgh1dlbpd" path="res://scenes/player_character/player_character.gd" id="1_n46ue"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooxip"]
+size = Vector2(32, 32)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_n46ue")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = ExtResource("1_m2hx6")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_ooxip")
