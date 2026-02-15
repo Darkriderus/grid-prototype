@@ -27,8 +27,8 @@ func _physics_process(_delta: float) -> void:
 
 func _move(input_dir: Vector2) -> void:
 	if input_dir and not is_moving:
-		var move_to_tile = grid.logic.get_entity_tile(self) + Vector2i(input_dir)
-		if grid.logic.is_tile_occupied(move_to_tile):
+		var move_to_tile = grid_logic.get_entity_tile(self) + Vector2i(input_dir)
+		if grid_logic.is_tile_occupied(move_to_tile):
 			print("ATTACK!")
 		else:
 			is_moving = true
@@ -37,6 +37,6 @@ func _move(input_dir: Vector2) -> void:
 			tween.tween_callback(_on_move_end)
 
 func _on_move_end() -> void:
-	var grid_tile := grid.get_tile_from_global(global_position)
-	grid.logic.move_entity(self, grid_tile)
+	var grid_tile := grid_logic.get_tile_from_global(global_position)
+	grid_logic.move_entity(self, grid_tile)
 	is_moving = false
