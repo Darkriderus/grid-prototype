@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://hc5pd0rrpxqi"]
 
-[ext_resource type="Texture2D" uid="uid://swfs8lkoc0ds" path="res://assets/tileset/rogues.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://drvvr3wo46kj1" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="Texture2D" uid="uid://flhtxdlr57rd" path="res://assets/entities/_debug_char/Idle_Front.PNG" id="2_dovo2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(16, 16)
@@ -10,11 +10,11 @@ size = Vector2(16, 16)
 script = ExtResource("1_dovo2")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_8afob")
+texture = ExtResource("2_dovo2")
 region_enabled = true
-region_rect = Rect2(32, 32, 32, 32)
+region_rect = Rect2(0, 0, 32, 32)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_dovo2")
 
 [node name="Up" type="RayCast2D" parent="."]
