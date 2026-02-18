@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://swfs8lkoc0ds"
-path="res://.godot/imported/rogues.png-2e87f972549a4e0806cf5c8814fe3253.ctex"
+uid="uid://cmtwlhv1a2mw0"
+path="res://.godot/imported/walls.png-51c8acf86da6da9ac1d5a70381981f62.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tileset/rogues.png"
-dest_files=["res://.godot/imported/rogues.png-2e87f972549a4e0806cf5c8814fe3253.ctex"]
+source_file="res://assets/tileset/walls.png"
+dest_files=["res://.godot/imported/walls.png-51c8acf86da6da9ac1d5a70381981f62.ctex"]
 
 [params]
 

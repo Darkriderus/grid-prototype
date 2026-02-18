@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=4 uid="uid://bylbmsqm21hkt"]
 
-[ext_resource type="TileSet" uid="uid://cpkwww8xlesnx" path="res://assets/tileset/tileset.tres" id="1_4xfga"]
+[ext_resource type="TileSet" uid="uid://cpkwww8xlesnx" path="res://assets/tileset/_tileset.tres" id="1_4xfga"]
 [ext_resource type="PackedScene" uid="uid://hc5pd0rrpxqi" path="res://scenes/player/player.tscn" id="2_tqkkf"]
 
 [node name="Map" type="Node2D"]
@@ -13,7 +13,6 @@ tile_set = ExtResource("1_4xfga")
 tile_set = ExtResource("1_4xfga")
 
 [node name="Colliders" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAADAAoABAADAAIAAAADAAsABAADAAMAAAAFAAoABAAFAAIAAAAFAAsABAAFAAMAAAAIAAoABAADAAIAAAAIAAsABAADAAMAAAA=")
 tile_set = ExtResource("1_4xfga")
 
 [node name="Player" parent="." instance=ExtResource("2_tqkkf")]

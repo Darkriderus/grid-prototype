@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wsbu6qa2i52x"
-path="res://.godot/imported/TX Shadow.png-adf05cc92ab7c852870b491c041fcc4f.ctex"
+uid="uid://c72ikprih0l6c"
+path="res://.godot/imported/stone.png-a989e80111a720cd33c1703eb3ad81bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tileset/TX Shadow.png"
-dest_files=["res://.godot/imported/TX Shadow.png-adf05cc92ab7c852870b491c041fcc4f.ctex"]
+source_file="res://assets/tileset/stone.png"
+dest_files=["res://.godot/imported/stone.png-a989e80111a720cd33c1703eb3ad81bd.ctex"]
 
 [params]
 
