@@ -15,7 +15,11 @@ func _on_turn_started(character: CharacterBody2D):
 	if character != self:
 		return
 		
-	print("My turn! ", self.name) 
+	print("Turn started! ", name) 
 	# TODO: Do your stuff (FSM)
 	
+	_turn_end()
+
+func _turn_end():
+	print("Turn ended: ", name)
 	Signals.turn_ended.emit(self)
