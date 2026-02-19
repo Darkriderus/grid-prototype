@@ -2,8 +2,13 @@ class_name StateMachine
 extends Node
 
 @export var initial_state: State
+@export var debug_label: Label
 
-var current_state : State
+var current_state : State:
+	set(value):
+		current_state = value
+		if debug_label:
+			debug_label.text = current_state.name
 var states : Dictionary = {}
 
 func _ready() -> void:

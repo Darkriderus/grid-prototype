@@ -2,6 +2,7 @@ class_name Character
 extends CharacterBody2D
 
 @onready var sprite: Sprite2D = $Sprite
+@export var sight_radius: Area2D
 
 func _ready() -> void:
 	if not self.is_in_group("characters"):

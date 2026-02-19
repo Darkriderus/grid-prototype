@@ -13,8 +13,6 @@ func exit() -> void:
 func physics_process_frame(delta: float):
 	if not character:
 		return
-		
-	var distance_to_player = player_character.global_position - character.global_position
-	if distance_to_player.length() > Constants.TILE_SIZE.x * 4:
-		transitioned.emit(self, "Idle")
+	if TurnManager.current_turn_character == character:
+		TurnManager.end_turn(character)
 	

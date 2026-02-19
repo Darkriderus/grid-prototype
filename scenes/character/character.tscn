@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkdqtpsw1ak8l"]
+[gd_scene load_steps=8 format=3 uid="uid://bkdqtpsw1ak8l"]
 
 [ext_resource type="Script" uid="uid://c267t5sbk83lb" path="res://scenes/character/character.gd" id="1_cuyo6"]
 [ext_resource type="Texture2D" uid="uid://hpo6ljjdrc5h" path="res://assets/entities/_placeholder/unknown.png" id="2_mutn8"]
@@ -9,8 +9,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxwtt"]
 size = Vector2(16, 16)
 
-[node name="Character" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_f8hpl"]
+radius = 96.0
+
+[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("sight_radius")]
 script = ExtResource("1_cuyo6")
+sight_radius = NodePath("SightRadius")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_mutn8")
@@ -21,9 +25,27 @@ region_rect = Rect2(0, 0, 32, 32)
 shape = SubResource("RectangleShape2D_nxwtt")
 script = ExtResource("3_f8hpl")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="DebugLabel" type="Label" parent="."]
+offset_left = -61.0
+offset_top = -42.0
+offset_right = 61.0
+offset_bottom = -19.0
+text = "---"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="SightRadius" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Collider" type="CollisionShape2D" parent="SightRadius"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_f8hpl")
+debug_color = Color(0.8247139, 0, 0.45876074, 0.41960785)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "debug_label")]
 script = ExtResource("3_f8hpl")
 initial_state = NodePath("Idle")
+debug_label = NodePath("../DebugLabel")
 metadata/_custom_type_script = "uid://b7xkbxsk8y0rn"
 
 [node name="Chase" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
@@ -35,3 +57,5 @@ metadata/_custom_type_script = "uid://bymmrgxw8w7ss"
 script = ExtResource("5_bix7t")
 character = NodePath("../..")
 metadata/_custom_type_script = "uid://dux7r31exk365"
+
+[connection signal="area_entered" from="SightRadius" to="." method="_on_sight_radius_area_entered"]

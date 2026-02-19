@@ -5,9 +5,14 @@ var player_character : Player
 
 func enter() -> void:
 	player_character = get_tree().get_first_node_in_group("player") as Player
+	character.sight_radius.body_entered.connect(_on_sight_radius_body_entered)
+	
 	print("Entered Idle")
 	
+	
 func exit() -> void:
+	character.sight_radius.body_entered.disconnect(_on_sight_radius_body_entered)
+	
 	print("Exit Idle")
 	
 func physics_process_frame(delta: float):
@@ -22,4 +27,8 @@ func physics_process_frame(delta: float):
 		
 		TurnManager.end_turn(character)
 		
+func _on_sight_radius_body_entered(body: Node2D) -> void:
+	if body is Player:
+		print("See you", character.name, body.name)
+		transitioned.emit(self, "Chase")
 		
