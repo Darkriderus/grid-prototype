@@ -1,11 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkdqtpsw1ak8l"]
+[gd_scene load_steps=4 format=3 uid="uid://bkdqtpsw1ak8l"]
+
+[ext_resource type="Script" uid="uid://c267t5sbk83lb" path="res://scenes/character/character.gd" id="1_cuyo6"]
+[ext_resource type="Texture2D" uid="uid://hpo6ljjdrc5h" path="res://assets/entities/_placeholder/unknown.png" id="2_mutn8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxwtt"]
 size = Vector2(16, 16)
 
 [node name="Character" type="CharacterBody2D"]
+script = ExtResource("1_cuyo6")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_mutn8")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 

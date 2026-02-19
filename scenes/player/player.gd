@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 var tween: Tween
@@ -13,9 +14,25 @@ var tween: Tween
 @onready var left: RayCast2D = $Left
 @onready var up_left: RayCast2D = $UpLeft
 
+func _ready() -> void:
+	if not self.is_in_group("characters"):
+		self.add_to_group("characters")
+	
+	TurnManager.add_character(self)
+	
+	Signals.turn_started.connect(_on_turn_started)
+
+func _on_turn_started(character: CharacterBody2D):
+	if character != self:
+		return
+		
+	print("My turn! ", self.name) 
 
 func _physics_process(_delta: float) -> void:
-	if not tween or not tween.is_running():
+	if TurnManager.current_turn_character != self:
+		return
+		
+	if (not tween or not tween.is_running()):
 		if Input.is_action_pressed("move_up") and not up.is_colliding():
 			_move(Direction.UP)
 		
@@ -50,3 +67,9 @@ func _move(direction: Vector2) -> void:
 	tween = create_tween()
 	tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tween.tween_property(sprite, "global_position", global_position, Constants.MOVE_SPEED).set_trans(Tween.TRANS_SINE)
+	tween.tween_callback(_turn_end)
+
+func _turn_end():
+	print("Turn ended: ", self)
+	Signals.turn_ended.emit(self)
+	
