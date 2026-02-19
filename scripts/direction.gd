@@ -9,3 +9,14 @@ const DOWN := Vector2.DOWN
 const DOWN_LEFT := Vector2.DOWN + Vector2.LEFT
 const LEFT := Vector2.LEFT
 const UP_LEFT := Vector2.UP + Vector2.LEFT
+
+const ALL := [
+	UP,
+	UP_RIGHT,
+	RIGHT,
+	DOWN_RIGHT,
+	DOWN,
+	DOWN_LEFT,
+	LEFT,
+	UP_LEFT
+]

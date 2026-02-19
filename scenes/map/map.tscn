@@ -23,3 +23,9 @@ position = Vector2(656, 528)
 
 [node name="Character" parent="." groups=["characters"] instance=ExtResource("3_a2pkv")]
 position = Vector2(528, 400)
+
+[node name="Character2" parent="." groups=["characters"] instance=ExtResource("3_a2pkv")]
+position = Vector2(848, 336)
+
+[node name="Character3" parent="." groups=["characters"] instance=ExtResource("3_a2pkv")]
+position = Vector2(976, 656)

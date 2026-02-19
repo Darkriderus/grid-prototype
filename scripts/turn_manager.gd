@@ -15,10 +15,13 @@ func initialize() -> void:
 	current_turn_character = characters[0]
 
 
-func _on_turn_ended(character: CharacterBody2D):
+func end_turn(character: CharacterBody2D):
 	if character == current_turn_character:
 		var next_turn_character_idx = (characters.find(character) + 1) % characters.size()
 		current_turn_character = characters[next_turn_character_idx]
+
+func _on_turn_ended(character: CharacterBody2D):
+	end_turn(character)
 
 func add_character(character: CharacterBody2D):
 	if not characters.has(character):

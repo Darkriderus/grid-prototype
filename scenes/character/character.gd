@@ -8,18 +8,11 @@ func _ready() -> void:
 		self.add_to_group("characters")
 	
 	TurnManager.add_character(self)
-	
-	Signals.turn_started.connect(_on_turn_started)
 
-func _on_turn_started(character: CharacterBody2D):
-	if character != self:
-		return
-		
-	print("Turn started! ", name) 
-	# TODO: Do your stuff (FSM)
+func move(direction: Vector2) -> void:
+	global_position += direction * Constants.TILE_SIZE
+	sprite.global_position -= direction * Constants.TILE_SIZE
 	
-	_turn_end()
-
-func _turn_end():
-	print("Turn ended: ", name)
-	Signals.turn_ended.emit(self)
+	var tween = create_tween()
+	tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	tween.tween_property(sprite, "global_position", global_position, Constants.MOVE_SPEED).set_trans(Tween.TRANS_SINE)

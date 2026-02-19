@@ -64,5 +64,6 @@ func _move(direction: Vector2) -> void:
 	tween.tween_property(sprite, "global_position", global_position, Constants.MOVE_SPEED).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(_turn_end)
 
-
-	
+func _turn_end():
+	print("Turn ended: ", name)
+	Signals.turn_ended.emit(self)

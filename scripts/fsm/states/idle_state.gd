@@ -14,7 +14,12 @@ func physics_process_frame(delta: float):
 	if not character:
 		return
 		
-	var distance_to_player = (player_character.global_position - character.global_position)
-	if distance_to_player.length() < Constants.TILE_SIZE.x * 3:
-		transitioned.emit(self, "Chase")
-	
+	if TurnManager.current_turn_character == character:
+		var direction_to_move = Direction.ALL.pick_random()
+		
+		print("Turn: ", character.name)
+		character.move(direction_to_move)
+		
+		TurnManager.end_turn(character)
+		
+		

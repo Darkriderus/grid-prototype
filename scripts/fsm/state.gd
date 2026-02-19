@@ -3,7 +3,7 @@ extends Node
 
 signal transitioned(from_state: State, to_state_name: String)
 
-@export var character : CharacterBody2D
+@export var character : Character
 
 func enter() -> void:
 	pass
