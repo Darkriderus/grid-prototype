@@ -29,6 +29,5 @@ func physics_process_frame(delta: float):
 		
 func _on_sight_radius_body_entered(body: Node2D) -> void:
 	if body is Player:
-		print("See you", character.name, body.name)
 		transitioned.emit(self, "Chase")
 		
