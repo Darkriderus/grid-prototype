@@ -49,4 +49,4 @@ func _move(direction: Vector2) -> void:
 	
 	tween = create_tween()
 	tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	tween.tween_property(sprite, "global_position", global_position, 0.2).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(sprite, "global_position", global_position, Constants.MOVE_SPEED).set_trans(Tween.TRANS_SINE)
