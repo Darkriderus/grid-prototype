@@ -1,8 +1,6 @@
 class_name Player
 extends Character
 
-var tween: Tween
-
 @onready var up: RayCast2D = $Up
 @onready var up_right: RayCast2D = $UpRight
 @onready var right: RayCast2D = $Right
@@ -65,5 +63,5 @@ func _move(direction: Vector2) -> void:
 	tween.tween_callback(_turn_end)
 
 func _turn_end():
-	print("Turn ended: ", name)
+	super._turn_end()
 	Signals.turn_ended.emit(self)

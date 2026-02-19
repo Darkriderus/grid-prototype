@@ -4,6 +4,8 @@ extends CharacterBody2D
 @onready var sprite: Sprite2D = $Sprite
 @export var sight_radius: Area2D
 
+var tween: Tween
+
 func _ready() -> void:
 	if not self.is_in_group("characters"):
 		self.add_to_group("characters")
@@ -14,6 +16,10 @@ func move(direction: Vector2) -> void:
 	global_position += direction * Constants.TILE_SIZE
 	sprite.global_position -= direction * Constants.TILE_SIZE
 	
-	var tween = create_tween()
+	tween = create_tween()
 	tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tween.tween_property(sprite, "global_position", global_position, Constants.MOVE_SPEED).set_trans(Tween.TRANS_SINE)
+	tween.tween_callback(_turn_end)
+	
+func _turn_end():
+	print("Char Turn ended: ", name)
