@@ -18,7 +18,7 @@ tile_set = ExtResource("1_4xfga")
 [node name="Colliders" type="TileMapLayer" parent="."]
 tile_set = ExtResource("1_4xfga")
 
-[node name="Player" parent="." groups=["characters"] instance=ExtResource("2_tqkkf")]
+[node name="Player" parent="." groups=["characters", "player"] instance=ExtResource("2_tqkkf")]
 position = Vector2(656, 528)
 
 [node name="Character" parent="." groups=["characters"] instance=ExtResource("3_a2pkv")]

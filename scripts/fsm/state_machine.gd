@@ -24,11 +24,11 @@ func _physics_process(delta: float) -> void:
 	if current_state:
 		current_state.physics_process_frame(delta)
 
-func _on_state_transitioned(from_state: State, to_state: State):
+func _on_state_transitioned(from_state: State, to_state_name: String):
 	if from_state != current_state:
 		return
 	
-	var new_state = states.get(to_state.name.to_lower())
+	var new_state = states.get(to_state_name.to_lower())
 	if not new_state:
 		return
 		

@@ -1,7 +1,7 @@
 class_name State
 extends Node
 
-signal transitioned(from_state: State, to_state: State)
+signal transitioned(from_state: State, to_state_name: String)
 
 @export var character : CharacterBody2D
 
@@ -11,8 +11,8 @@ func enter() -> void:
 func exit() -> void:
 	pass
 	
-func process_frame(delta: float) -> State:
+func process_frame(delta: float):
 	return null
 	
-func physics_process_frame(delta: float) -> State:
+func physics_process_frame(delta: float):
 	return null

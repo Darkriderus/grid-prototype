@@ -14,6 +14,8 @@ var tween: Tween
 
 func _ready() -> void:
 	super._ready()
+	if not self.is_in_group("player"):
+		self.add_to_group("player")
 
 func _on_turn_started(character: CharacterBody2D):
 	if character != self:
