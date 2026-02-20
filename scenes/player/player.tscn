@@ -1,7 +1,97 @@
-[gd_scene load_steps=4 format=3 uid="uid://hc5pd0rrpxqi"]
+[gd_scene load_steps=10 format=3 uid="uid://hc5pd0rrpxqi"]
 
 [ext_resource type="Script" uid="uid://drvvr3wo46kj1" path="res://scenes/player/player.gd" id="1_dovo2"]
-[ext_resource type="Texture2D" uid="uid://flhtxdlr57rd" path="res://assets/entities/_debug_char/Idle_Front.PNG" id="2_dovo2"]
+[ext_resource type="Texture2D" uid="uid://qtmanow7kg2w" path="res://assets/entities/_debug_char/debugcharacter_sprite.PNG" id="2_gmlin"]
+[ext_resource type="Texture2D" uid="uid://bsyg7fni4lf2e" path="res://assets/entities/_debug_char/Shadow.png" id="3_gmlin"]
+
+[sub_resource type="Animation" id="Animation_lvxji"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dovo2"]
+resource_name = "idle"
+length = 1.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_p47bc"]
+resource_name = "schmirb_walk"
+length = 0.2
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.17453292519943295, 0.0, -0.17453292519943295, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_gmlin"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gmlin"]
+_data = {
+&"RESET": SubResource("Animation_lvxji"),
+&"idle": SubResource("Animation_dovo2"),
+&"schmirb_walk": SubResource("Animation_p47bc"),
+&"walk": SubResource("Animation_gmlin")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(16, 16)
@@ -9,10 +99,22 @@ size = Vector2(16, 16)
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dovo2")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_gmlin")
+}
+autoplay = "idle"
+
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_dovo2")
-region_enabled = true
-region_rect = Rect2(0, 0, 32, 32)
+texture = ExtResource("2_gmlin")
+hframes = 9
+vframes = 2
+
+[node name="Shadow" type="Sprite2D" parent="Sprite"]
+show_behind_parent = true
+position = Vector2(0, 16)
+texture = ExtResource("3_gmlin")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_dovo2")
@@ -58,5 +160,6 @@ target_position = Vector2(-16, -16)
 hit_from_inside = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
 process_callback = 0
 position_smoothing_enabled = true

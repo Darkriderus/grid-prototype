@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 @onready var sprite: Sprite2D = $Sprite
 @export var sight_radius: Area2D
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 
 var tween: Tween
 
@@ -11,8 +12,14 @@ func _ready() -> void:
 		self.add_to_group("characters")
 	
 	TurnManager.add_character(self)
+	
+	animation_player.stop()
+	animation_player.play("idle")
 
 func move(direction: Vector2) -> void:
+	animation_player.stop()
+	animation_player.play("schmirb_walk")
+	
 	global_position += direction * Constants.TILE_SIZE
 	sprite.global_position -= direction * Constants.TILE_SIZE
 	
@@ -22,4 +29,7 @@ func move(direction: Vector2) -> void:
 	tween.tween_callback(_turn_end)
 	
 func _turn_end():
+	animation_player.stop()
+	animation_player.play("idle")
+	
 	print("Char Turn ended: ", name)
