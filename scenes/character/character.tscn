@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bkdqtpsw1ak8l"]
 
 [ext_resource type="Script" uid="uid://c267t5sbk83lb" path="res://scenes/character/character.gd" id="1_cuyo6"]
-[ext_resource type="Texture2D" uid="uid://jcacaewgcqfa" path="res://assets/entities/_placeholder/BaseSprites.png" id="2_f8hpl"]
+[ext_resource type="PackedScene" uid="uid://b14qvl6ylni3t" path="res://scenes/char_sprite/char_sprite.tscn" id="2_f8hpl"]
 [ext_resource type="Script" uid="uid://b7xkbxsk8y0rn" path="res://scripts/fsm/state_machine.gd" id="3_f8hpl"]
 [ext_resource type="Script" uid="uid://bymmrgxw8w7ss" path="res://scripts/fsm/states/chase_state.gd" id="4_7ex5l"]
 [ext_resource type="Script" uid="uid://dux7r31exk365" path="res://scripts/fsm/states/idle_state.gd" id="5_bix7t"]
@@ -16,17 +16,10 @@ radius = 96.0
 script = ExtResource("1_cuyo6")
 sight_radius = NodePath("SightRadius")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-
-[node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_f8hpl")
-region_enabled = true
-region_rect = Rect2(288, 0, 32, 32)
+[node name="CharSprite" parent="." instance=ExtResource("2_f8hpl")]
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nxwtt")
-script = ExtResource("3_f8hpl")
 
 [node name="DebugLabel" type="Label" parent="."]
 offset_left = -61.0

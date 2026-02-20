@@ -26,8 +26,8 @@ tile_map_data = PackedByteArray("AAABAAIAAgAFAAEAAAABAAMAAgAFAAIAAAACAAIAAgAGAAE
 tile_set = ExtResource("1_4xfga")
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." groups=["characters", "player"] instance=ExtResource("2_tqkkf")]
-position = Vector2(608, 672)
+[node name="Character" parent="." instance=ExtResource("3_a2pkv")]
+position = Vector2(416, 832)
 
-[node name="Enemy" parent="." instance=ExtResource("3_a2pkv")]
-position = Vector2(384, 832)
+[node name="Player" parent="." instance=ExtResource("2_tqkkf")]
+position = Vector2(640, 768)
