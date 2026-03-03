@@ -14,12 +14,12 @@ func _physics_process(_delta: float) -> void:
 		action.perform(self, player)
 
 func _ready() -> void:
-	var player_start_pos: Vector2i = Grid.world_to_grid(get_viewport_rect().size.floor() / 2)
-	player = Entity.new(player_start_pos, player_definition)
+	player = Entity.new(Vector2i.ZERO, player_definition)
+	var camera: Camera2D = $Camera2D
+	remove_child(camera)
+	player.add_child(camera)
 	entities.add_child(player)
-	var npc := Entity.new(player_start_pos + Vector2i.RIGHT, player_definition)
-	npc.modulate = Color.ORANGE_RED
-	entities.add_child(npc)
+	map.generate(player)
 
 func get_map_data() -> MapData:
 	return map.map_data
