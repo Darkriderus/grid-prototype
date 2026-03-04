@@ -9,5 +9,6 @@ region = Rect2(32, 128, 16, 16)
 
 [resource]
 script = ExtResource("1_rh3l6")
+name = "Player"
 texture = SubResource("AtlasTexture_d6gd7")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

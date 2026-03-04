@@ -21,7 +21,9 @@ script = ExtResource("4_kelw5")
 [node name="FieldOfView" type="Node" parent="Map"]
 script = ExtResource("4_lfrn8")
 
-[node name="Entities" type="Node2D" parent="."]
+[node name="Tiles" type="Node2D" parent="Map"]
+
+[node name="Entities" type="Node2D" parent="Map"]
 
 [node name="EventHandler" type="Node" parent="."]
 script = ExtResource("3_0sr1o")
