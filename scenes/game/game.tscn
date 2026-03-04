@@ -1,15 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://bylbmsqm21hkt"]
+[gd_scene load_steps=20 format=3 uid="uid://bylbmsqm21hkt"]
 
 [ext_resource type="Script" uid="uid://bylqdyktoeg8d" path="res://scenes/game/game.gd" id="1_7h61r"]
 [ext_resource type="Script" uid="uid://c0ugpchiqhcyt" path="res://scenes/game/map.gd" id="2_0sr1o"]
 [ext_resource type="Script" uid="uid://bexblnv4queky" path="res://entities/input_handler/input_handler.gd" id="3_0sr1o"]
 [ext_resource type="Script" uid="uid://dkxmpoqtqm10q" path="res://scenes/game/dungeon_generator.gd" id="4_kelw5"]
 [ext_resource type="Script" uid="uid://dpdtksv7cxtoy" path="res://entities/field_of_view/field_of_view.gd" id="4_lfrn8"]
+[ext_resource type="Script" uid="uid://bgtkanxtvjtl3" path="res://scenes/game/mouseover_checker.gd" id="5_vaxfo"]
 [ext_resource type="Script" uid="uid://c2ajep0v5b12s" path="res://entities/input_handler/main_game_input_handler.gd" id="6_bdhmt"]
 [ext_resource type="Script" uid="uid://cymvdo1n1fp46" path="res://entities/input_handler/game_over_input_handler.gd" id="7_87uf6"]
+[ext_resource type="Script" uid="uid://dpwyt7o3qa01d" path="res://scenes/game/history_viewer_input_handler.gd" id="8_5jirj"]
 [ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="8_87uf6"]
 [ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="9_2a8rs"]
 [ext_resource type="Script" uid="uid://ba0m4vu8nbisj" path="res://scenes/game/hp_display.gd" id="9_4j704"]
+[ext_resource type="Script" uid="uid://bp0b3bbpanmri" path="res://scenes/game/message_log.gd" id="11_kp23o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdhmt"]
 atlas = ExtResource("8_87uf6")
@@ -37,6 +40,9 @@ font = ExtResource("9_2a8rs")
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_vaxfo"]
+font = ExtResource("9_2a8rs")
+
 [node name="InterfaceRoot" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -60,7 +66,9 @@ size_flags_stretch_ratio = 5.0
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer"]
 disable_3d = true
+handle_input_locally = false
 canvas_item_default_texture_filter = 0
+render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport"]
 script = ExtResource("1_7h61r")
@@ -81,6 +89,9 @@ script = ExtResource("4_lfrn8")
 
 [node name="Entities" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 
+[node name="MouseoverChecker" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
+script = ExtResource("5_vaxfo")
+
 [node name="InputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game"]
 script = ExtResource("3_0sr1o")
 
@@ -89,6 +100,11 @@ script = ExtResource("6_bdhmt")
 
 [node name="GameOverInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
 script = ExtResource("7_87uf6")
+
+[node name="HistoryViewerInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
+script = ExtResource("8_5jirj")
+messages_panel_path = NodePath("../../../../../InfoBar/MessagePanel")
+message_log_path = NodePath("../../../../../InfoBar/MessagePanel/MessageLog")
 
 [node name="InfoBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -110,9 +126,11 @@ script = ExtResource("9_4j704")
 [node name="HpBar" type="ProgressBar" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_87uf6")
 theme_override_styles/fill = SubResource("StyleBoxFlat_2a8rs")
 step = 1.0
+show_percentage = false
 
 [node name="HpLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
 unique_name_in_owner = true
@@ -121,10 +139,27 @@ label_settings = SubResource("LabelSettings_4j704")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="MouseoverLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+label_settings = SubResource("LabelSettings_vaxfo")
+
 [node name="MessagePanel" type="PanelContainer" parent="VBoxContainer/InfoBar"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_bdhmt")
 
+[node name="MessageLog" type="ScrollContainer" parent="VBoxContainer/InfoBar/MessagePanel"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+script = ExtResource("11_kp23o")
+
+[node name="MessageList" type="VBoxContainer" parent="VBoxContainer/InfoBar/MessagePanel/MessageLog"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
 [connection signal="player_created" from="VBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
+[connection signal="entities_focussed" from="VBoxContainer/SubViewportContainer/SubViewport/Game/Map/MouseoverChecker" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/MouseoverLabel" method="set_text"]
