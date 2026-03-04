@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bgtkanxtvjtl3" path="res://scenes/game/mouseover_checker.gd" id="5_vaxfo"]
 [ext_resource type="Script" uid="uid://c2ajep0v5b12s" path="res://entities/input_handler/main_game_input_handler.gd" id="6_bdhmt"]
 [ext_resource type="Script" uid="uid://cymvdo1n1fp46" path="res://entities/input_handler/game_over_input_handler.gd" id="7_87uf6"]
-[ext_resource type="Script" uid="uid://dpwyt7o3qa01d" path="res://scenes/game/history_viewer_input_handler.gd" id="8_5jirj"]
+[ext_resource type="Script" uid="uid://dpwyt7o3qa01d" path="res://entities/input_handler/history_viewer_input_handler.gd" id="8_5jirj"]
 [ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="8_87uf6"]
 [ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="9_2a8rs"]
 [ext_resource type="Script" uid="uid://ba0m4vu8nbisj" path="res://scenes/game/hp_display.gd" id="9_4j704"]

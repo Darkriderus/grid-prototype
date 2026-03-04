@@ -8,3 +8,8 @@ const PLAYER_DIE = Color("ff3030")
 const ENEMY_DIE = Color("ffa030")
 
 const WELCOME_TEXT = Color("20a0ff")
+const HEALTH_RECOVERED = Color("00ff00")
+
+const INVALID = Color("ffff00")
+const IMPOSSIBLE = Color("808080")
+const ERROR = Color("ff4040")
