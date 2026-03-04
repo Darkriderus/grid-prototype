@@ -1,6 +1,8 @@
 class_name Game
 extends Node2D
 
+signal player_created(player)
+
 const player_definition: EntityDefinition = preload("uid://dgtkb8ig8pwt0")
 
 @onready var player: Entity
@@ -10,6 +12,7 @@ const player_definition: EntityDefinition = preload("uid://dgtkb8ig8pwt0")
 
 func _ready() -> void:
 	player = Entity.new(null, Vector2i.ZERO, player_definition)
+	player_created.emit(player)
 	remove_child(camera)
 	player.add_child(camera)
 	map.generate(player)
