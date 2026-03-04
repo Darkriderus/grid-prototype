@@ -22,4 +22,5 @@ name = "Player"
 texture = SubResource("AtlasTexture_d6gd7")
 fighter_definition = SubResource("Resource_gutnb")
 ai_type = 1
+inventory_capacity = 26
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"
