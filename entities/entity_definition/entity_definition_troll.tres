@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://b4kbg7bx30jwl"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=7 format=3 uid="uid://b4kbg7bx30jwl"]
 
 [ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/fighter_component_definition/fighter_component_definition.gd" id="1_0bcnf"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="1_7ruw5"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_sd5tl"]
 [ext_resource type="Texture2D" uid="uid://dnvogjorj6abs" path="res://assets/tilemap/tilemap_packed.png" id="2_xujyn"]
 
