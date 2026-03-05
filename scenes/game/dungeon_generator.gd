@@ -20,7 +20,9 @@ var _rng := RandomNumberGenerator.new()
 const entity_types = {
 	"orc": preload("uid://cu5b5e84eg0bu"),
 	"troll": preload("uid://b4kbg7bx30jwl"),
-	"health_potion": preload("uid://bghj1pduyucfc")
+	"health_potion": preload("uid://bghj1pduyucfc"),
+	"lightning_scroll": preload("uid://o50ecypopc40")
+
 }
 
 func _ready() -> void:
@@ -131,5 +133,10 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 				break
 		
 		if can_place:
-			var new_entity: Entity = Entity.new(dungeon, new_entity_position, entity_types.health_potion)
+			var item_chance: float = _rng.randf()
+			var new_entity: Entity
+			if item_chance < 0.7:
+				new_entity = Entity.new(dungeon, new_entity_position, entity_types.health_potion)
+			else:
+				new_entity = Entity.new(dungeon, new_entity_position, entity_types.lightning_scroll)
 			dungeon.entities.append(new_entity)
