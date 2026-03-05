@@ -13,6 +13,8 @@ const directions = {
 
 const inventory_menu_scene = preload("uid://dy7s6c7w2b12c")
 
+@export var reticle: Reticle
+
 func get_item(window_title: String, inventory: InventoryComponent) -> Entity:
 	var inventory_menu: InventoryMenu = inventory_menu_scene.instantiate()
 	add_child(inventory_menu)
@@ -53,3 +55,11 @@ func get_action(player: Entity) -> Action:
 		action = EscapeAction.new(player)
 	
 	return action
+
+
+func get_grid_position(player: Entity, radius: int) -> Vector2i:
+	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
+	var selected_position: Vector2i = await reticle.select_position(player, radius)
+	await get_tree().physics_frame
+	get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
+	return selected_position

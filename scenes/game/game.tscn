@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://bylbmsqm21hkt"]
+[gd_scene load_steps=22 format=3 uid="uid://bylbmsqm21hkt"]
 
 [ext_resource type="Script" uid="uid://bylqdyktoeg8d" path="res://scenes/game/game.gd" id="1_7h61r"]
 [ext_resource type="Script" uid="uid://c0ugpchiqhcyt" path="res://scenes/game/map.gd" id="2_0sr1o"]
 [ext_resource type="Script" uid="uid://bexblnv4queky" path="res://entities/input_handler/input_handler.gd" id="3_0sr1o"]
+[ext_resource type="PackedScene" uid="uid://rgg38k4w5ef2" path="res://scenes/reticle/reticle.tscn" id="3_otnwt"]
 [ext_resource type="Script" uid="uid://dkxmpoqtqm10q" path="res://scenes/game/dungeon_generator.gd" id="4_kelw5"]
 [ext_resource type="Script" uid="uid://dpdtksv7cxtoy" path="res://entities/field_of_view/field_of_view.gd" id="4_lfrn8"]
 [ext_resource type="Script" uid="uid://bgtkanxtvjtl3" path="res://scenes/game/mouseover_checker.gd" id="5_vaxfo"]
@@ -80,6 +81,8 @@ zoom = Vector2(2, 2)
 [node name="Map" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game"]
 script = ExtResource("2_0sr1o")
 
+[node name="Reticle" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map" instance=ExtResource("3_otnwt")]
+
 [node name="DungeonGenerator" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 script = ExtResource("4_kelw5")
 
@@ -96,8 +99,9 @@ script = ExtResource("5_vaxfo")
 [node name="InputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game"]
 script = ExtResource("3_0sr1o")
 
-[node name="MainGameInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
+[node name="MainGameInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler" node_paths=PackedStringArray("reticle")]
 script = ExtResource("6_bdhmt")
+reticle = NodePath("../../Map/Reticle")
 
 [node name="GameOverInputHandler" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
 script = ExtResource("7_87uf6")
