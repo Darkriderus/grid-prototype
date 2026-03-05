@@ -39,3 +39,8 @@ func build(title_text: String, inventory: InventoryComponent) -> void:
 		_register_item(i, inventory.items[i])
 	inventory_list.get_child(0).grab_focus()
 	show()
+	
+func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_back"):
+		item_selected.emit(null)
+		queue_free()
