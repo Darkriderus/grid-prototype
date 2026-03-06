@@ -1,6 +1,13 @@
 class_name Tile
 extends Sprite2D
 
+const tile_types = {
+	"floor": preload("uid://bby8nrjwno8kf"),
+	"wall": preload("uid://cxxd6wrpw0pu7"),
+}
+
+var key: String
+
 var _definition: TileDefinition
 
 var is_explored: bool = false:
