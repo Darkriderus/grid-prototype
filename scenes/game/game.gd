@@ -13,6 +13,8 @@ const level_up_menu_scene: PackedScene = preload("uid://snopwjqg3h3j")
 
 func new_game() -> void:
 	player = Entity.new(null, Vector2i.ZERO, "player")
+	_add_player_start_equipment("dagger")
+	_add_player_start_equipment("leather_armor")
 	player.level_component.level_up_required.connect(_on_player_level_up_requested)
 	player_created.emit(player)
 	remove_child(camera)
@@ -40,6 +42,13 @@ func load_game() -> bool:
 	).call_deferred()
 	camera.make_current.call_deferred()
 	return true
+
+
+func _add_player_start_equipment(item_key: String) -> void:
+	var item := Entity.new(null, Vector2i.ZERO, item_key)
+	player.inventory_component.items.append(item)
+	player.equipment_component.toggle_equip(item, false)
+
 
 func _physics_process(_delta: float) -> void:
 	var action: Action = await input_handler.get_action(player)

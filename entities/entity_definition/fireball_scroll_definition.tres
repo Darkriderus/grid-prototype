@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://djrlkbvs4htwx" path="res://entities/consumable_component_definition/fireball_damage_consumable_component_definition.gd" id="1_v1nkb"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="3_3i0yg"]
 
-[sub_resource type="Resource" id="Resource_qql3h"]
+[sub_resource type="Resource" id="Resource_v1nkb"]
 script = ExtResource("1_v1nkb")
 damage = 12
 radius = 3
@@ -21,5 +21,5 @@ texture = SubResource("AtlasTexture_pcs1e")
 color = Color(1, 0, 0, 1)
 is_blocking_movement = false
 type = 1
-consumable_definition = SubResource("Resource_qql3h")
+item_definition = SubResource("Resource_v1nkb")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

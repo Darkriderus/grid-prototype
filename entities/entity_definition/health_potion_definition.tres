@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_yp4kl"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="3_x05ji"]
 
-[sub_resource type="Resource" id="Resource_ew7yl"]
+[sub_resource type="Resource" id="Resource_x05ji"]
 script = ExtResource("1_x05ji")
 healing_amount = 4
 metadata/_custom_type_script = "uid://brkrt0ts6wl45"
@@ -20,5 +20,5 @@ texture = SubResource("AtlasTexture_x05ji")
 color = Color(0.49803922, 0, 0, 1)
 is_blocking_movement = false
 type = 1
-consumable_definition = SubResource("Resource_ew7yl")
+item_definition = SubResource("Resource_x05ji")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"
