@@ -5,6 +5,19 @@ enum AIType {NONE, HOSTILE}
 
 enum EntityType {CORPSE, ITEM, ACTOR}
 
+# TODO: Cleanup, FFS
+const entity_types = {
+	"player": "res://entities/entity_definition/entity_definition_player.tres",
+	"orc": "res://entities/entity_definition/entity_definition_orc.tres",
+	"troll": "res://entities/entity_definition/entity_definition_troll.tres",
+	"health_potion": "res://entities/entity_definition/health_potion_definition.tres",
+	"lightning_scroll": "res://entities/entity_definition/lightning_scroll_definition.tres",
+	"confusion_scroll": "res://entities/entity_definition/confusion_scroll_definition.tres",
+	"fireball_scroll": "res://entities/entity_definition/fireball_scroll_definition.tres"
+}
+
+var key: String
+
 var type: EntityType:
 	set(value):
 		type = value
@@ -27,14 +40,17 @@ var grid_position: Vector2i:
 		position = Grid.grid_to_world(grid_position)
 
 
-func _init(map_data: MapData, start_position: Vector2i, entity_definition: EntityDefinition) -> void:
+func _init(map_data: MapData, start_position: Vector2i, key: String = "") -> void:
 	centered = false
 	grid_position = start_position
 	self.map_data = map_data
-	set_entity_type(entity_definition)
+	if key != "":
+		set_entity_type(key)
 	
 	
-func set_entity_type(entity_definition: EntityDefinition) -> void:
+func set_entity_type(key: String) -> void:
+	self.key = key
+	var entity_definition: EntityDefinition = load(entity_types[key])
 	_definition = entity_definition
 	type = _definition.type
 	blocks_movement = _definition.is_blocking_movement
@@ -94,3 +110,33 @@ func _handle_consumable(consumable_definition: ConsumableComponentDefinition) ->
 	
 	if consumable_component:
 		add_child(consumable_component)
+	consumable_component.entity = self
+
+
+func get_save_data() -> Dictionary:
+	var save_data: Dictionary = {
+		"x": grid_position.x,
+		"y": grid_position.y,
+		"key": key,
+	}
+	if fighter_component:
+		save_data["fighter_component"] = fighter_component.get_save_data()
+	if ai_component:
+		save_data["ai_component"] = ai_component.get_save_data()
+	if inventory_component:
+		save_data["inventory_component"] = inventory_component.get_save_data()
+	return save_data
+	
+	
+func restore(save_data: Dictionary) -> void:
+	grid_position = Vector2i(save_data["x"], save_data["y"])
+	set_entity_type(save_data["key"])
+	if fighter_component and save_data.has("fighter_component"):
+		fighter_component.restore(save_data["fighter_component"])
+	if ai_component and save_data.has("ai_component"):
+		var ai_data: Dictionary = save_data["ai_component"]
+		if ai_data["type"] == "ConfusedEnemyAI":
+			var confused_enemy_ai := ConfusedEnemyAIComponent.new(ai_data["turns_remaining"])
+			add_child(confused_enemy_ai)
+	if inventory_component and save_data.has("inventory_component"):
+		inventory_component.restore(save_data["inventory_component"])
