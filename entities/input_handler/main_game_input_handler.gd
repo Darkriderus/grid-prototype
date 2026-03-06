@@ -15,14 +15,15 @@ const inventory_menu_scene = preload("uid://dy7s6c7w2b12c")
 
 @export var reticle: Reticle
 
-func get_item(window_title: String, inventory: InventoryComponent) -> Entity:
+func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_next_step: bool = false) -> Entity:
 	var inventory_menu: InventoryMenu = inventory_menu_scene.instantiate()
 	add_child(inventory_menu)
 	inventory_menu.build(window_title, inventory)
 	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
 	var selected_item: Entity = await inventory_menu.item_selected
-	await get_tree().physics_frame
-	get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
+	if not evaluate_for_next_step or (selected_item and selected_item.consumable_component and selected_item.consumable_component.get_targeting_radius() == -1):
+		await get_tree().physics_frame
+		get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
 	return selected_item
 	
 
@@ -48,13 +49,30 @@ func get_action(player: Entity) -> Action:
 		action = DropItemAction.new(player, selected_item)
 	
 	if Input.is_action_just_pressed("activate"):
-		var selected_item: Entity = await get_item("Select an item to use", player.inventory_component)
-		action = ItemAction.new(player, selected_item)
-	
+		action = await activate_item(player)
+		
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
+		
+	if Input.is_action_just_pressed("look"):
+		await get_grid_position(player, 0)
 	
 	return action
+
+
+func activate_item(player: Entity) -> Action:
+	var selected_item: Entity = await get_item("Select an item to use", player.inventory_component, true)
+	if selected_item == null:
+		return null
+	var target_radius: int = -1
+	if selected_item.consumable_component != null:
+		target_radius = selected_item.consumable_component.get_targeting_radius()
+	if target_radius == -1:
+		return ItemAction.new(player, selected_item)
+	var target_position: Vector2i = await get_grid_position(player, target_radius)
+	if target_position == Vector2i(-1, -1):
+		return null
+	return ItemAction.new(player, selected_item, target_position)
 
 
 func get_grid_position(player: Entity, radius: int) -> Vector2i:

@@ -21,8 +21,9 @@ const entity_types = {
 	"orc": preload("uid://cu5b5e84eg0bu"),
 	"troll": preload("uid://b4kbg7bx30jwl"),
 	"health_potion": preload("uid://bghj1pduyucfc"),
-	"lightning_scroll": preload("uid://o50ecypopc40")
-
+	"lightning_scroll": preload("uid://o50ecypopc40"),
+	"confusion_scroll": preload("uid://b6iuqi6lk2imp"),
+	"fireball_scroll": preload("uid://bpl0ttrtq0p58"),
 }
 
 func _ready() -> void:
@@ -137,6 +138,10 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 			var new_entity: Entity
 			if item_chance < 0.7:
 				new_entity = Entity.new(dungeon, new_entity_position, entity_types.health_potion)
+			elif item_chance < 0.8:
+				new_entity = Entity.new(dungeon, new_entity_position, entity_types.fireball_scroll)
+			elif item_chance < 0.9:
+				new_entity = Entity.new(dungeon, new_entity_position, entity_types.confusion_scroll)
 			else:
 				new_entity = Entity.new(dungeon, new_entity_position, entity_types.lightning_scroll)
 			dungeon.entities.append(new_entity)
