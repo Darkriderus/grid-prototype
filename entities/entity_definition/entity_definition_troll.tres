@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=7 format=3 uid="uid://b4kbg7bx30jwl"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://b4kbg7bx30jwl"]
 
 [ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/fighter_component_definition/fighter_component_definition.gd" id="1_0bcnf"]
 [ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="1_7ruw5"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_sd5tl"]
 [ext_resource type="Texture2D" uid="uid://dnvogjorj6abs" path="res://assets/tilemap/tilemap_packed.png" id="2_xujyn"]
+[ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/level_component_definition/level_component_definition.gd" id="3_kajl6"]
 
 [sub_resource type="Resource" id="Resource_7ruw5"]
 script = ExtResource("1_0bcnf")
@@ -11,6 +12,12 @@ max_hp = 16
 power = 4
 defense = 1
 metadata/_custom_type_script = "uid://x0nxlyvawv7n"
+
+[sub_resource type="Resource" id="Resource_6ivs4"]
+script = ExtResource("3_kajl6")
+level_up_factor = 1
+xp_given = 100
+metadata/_custom_type_script = "uid://dmgr051d8ffd1"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0bcnf"]
 atlas = ExtResource("2_xujyn")
@@ -22,4 +29,5 @@ name = "Troll"
 texture = SubResource("AtlasTexture_0bcnf")
 fighter_definition = SubResource("Resource_7ruw5")
 ai_type = 1
+level_info = SubResource("Resource_6ivs4")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"
