@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bylbmsqm21hkt"]
+[gd_scene load_steps=23 format=3 uid="uid://bylbmsqm21hkt"]
 
 [ext_resource type="Script" uid="uid://ey8xkfl4u6kb" path="res://scenes/game/game_root.gd" id="1_3xj4h"]
 [ext_resource type="Script" uid="uid://bylqdyktoeg8d" path="res://scenes/game/game.gd" id="1_7h61r"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://ba0m4vu8nbisj" path="res://scenes/game/hp_display.gd" id="9_4j704"]
 [ext_resource type="Script" uid="uid://d4iw6p738srb6" path="res://entities/input_handler/base_input_handler.gd" id="10_ftsea"]
 [ext_resource type="Script" uid="uid://bp0b3bbpanmri" path="res://scenes/game/message_log.gd" id="11_kp23o"]
-[ext_resource type="Script" uid="uid://cvoi7gpc5rppq" path="res://scenes/game/dungeon_floor_label.gd" id="16_5v6r0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdhmt"]
 atlas = ExtResource("8_87uf6")
@@ -154,12 +153,6 @@ label_settings = SubResource("LabelSettings_4j704")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DungeonFloorLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 10
-label_settings = SubResource("LabelSettings_vaxfo")
-script = ExtResource("16_5v6r0")
-
 [node name="MouseoverLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
@@ -183,5 +176,4 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [connection signal="player_created" from="VBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
-[connection signal="dungeon_floor_changed" from="VBoxContainer/SubViewportContainer/SubViewport/Game/Map" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/DungeonFloorLabel" method="set_dungeon_floor"]
 [connection signal="entities_focussed" from="VBoxContainer/SubViewportContainer/SubViewport/Game/Map/MouseoverChecker" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/MouseoverLabel" method="set_text"]

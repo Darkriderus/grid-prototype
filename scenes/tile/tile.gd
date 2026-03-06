@@ -1,9 +1,11 @@
 class_name Tile
 extends Sprite2D
 
+# TODO: Enum FFS
 const tile_types = {
 	"floor": preload("uid://bby8nrjwno8kf"),
 	"wall": preload("uid://cxxd6wrpw0pu7"),
+	"down_stairs": preload("uid://bm1wo6lgy1rkt"),
 }
 
 var key: String
