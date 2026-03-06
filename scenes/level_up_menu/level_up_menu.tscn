@@ -1,0 +1,160 @@
+[gd_scene load_steps=19 format=3 uid="uid://snopwjqg3h3j"]
+
+[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="1_j3eot"]
+[ext_resource type="Script" uid="uid://dvgt57qg5irk5" path="res://scenes/level_up_menu/level_up_menu.gd" id="1_ue5gx"]
+[ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="2_ue5gx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdhmt"]
+atlas = ExtResource("1_j3eot")
+region = Rect2(768, 336, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ue5gx"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+texture = SubResource("AtlasTexture_bdhmt")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_eiolo"]
+font = ExtResource("2_ue5gx")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ue5gx"]
+color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j3eot"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ue5gx"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eiolo"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vji5f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dvf6"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_j3eot"]
+device = -1
+keycode = 65
+unicode = 97
+
+[sub_resource type="Shortcut" id="Shortcut_ue5gx"]
+events = [SubResource("InputEventKey_j3eot")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ue5gx"]
+device = -1
+keycode = 66
+unicode = 98
+
+[sub_resource type="Shortcut" id="Shortcut_eiolo"]
+events = [SubResource("InputEventKey_ue5gx")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_eiolo"]
+device = -1
+keycode = 67
+unicode = 99
+
+[sub_resource type="Shortcut" id="Shortcut_vji5f"]
+events = [SubResource("InputEventKey_eiolo")]
+
+[node name="LevelUpMenu" type="CanvasLayer"]
+script = ExtResource("1_ue5gx")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ue5gx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Level Up"
+label_settings = SubResource("LabelSettings_eiolo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Congratulations! You level up! Select an attribute to increase"
+label_settings = SubResource("LabelSettings_eiolo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_ue5gx")
+
+[node name="HealthUpgradeButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_ue5gx")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_j3eot")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ue5gx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eiolo")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vji5f")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dvf6")
+shortcut = SubResource("Shortcut_ue5gx")
+shortcut_feedback = false
+text = "[a] Health"
+
+[node name="PowerUpgradeButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_ue5gx")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_j3eot")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ue5gx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eiolo")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vji5f")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dvf6")
+shortcut = SubResource("Shortcut_eiolo")
+shortcut_feedback = false
+text = "[b] Power"
+
+[node name="DefenseUpgradeButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_ue5gx")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_j3eot")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ue5gx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eiolo")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vji5f")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dvf6")
+shortcut = SubResource("Shortcut_vji5f")
+shortcut_feedback = false
+text = "[c] Defense"
+
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/HealthUpgradeButton" to="." method="_on_health_upgrade_button_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/PowerUpgradeButton" to="." method="_on_power_upgrade_button_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/DefenseUpgradeButton" to="." method="_on_defense_upgrade_button_pressed"]
