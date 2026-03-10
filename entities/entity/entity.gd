@@ -1,7 +1,7 @@
 class_name Entity
 extends Sprite2D
 
-enum AIType {NONE, HOSTILE}
+enum AIType {INANIMATE, HOSTILE, NO_AI}
 
 enum EntityType {CORPSE, ITEM, ACTOR}
 
@@ -81,6 +81,9 @@ func set_entity_definition(key: EntityKey) -> void:
 	match entity_definition.ai_type:
 		AIType.HOSTILE:
 			ai_component = HostileEnemyAIComponent.new()
+			add_child(ai_component)
+		AIType.NO_AI:
+			ai_component = NoAIComponent.new()
 			add_child(ai_component)
 	
 	if entity_definition.fighter_definition:
