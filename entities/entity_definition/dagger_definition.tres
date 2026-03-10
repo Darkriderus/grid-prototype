@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhqk57o0wm5s0" path="res://entities/equippable_component_definition/equippable_component_definition.gd" id="1_ac728"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_bcjak"]
-[ext_resource type="Texture2D" uid="uid://dnvogjorj6abs" path="res://assets/tilemap/tilemap_packed.png" id="3_uf4fc"]
+[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_ac728"]
 
 [sub_resource type="Resource" id="Resource_tmhhq"]
 script = ExtResource("1_ac728")
@@ -10,8 +10,8 @@ power_bonus = 2
 metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sqf0r"]
-atlas = ExtResource("3_uf4fc")
-region = Rect2(112, 128, 16, 16)
+atlas = ExtResource("3_ac728")
+region = Rect2(544, 96, 16, 16)
 
 [resource]
 script = ExtResource("1_bcjak")

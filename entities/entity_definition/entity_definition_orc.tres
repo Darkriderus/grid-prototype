@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/fighter_component_definition/fighter_component_definition.gd" id="1_bs7th"]
 [ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="1_fc86u"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_kbxxg"]
-[ext_resource type="Texture2D" uid="uid://dnvogjorj6abs" path="res://assets/tilemap/tilemap_packed.png" id="2_cxovq"]
 [ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/level_component_definition/level_component_definition.gd" id="3_e73v8"]
+[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="5_e73v8"]
 
 [sub_resource type="Resource" id="Resource_fc86u"]
 script = ExtResource("1_bs7th")
@@ -19,8 +19,8 @@ xp_given = 35
 metadata/_custom_type_script = "uid://dmgr051d8ffd1"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bs7th"]
-atlas = ExtResource("2_cxovq")
-region = Rect2(16, 144, 16, 16)
+atlas = ExtResource("5_e73v8")
+region = Rect2(464, 32, 16, 16)
 
 [resource]
 script = ExtResource("1_kbxxg")

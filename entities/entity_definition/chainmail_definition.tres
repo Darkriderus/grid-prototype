@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_8gtcg"]
 [ext_resource type="Script" uid="uid://dhqk57o0wm5s0" path="res://entities/equippable_component_definition/equippable_component_definition.gd" id="1_pjb5h"]
-[ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="3_va1o4"]
+[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_va1o4"]
 
 [sub_resource type="Resource" id="Resource_va1o4"]
 script = ExtResource("1_pjb5h")

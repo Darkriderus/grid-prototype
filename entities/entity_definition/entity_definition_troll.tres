@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/fighter_component_definition/fighter_component_definition.gd" id="1_0bcnf"]
 [ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="1_7ruw5"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_sd5tl"]
-[ext_resource type="Texture2D" uid="uid://dnvogjorj6abs" path="res://assets/tilemap/tilemap_packed.png" id="2_xujyn"]
 [ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/level_component_definition/level_component_definition.gd" id="3_kajl6"]
+[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="5_kajl6"]
 
 [sub_resource type="Resource" id="Resource_7ruw5"]
 script = ExtResource("1_0bcnf")
@@ -20,13 +20,14 @@ xp_given = 100
 metadata/_custom_type_script = "uid://dmgr051d8ffd1"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0bcnf"]
-atlas = ExtResource("2_xujyn")
-region = Rect2(0, 144, 16, 16)
+atlas = ExtResource("5_kajl6")
+region = Rect2(416, 32, 16, 16)
 
 [resource]
 script = ExtResource("1_sd5tl")
 name = "Troll"
 texture = SubResource("AtlasTexture_0bcnf")
+color = Color(0.41568628, 0.40392157, 0, 1)
 fighter_definition = SubResource("Resource_7ruw5")
 ai_type = 1
 level_info = SubResource("Resource_6ivs4")

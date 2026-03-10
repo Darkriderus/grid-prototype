@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_3e8eo"]
 [ext_resource type="Script" uid="uid://dhqk57o0wm5s0" path="res://entities/equippable_component_definition/equippable_component_definition.gd" id="1_chgcl"]
-[ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="3_jr8yb"]
+[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_chgcl"]
 
 [sub_resource type="Resource" id="Resource_6x80m"]
 script = ExtResource("1_chgcl")
@@ -11,7 +11,7 @@ defense_bonus = 1
 metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trr2e"]
-atlas = ExtResource("3_jr8yb")
+atlas = ExtResource("3_chgcl")
 region = Rect2(512, 16, 16, 16)
 
 [resource]
