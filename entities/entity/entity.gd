@@ -5,27 +5,36 @@ enum AIType {NONE, HOSTILE}
 
 enum EntityType {CORPSE, ITEM, ACTOR}
 
-# TODO: Cleanup, FFS
-const entity_types = {
-	"player": "res://entities/entity_definition/entity_definition_player.tres",
-	"orc": "res://entities/entity_definition/entity_definition_orc.tres",
-	"troll": "res://entities/entity_definition/entity_definition_troll.tres",
-	"health_potion": "res://entities/entity_definition/health_potion_definition.tres",
-	"lightning_scroll": "res://entities/entity_definition/lightning_scroll_definition.tres",
-	"confusion_scroll": "res://entities/entity_definition/confusion_scroll_definition.tres",
-	"fireball_scroll": "res://entities/entity_definition/fireball_scroll_definition.tres",
-	"dagger": "res://entities/entity_definition/dagger_definition.tres",
-	"sword": "res://entities/entity_definition/sword_definition.tres",
-	"chainmail": "res://entities/entity_definition/chainmail_definition.tres",
-	"leather_armor": "res://entities/entity_definition/leather_armor_definition.tres",
+enum EntityKey {
+	UNKNOWN,
+	PLAYER,
+	ORC,
+	TROLL,
+	HEALTH_POTION,
+	LIGHTNING_SCROLL,
+	CONFUSION_SCROLL,
+	FIREBALL_SCROLL,
+	DAGGER,
+	SWORD,
+	CHAINMAIL,
+	LEATHER_ARMOR
 }
 
-var key: String
+const ENTITY_DEFINITION_PATHS := {
+	EntityKey.PLAYER: "uid://dgtkb8ig8pwt0",
+	EntityKey.ORC: "uid://cu5b5e84eg0bu",
+	EntityKey.TROLL: "uid://b4kbg7bx30jwl",
+	EntityKey.HEALTH_POTION: "uid://bghj1pduyucfc",
+	EntityKey.LIGHTNING_SCROLL: "uid://o50ecypopc40",
+	EntityKey.CONFUSION_SCROLL: "uid://b6iuqi6lk2imp",
+	EntityKey.FIREBALL_SCROLL: "uid://bpl0ttrtq0p58",
+	EntityKey.DAGGER: "uid://dj6mgl0pt8ofp",
+	EntityKey.SWORD: "uid://cnvy4inyd8arv",
+	EntityKey.CHAINMAIL: "uid://cvbk872p5bt0d",
+	EntityKey.LEATHER_ARMOR: "uid://467c55dlqcbx",
+}
 
-var type: EntityType:
-	set(value):
-		type = value
-		z_index = type
+var key: EntityKey
 
 var _definition: EntityDefinition
 var entity_name: String
@@ -40,24 +49,28 @@ var inventory_component: InventoryComponent
 var level_component: LevelComponent
 var equipment_component: EquipmentComponent
 
-
+var type: EntityType:
+	set(value):
+		type = value
+		z_index = type
+		
 var grid_position: Vector2i:
 	set(value):
 		grid_position = value
 		position = Grid.grid_to_world(grid_position)
 
 
-func _init(map_data: MapData, start_position: Vector2i, key: String = "") -> void:
+func _init(map_data: MapData, start_position: Vector2i, key: EntityKey = EntityKey.UNKNOWN) -> void:
 	centered = false
 	grid_position = start_position
 	self.map_data = map_data
-	if key != "":
-		set_entity_type(key)
+	if key != EntityKey.UNKNOWN:
+		set_entity_definition(key)
 	
 	
-func set_entity_type(key: String) -> void:
+func set_entity_definition(key: EntityKey) -> void:
 	self.key = key
-	var entity_definition: EntityDefinition = load(entity_types[key])
+	var entity_definition: EntityDefinition = load(ENTITY_DEFINITION_PATHS[key])
 	_definition = entity_definition
 	type = _definition.type
 	blocks_movement = _definition.is_blocking_movement
@@ -118,21 +131,6 @@ func distance(other_position: Vector2i) -> int:
 	return maxi(abs(relative.x), abs(relative.y))
 
 
-func _handle_consumable(consumable_definition: ConsumableComponentDefinition) -> void:
-	if consumable_definition is HealingConsumableComponentDefinition:
-		consumable_component = HealingConsumableComponent.new(consumable_definition)
-	elif consumable_definition is LightningDamageConsumableComponentDefinition:
-		consumable_component = LightningDamageConsumableComponent.new(consumable_definition)
-	elif consumable_definition is ConfusionConsumableComponentDefinition:
-		consumable_component = ConfusionConsumableComponent.new(consumable_definition)
-	elif consumable_definition is FireballDamageConsumableComponentDefinition:
-		consumable_component = FireballDamageConsumableComponent.new(consumable_definition)
-	
-	if consumable_component:
-		add_child(consumable_component)
-	consumable_component.entity = self
-
-
 func get_save_data() -> Dictionary:
 	var save_data: Dictionary = {
 		"x": grid_position.x,
@@ -154,7 +152,7 @@ func get_save_data() -> Dictionary:
 	
 func restore(save_data: Dictionary) -> void:
 	grid_position = Vector2i(save_data["x"], save_data["y"])
-	set_entity_type(save_data["key"])
+	set_entity_definition(save_data["key"])
 	if fighter_component and save_data.has("fighter_component"):
 		fighter_component.restore(save_data["fighter_component"])
 	if ai_component and save_data.has("ai_component"):
@@ -168,3 +166,18 @@ func restore(save_data: Dictionary) -> void:
 		inventory_component.restore(save_data["inventory_component"])
 	if equipment_component and save_data.has("equipment_component"):
 		equipment_component.restore(save_data["equipment_component"])
+		
+		
+func _handle_consumable(consumable_definition: ConsumableComponentDefinition) -> void:
+	if consumable_definition is HealingConsumableComponentDefinition:
+		consumable_component = HealingConsumableComponent.new(consumable_definition)
+	elif consumable_definition is LightningDamageConsumableComponentDefinition:
+		consumable_component = LightningDamageConsumableComponent.new(consumable_definition)
+	elif consumable_definition is ConfusionConsumableComponentDefinition:
+		consumable_component = ConfusionConsumableComponent.new(consumable_definition)
+	elif consumable_definition is FireballDamageConsumableComponentDefinition:
+		consumable_component = FireballDamageConsumableComponent.new(consumable_definition)
+	
+	if consumable_component:
+		add_child(consumable_component)
+	consumable_component.entity = self

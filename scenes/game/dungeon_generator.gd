@@ -21,16 +21,16 @@ extends Node
 	[6, 5]
 ]
 @export var item_chances = {
-	0: {"health_potion": 35},
-	2: {"confusion_scroll": 10},
-	4: {"lightning_scroll": 25, "sword": 5},
-	6: {"fireball_scroll": 25, "chainmail": 15},
+	0: {Entity.EntityKey.HEALTH_POTION: 35},
+	2: {Entity.EntityKey.CONFUSION_SCROLL: 10},
+	4: {Entity.EntityKey.LIGHTNING_SCROLL: 25, "sword": 5},
+	6: {Entity.EntityKey.FIREBALL_SCROLL: 25, "chainmail": 15},
 }
 @export var enemy_chances = {
-	0: {"orc": 80},
-	3: {"troll": 15},
-	5: {"troll": 30},
-	7: {"troll": 60}
+	0: {Entity.EntityKey.ORC: 80},
+	3: {Entity.EntityKey.TROLL: 15},
+	5: {Entity.EntityKey.TROLL: 30},
+	7: {Entity.EntityKey.TROLL: 60}
 }
 
 var _rng := RandomNumberGenerator.new()
@@ -48,9 +48,9 @@ func _get_max_value_for_floor(weighted_chances_by_floor: Array, current_floor: i
 	return current_value
 
 
-func _get_entities_at_random(weighted_chances_by_floor: Dictionary, number_of_entities: int, current_floor: int) -> Array[String]:
+func _get_entities_at_random(weighted_chances_by_floor: Dictionary, number_of_entities: int, current_floor: int) -> Array[Entity.EntityKey]:
 	var entity_weighted_chances = {}
-	var chosen_entities: Array[String] = []
+	var chosen_entities: Array[Entity.EntityKey] = []
 	
 	for key in weighted_chances_by_floor:
 		if key > current_floor:
@@ -65,8 +65,8 @@ func _get_entities_at_random(weighted_chances_by_floor: Dictionary, number_of_en
 	return chosen_entities
 	
 	
-func _pick_weighted(weighted_chances: Dictionary) -> String:
-	var keys: Array[String] = []
+func _pick_weighted(weighted_chances: Dictionary) -> Entity.EntityKey:
+	var keys: Array[Entity.EntityKey] = []
 	var cumulative_chances := []
 	var sum: int = 0
 	for key in weighted_chances:
@@ -75,7 +75,7 @@ func _pick_weighted(weighted_chances: Dictionary) -> String:
 		sum += chance
 		cumulative_chances.append(sum)
 	var random_chance: int = _rng.randi_range(0, sum - 1)
-	var selection: String
+	var selection: Entity.EntityKey
 	
 	for i in cumulative_chances.size():
 		if cumulative_chances[i] > random_chance:
@@ -171,10 +171,10 @@ func _place_entities(dungeon: MapData, room: Rect2i, current_floor: int) -> void
 	var number_of_monsters: int = _rng.randi_range(0, max_monsters_per_room)
 	var number_of_items: int = _rng.randi_range(0, max_items_per_room)
 	
-	var monsters: Array[String] = _get_entities_at_random(enemy_chances, number_of_monsters, current_floor)
-	var items: Array[String] = _get_entities_at_random(item_chances, number_of_items, current_floor)
+	var monsters: Array[Entity.EntityKey] = _get_entities_at_random(enemy_chances, number_of_monsters, current_floor)
+	var items: Array[Entity.EntityKey] = _get_entities_at_random(item_chances, number_of_items, current_floor)
 	
-	var entity_keys: Array[String] = monsters + items
+	var entity_keys: Array[Entity.EntityKey] = monsters + items
 	
 	for entity_key in entity_keys:
 		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)

@@ -12,9 +12,9 @@ const level_up_menu_scene: PackedScene = preload("uid://snopwjqg3h3j")
 @onready var camera: Camera2D = $Camera2D
 
 func new_game() -> void:
-	player = Entity.new(null, Vector2i.ZERO, "player")
-	_add_player_start_equipment("dagger")
-	_add_player_start_equipment("leather_armor")
+	player = Entity.new(null, Vector2i.ZERO, Entity.EntityKey.PLAYER)
+	_add_player_start_equipment(Entity.EntityKey.DAGGER)
+	_add_player_start_equipment(Entity.EntityKey.LEATHER_ARMOR)
 	player.level_component.level_up_required.connect(_on_player_level_up_requested)
 	player_created.emit(player)
 	remove_child(camera)
@@ -28,7 +28,7 @@ func new_game() -> void:
 	camera.make_current.call_deferred()
 
 func load_game() -> bool:
-	player = Entity.new(null, Vector2i.ZERO, "")
+	player = Entity.new(null, Vector2i.ZERO, Entity.EntityKey.UNKNOWN)
 	remove_child(camera)
 	player.add_child(camera)
 	if not map.load_game(player):
@@ -44,7 +44,7 @@ func load_game() -> bool:
 	return true
 
 
-func _add_player_start_equipment(item_key: String) -> void:
+func _add_player_start_equipment(item_key: Entity.EntityKey) -> void:
 	var item := Entity.new(null, Vector2i.ZERO, item_key)
 	player.inventory_component.items.append(item)
 	player.equipment_component.toggle_equip(item, false)
