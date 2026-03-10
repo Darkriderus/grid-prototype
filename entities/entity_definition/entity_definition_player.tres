@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://dgtkb8ig8pwt0"]
 
-[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/fighter_component_definition/fighter_component_definition.gd" id="1_d6gd7"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/fighter_component_definition.gd" id="1_d6gd7"]
 [ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="1_gutnb"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_rh3l6"]
-[ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/level_component_definition/level_component_definition.gd" id="3_50ym3"]
+[ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/component_definitions/level_component_definition.gd" id="3_50ym3"]
 [ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="5_50ym3"]
 
 [sub_resource type="Resource" id="Resource_gutnb"]

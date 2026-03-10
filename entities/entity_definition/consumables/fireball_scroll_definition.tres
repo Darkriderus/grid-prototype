@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://bpl0ttrtq0p58"]
 
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_tva5y"]
-[ext_resource type="Script" uid="uid://djrlkbvs4htwx" path="res://entities/consumable_component_definition/fireball_damage_consumable_component_definition.gd" id="1_v1nkb"]
+[ext_resource type="Script" uid="uid://djrlkbvs4htwx" path="res://entities/component_definitions/consumables/fireball_damage_consumable_component_definition.gd" id="1_v1nkb"]
 [ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_v1nkb"]
 
 [sub_resource type="Resource" id="Resource_v1nkb"]
