@@ -27,7 +27,6 @@ script = ExtResource("1_rh3l6")
 name = "Player"
 texture = SubResource("AtlasTexture_d6gd7")
 fighter_definition = SubResource("Resource_gutnb")
-ai_type = 1
 inventory_capacity = 26
 level_info = SubResource("Resource_yehk2")
 has_equipment = true
