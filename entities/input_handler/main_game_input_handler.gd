@@ -14,6 +14,7 @@ const directions = {
 const inventory_menu_scene = preload("uid://dy7s6c7w2b12c")
 
 @export var reticle: Reticle
+@export var map: Map
 
 func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_next_step: bool = false) -> Entity:
 	if inventory.items.is_empty():
@@ -41,6 +42,10 @@ func get_action(player: Entity) -> Action:
 			var offset: Vector2i = directions[direction]
 			action = BumpAction.new(player, offset.x, offset.y)
 	
+	if Input.is_action_just_pressed("select"):
+		var mouse_grid_coord: Vector2i = Grid.world_to_grid(Vector2i(map.get_global_mouse_position()))		
+		action = SelectAction.new(player, mouse_grid_coord.x, mouse_grid_coord.y)
+	
 	if Input.is_action_just_pressed("wait"):
 		action = WaitAction.new(player)
 	
@@ -60,8 +65,8 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
 		
-	if Input.is_action_just_pressed("look"):
-		await get_grid_position(player, 0)
+	#if Input.is_action_just_pressed("look"):
+		#await get_grid_position(player, 0)
 		
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)

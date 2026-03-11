@@ -69,6 +69,7 @@ func get_blocking_entity_at_location(grid_position: Vector2i) -> Entity:
 func setup_pathfinding() -> void:
 	pathfinder = AStarGrid2D.new()
 	pathfinder.region = Rect2i(0, 0, width, height)
+	pathfinder.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE 
 	pathfinder.update()
 	for y in height:
 		for x in width:

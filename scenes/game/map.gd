@@ -55,12 +55,21 @@ func _draw_path_to_mouse():
 	var mouse_grid_cord: Vector2i = Grid.world_to_grid(Vector2i(get_global_mouse_position()))
 	if mouse_grid_cord != current_mouse_grid_coord:
 		current_mouse_grid_coord = mouse_grid_cord
-		var path = map_data.pathfinder.get_point_path(map_data.player.grid_position, current_mouse_grid_coord)
+		
+		var diff: Vector2i = current_mouse_grid_coord - map_data.player.grid_position
+		var distance: int = max(abs(diff.x), abs(diff.y))
+		
 
 		for dot in path_dots.get_children():
 			dot.queue_free()
-		
-		if path.size() > 1:
+			
+		if distance <= 1:
+			var dot = path_dot_scene.instantiate()
+			dot.position = Grid.grid_to_world(current_mouse_grid_coord)
+			dot.is_last_dot = true	
+			path_dots.add_child(dot)
+		else:
+			var path = map_data.pathfinder.get_point_path(map_data.player.grid_position, current_mouse_grid_coord)
 			path.remove_at(0)
 			
 			for step in path:
