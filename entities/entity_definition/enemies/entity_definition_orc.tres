@@ -29,5 +29,7 @@ texture = SubResource("AtlasTexture_bs7th")
 color = Color(0.24705882, 0.49803922, 0.24705882, 1)
 fighter_definition = SubResource("Resource_fc86u")
 ai_type = 1
+inventory_capacity = 6
 level_info = SubResource("Resource_1dw78")
+has_equipment = true
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"
