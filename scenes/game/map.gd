@@ -69,7 +69,17 @@ func _draw_path_to_mouse():
 			dot.is_last_dot = true	
 			path_dots.add_child(dot)
 		else:
+			# TODO: move pathfinding into a helper
+			if not map_data.pathfinder.is_in_bounds(current_mouse_grid_coord.x, current_mouse_grid_coord.y):
+				return
+			
+			if not map_data.get_tile(current_mouse_grid_coord).is_explored:
+				return
+				
 			var path = map_data.pathfinder.get_point_path(map_data.player.grid_position, current_mouse_grid_coord)
+			if path.size() <= 1:
+				return
+			
 			path.remove_at(0)
 			
 			for step in path:
