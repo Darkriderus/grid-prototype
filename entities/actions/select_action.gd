@@ -8,6 +8,10 @@ func perform() -> bool:
 	if distance <= 1:
 		return BumpAction.new(entity, diff.x, diff.y).perform()
 	else:
+		var target: Entity = get_map_data().get_actor_at_location(offset)
+		if target: 
+			return RangedAction.new(entity, diff.x, diff.y).perform()
+		
 		var path := entity.map_data.pathfinder.get_point_path(entity.grid_position, offset)
 		if path.size() <= 1:
 			return false

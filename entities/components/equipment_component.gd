@@ -34,6 +34,9 @@ func get_melee_power_bonus() -> int:
 	
 	return bonus
 	
+	
+func get_item_from_slot(slot: EquippableComponent.EquipmentType):
+	return slots[slot] if slots.has(slot) else null
 
 func is_item_equipped(item: Entity) -> bool:
 	return item in slots.values()
