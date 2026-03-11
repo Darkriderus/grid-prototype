@@ -15,13 +15,17 @@ var hp: int:
 				await ready
 			die(not die_silently)
 var base_defense: int
-var base_power: int
+var base_ranged_power: int
+var base_melee_power
 var defense: int: 
 	get:
 		return base_defense + get_defense_bonus()
-var power: int: 
+var melee_power: int: 
 	get:
-		return base_power + get_power_bonus()
+		return base_melee_power + get_melee_power_bonus()
+var ranged_power: int: 
+	get:
+		return base_ranged_power + get_ranged_power_bonus()
 
 var death_texture: Texture
 var death_color: Color
@@ -33,9 +37,15 @@ func get_defense_bonus() -> int:
 	return 0
 
 
-func get_power_bonus() -> int:
+func get_melee_power_bonus() -> int:
 	if entity.equipment_component:
-		return entity.equipment_component.get_power_bonus()
+		return entity.equipment_component.get_melee_power_bonus()
+	return 0
+	
+
+func get_ranged_power_bonus() -> int:
+	if entity.equipment_component:
+		return entity.equipment_component.get_ranged_power_bonus()
 	return 0
 	
 
@@ -43,7 +53,8 @@ func _init(definition: FighterComponentDefinition) -> void:
 	max_hp = definition.max_hp
 	hp = definition.max_hp
 	base_defense = definition.defense
-	base_power = definition.power
+	base_melee_power = definition.melee_power
+	base_ranged_power = definition.ranged_power
 	death_texture = definition.death_texture
 	death_color = definition.death_color
 	
@@ -94,7 +105,8 @@ func get_save_data() -> Dictionary:
 	return {
 		"max_hp": max_hp,
 		"hp": hp,
-		"power": base_power,
+		"melee_power": base_melee_power,
+		"ranged_power": base_ranged_power,
 		"defense": base_defense
 	}
 
@@ -102,5 +114,6 @@ func get_save_data() -> Dictionary:
 func restore(save_data: Dictionary) -> void:
 	max_hp = save_data["max_hp"]
 	hp = save_data["hp"]
-	base_power = save_data["power"]
+	base_melee_power = save_data["melee_power"]
+	base_ranged_power = save_data["ranged_power"]
 	base_defense = save_data["defense"]

@@ -3,7 +3,8 @@ extends HBoxContainer
 var _player: Entity
 
 @onready var level_label: Label = $LevelLabel
-@onready var attack_label: Label = $AttackLabel
+@onready var melee_attack_label: Label = $MeleeAttackLabel
+@onready var ranged_attack_label: Label = $RangedAttackLabel
 @onready var defense_label: Label = $DefenseLabel
 
 
@@ -18,5 +19,6 @@ func update_labels() -> void:
 	if not _player.is_inside_tree():
 		await _player.ready
 	level_label.text = "LVL: %d" % _player.level_component.current_level
-	attack_label.text = "ATK: %d" % _player.fighter_component.power
+	melee_attack_label.text = "MLD: %d" % _player.fighter_component.melee_power
+	ranged_attack_label.text = "RGD: %d" % _player.fighter_component.ranged_power
 	defense_label.text = "DEF: %d" % _player.fighter_component.defense

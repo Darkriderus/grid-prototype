@@ -3,7 +3,7 @@ extends Component
 
 signal equipment_changed
 
-var slots := {}
+var slots : Dictionary[EquippableComponent.EquipmentType, Entity] = {}
 
 
 func get_defense_bonus() -> int:
@@ -16,12 +16,21 @@ func get_defense_bonus() -> int:
 	return bonus
 
 
-func get_power_bonus() -> int:
+func get_ranged_power_bonus() -> int:
 	var bonus = 0
 	
 	for item in slots.values():
 		if item.equippable_component:
-			bonus += item.equippable_component.power_bonus
+			bonus += item.equippable_component.ranged_power_bonus
+	
+	return bonus
+
+func get_melee_power_bonus() -> int:
+	var bonus = 0
+	
+	for item in slots.values():
+		if item.equippable_component:
+			bonus += item.equippable_component.melee_power_bonus
 	
 	return bonus
 	

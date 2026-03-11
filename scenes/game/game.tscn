@@ -195,7 +195,13 @@ size_flags_horizontal = 3
 label_settings = SubResource("LabelSettings_vaxfo")
 horizontal_alignment = 1
 
-[node name="AttackLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox"]
+[node name="MeleeAttackLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_vaxfo")
+horizontal_alignment = 1
+
+[node name="RangedAttackLabel" type="Label" parent="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 label_settings = SubResource("LabelSettings_vaxfo")

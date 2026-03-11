@@ -17,7 +17,8 @@ enum EntityKey {
 	DAGGER,
 	SWORD,
 	CHAINMAIL,
-	LEATHER_ARMOR
+	LEATHER_ARMOR,
+	CROSSBOW
 }
 
 const ENTITY_DEFINITION_PATHS := {
@@ -32,6 +33,7 @@ const ENTITY_DEFINITION_PATHS := {
 	EntityKey.SWORD: "uid://cnvy4inyd8arv",
 	EntityKey.CHAINMAIL: "uid://cvbk872p5bt0d",
 	EntityKey.LEATHER_ARMOR: "uid://467c55dlqcbx",
+	EntityKey.CROSSBOW: "uid://cdmvyyqbt7jow",
 }
 
 var key: EntityKey
