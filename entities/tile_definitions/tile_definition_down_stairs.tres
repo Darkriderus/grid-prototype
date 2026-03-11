@@ -11,4 +11,5 @@ region = Rect2(48, 96, 16, 16)
 script = ExtResource("1_f1b3v")
 texture = SubResource("AtlasTexture_jr3pu")
 color_dark = Color(0.49803922, 0.49803922, 0.49803922, 1)
+ascii_char = " <"
 metadata/_custom_type_script = "uid://dlg72a6rbcla5"

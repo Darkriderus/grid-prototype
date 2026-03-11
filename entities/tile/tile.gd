@@ -4,13 +4,15 @@ extends Sprite2D
 enum TileTypeKeys {
 	FLOOR,
 	WALL,
-	DOWN_STAIRS
+	DOWN_STAIRS,
+	DOOR
 }
 
 const tile_types = {
 	TileTypeKeys.FLOOR: preload("uid://bby8nrjwno8kf"),
 	TileTypeKeys.WALL: preload("uid://cxxd6wrpw0pu7"),
 	TileTypeKeys.DOWN_STAIRS: preload("uid://bm1wo6lgy1rkt"),
+	TileTypeKeys.DOOR: preload("uid://dfhkg7qoqmy5f")
 }
 
 var key: TileTypeKeys

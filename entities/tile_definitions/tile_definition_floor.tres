@@ -12,4 +12,5 @@ script = ExtResource("1_gw062")
 texture = SubResource("AtlasTexture_b1cqj")
 color_lit = Color(0.15127608, 0.15127608, 0.15127605, 1)
 color_dark = Color(0.06053035, 0.06053035, 0.060530342, 1)
+ascii_char = "."
 metadata/_custom_type_script = "uid://dlg72a6rbcla5"

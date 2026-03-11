@@ -11,6 +11,7 @@ region = Rect2(176, 288, 16, 16)
 script = ExtResource("1_rp7ex")
 texture = SubResource("AtlasTexture_b1cqj")
 color_dark = Color(0.581033, 0.58103293, 0.5810329, 1)
+ascii_char = "#"
 is_walkable = false
 is_transparent = false
 metadata/_custom_type_script = "uid://dlg72a6rbcla5"
