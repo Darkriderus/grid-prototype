@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://cdmvyyqbt7jow"]
+
+[ext_resource type="Script" uid="uid://dhqk57o0wm5s0" path="res://entities/component_definitions/equippable_component_definition.gd" id="1_bs4p2"]
+[ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="2_5xm6o"]
+[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_dohtg"]
+
+[sub_resource type="Resource" id="Resource_tmhhq"]
+script = ExtResource("1_bs4p2")
+equipment_type = 2
+power_bonus = 5
+metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqf0r"]
+atlas = ExtResource("3_dohtg")
+region = Rect2(624, 80, 16, 16)
+
+[resource]
+script = ExtResource("2_5xm6o")
+name = "Crossbow"
+texture = SubResource("AtlasTexture_sqf0r")
+is_blocking_movement = false
+type = 1
+item_definition = SubResource("Resource_tmhhq")
+metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

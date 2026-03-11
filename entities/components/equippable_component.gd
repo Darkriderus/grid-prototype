@@ -1,7 +1,7 @@
 class_name EquippableComponent
 extends Component
 
-enum EquipmentType { WEAPON, ARMOR }
+enum EquipmentType { MELEE_WEAPON, ARMOR, RANGED_WEAPON }
 
 var equipment_type: EquipmentType
 var power_bonus: int
