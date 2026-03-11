@@ -50,7 +50,7 @@ func _add_player_start_equipment(item_key: Entity.EntityKey) -> void:
 	player.equipment_component.toggle_equip(item, false)
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:	
 	var action: Action = await input_handler.get_action(player)
 	if action:
 		var previous_player_position: Vector2i = player.grid_position

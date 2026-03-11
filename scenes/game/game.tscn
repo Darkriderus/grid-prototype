@@ -98,13 +98,15 @@ script = ExtResource("2_0sr1o")
 
 [node name="Reticle" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map" instance=ExtResource("3_otnwt")]
 
-[node name="DungeonGenerator" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
+[node name="DungeonGenerator" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map" groups=["path_dots"]]
 script = ExtResource("4_kelw5")
 
 [node name="FieldOfView" type="Node" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 script = ExtResource("4_lfrn8")
 
 [node name="Tiles" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
+
+[node name="PathDots" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 
 [node name="Entities" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 

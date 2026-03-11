@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwjhxap5vcy60"]
+
+[ext_resource type="Script" uid="uid://cr5fffpap5r5v" path="res://scenes/path_dot/path_dot.gd" id="1_grbww"]
+[ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="2_bmqpm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmqpm"]
+atlas = ExtResource("2_bmqpm")
+region = Rect2(432, 320, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8wku"]
+atlas = ExtResource("2_bmqpm")
+region = Rect2(608, 192, 16, 16)
+
+[node name="PathDot" type="Node2D"]
+z_index = 10
+z_as_relative = false
+script = ExtResource("1_grbww")
+
+[node name="Dot" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_bmqpm")
+centered = false
+
+[node name="LastDot" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_c8wku")
+centered = false

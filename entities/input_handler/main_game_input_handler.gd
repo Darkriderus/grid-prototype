@@ -69,6 +69,8 @@ func get_action(player: Entity) -> Action:
 	return action
 
 
+
+
 func activate_item(player: Entity) -> Action:
 	var selected_item: Entity = await get_item("Select an item to use", player.inventory_component, true)
 	if selected_item == null:

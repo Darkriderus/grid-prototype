@@ -29,6 +29,10 @@ gdscript/warnings/unused_signal=0
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[global_group]
+
+path_dots=""
+
 [input]
 
 move_up={
