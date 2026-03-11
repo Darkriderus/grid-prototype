@@ -19,22 +19,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var mouse_grid_cord: Vector2i = Grid.world_to_grid(Vector2i(get_global_mouse_position()))
-	if mouse_grid_cord != current_mouse_grid_coord:
-		current_mouse_grid_coord = mouse_grid_cord
-		var path = map_data.pathfinder.get_point_path(map_data.player.grid_position, current_mouse_grid_coord)
-
-		for dot in path_dots.get_children():
-			dot.queue_free()
-		
-		if path.size() > 1:
-			path.remove_at(0)
-			
-			for step in path:
-				var dot = path_dot_scene.instantiate()
-				dot.position = Grid.grid_to_world(step)
-				dot.is_last_dot = path[-1] == step			
-				path_dots.add_child(dot)
+	_draw_path_to_mouse()
 
 
 func next_floor() -> void:
@@ -64,6 +49,25 @@ func update_fov(player_position: Vector2i) -> void:
 	
 	for entity in map_data.entities:
 		entity.visible = map_data.get_tile(entity.grid_position).is_in_view
+
+
+func _draw_path_to_mouse():
+	var mouse_grid_cord: Vector2i = Grid.world_to_grid(Vector2i(get_global_mouse_position()))
+	if mouse_grid_cord != current_mouse_grid_coord:
+		current_mouse_grid_coord = mouse_grid_cord
+		var path = map_data.pathfinder.get_point_path(map_data.player.grid_position, current_mouse_grid_coord)
+
+		for dot in path_dots.get_children():
+			dot.queue_free()
+		
+		if path.size() > 1:
+			path.remove_at(0)
+			
+			for step in path:
+				var dot = path_dot_scene.instantiate()
+				dot.position = Grid.grid_to_world(step)
+				dot.is_last_dot = path[-1] == step			
+				path_dots.add_child(dot)
 
 
 func _place_entities() -> void:
