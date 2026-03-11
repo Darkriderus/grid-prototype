@@ -23,11 +23,11 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gc57s"]
 atlas = ExtResource("13_pg2xm")
-region = Rect2(688, 288, 16, 16)
+region = Rect2(384, 160, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8b66f"]
 atlas = ExtResource("13_pg2xm")
-region = Rect2(592, 288, 16, 16)
+region = Rect2(704, 144, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdhmt"]
 atlas = ExtResource("8_87uf6")
@@ -98,7 +98,7 @@ stretch = true
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1124, 536)
+size = Vector2i(1084, 536)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport"]
@@ -151,12 +151,18 @@ script = ExtResource("10_ftsea")
 layout_mode = 2
 
 [node name="InventoryButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 icon = SubResource("AtlasTexture_gc57s")
+icon_alignment = 1
+expand_icon = true
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="BackpackButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 icon = SubResource("AtlasTexture_8b66f")
+icon_alignment = 1
+expand_icon = true
 
 [node name="InfoBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
