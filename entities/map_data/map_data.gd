@@ -88,6 +88,14 @@ func unregister_blocking_entity(entity: Entity) -> void:
 	pathfinder.set_point_weight_scale(entity.grid_position, 0)
 
 
+func get_lootable_entities() -> Array[Entity]:
+	var lootables: Array[Entity] = []
+	for entity in entities:
+		if entity.inventory_component:
+			lootables.append(entity)
+	return lootables
+
+
 func get_actors() -> Array[Entity]:
 	var actors: Array[Entity] = []
 	for entity in entities:

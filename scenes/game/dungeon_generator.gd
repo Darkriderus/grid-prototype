@@ -191,9 +191,9 @@ func _place_entities(dungeon: MapData, room: Rect2i, current_floor: int) -> void
 			var new_entity := Entity.new(dungeon, new_entity_position, entity_key)
 			
 			# TODO: Loot Tables for Enemies
-			#if entity_key in monsters:
-				#var item := Entity.new(null, Vector2i.ZERO, Entity.EntityKey.SWORD)
-				#new_entity.inventory_component.items.append(item)
-				#new_entity.equipment_component.toggle_equip(item, false)
+			if entity_key in monsters:
+				var item := Entity.new(null, Vector2i.ZERO, Entity.EntityKey.HEALTH_POTION)
+				new_entity.inventory_component.items.append(item)
+				new_entity.equipment_component.toggle_equip(item, false)
 			
 			dungeon.entities.append(new_entity)
