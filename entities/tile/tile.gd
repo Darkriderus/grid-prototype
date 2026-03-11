@@ -7,7 +7,6 @@ enum TileTypeKeys {
 	DOWN_STAIRS
 }
 
-# TODO: Enum FFS
 const tile_types = {
 	TileTypeKeys.FLOOR: preload("uid://bby8nrjwno8kf"),
 	TileTypeKeys.WALL: preload("uid://cxxd6wrpw0pu7"),

@@ -1,5 +1,6 @@
 extends BaseInputHandler
 
+# TODO: Directions constant?
 const directions = {
 	"move_up": Vector2i.UP,
 	"move_down": Vector2i.DOWN,
