@@ -1,14 +1,20 @@
 class_name Tile
 extends Sprite2D
 
-# TODO: Enum FFS
-const tile_types = {
-	"floor": preload("uid://bby8nrjwno8kf"),
-	"wall": preload("uid://cxxd6wrpw0pu7"),
-	"down_stairs": preload("uid://bm1wo6lgy1rkt"),
+enum TileTypeKeys {
+	FLOOR,
+	WALL,
+	DOWN_STAIRS
 }
 
-var key: String
+# TODO: Enum FFS
+const tile_types = {
+	TileTypeKeys.FLOOR: preload("uid://bby8nrjwno8kf"),
+	TileTypeKeys.WALL: preload("uid://cxxd6wrpw0pu7"),
+	TileTypeKeys.DOWN_STAIRS: preload("uid://bm1wo6lgy1rkt"),
+}
+
+var key: TileTypeKeys
 
 var _definition: TileDefinition
 
@@ -25,14 +31,14 @@ var is_in_view: bool = false:
 		if is_in_view and not is_explored:
 			is_explored = true
 
-func _init(grid_position: Vector2i, key: String) -> void:
+func _init(grid_position: Vector2i, key: TileTypeKeys) -> void:
 	visible = false
 	centered = false
 	position = Grid.grid_to_world(grid_position)
 	set_tile_type(key)
 	
 
-func set_tile_type(key: String) -> void:
+func set_tile_type(key: TileTypeKeys) -> void:
 	self.key = key
 	_definition = tile_types[key]
 	texture = _definition.texture

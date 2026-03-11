@@ -91,7 +91,7 @@ func _ready() -> void:
 func _carve_tile(dungeon: MapData, x: int, y: int) -> void:
 	var tile_position = Vector2i(x, y)
 	var tile: Tile = dungeon.get_tile(tile_position)
-	tile.set_tile_type("floor")
+	tile.set_tile_type(Tile.TileTypeKeys.FLOOR)
 
 func _carve_room(dungeon: MapData, room: Rect2i) -> void:
 	var inner: Rect2i = room.grow(-1)
@@ -160,7 +160,7 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 	
 	dungeon.down_stairs_location = center_last_room
 	var down_tile: Tile = dungeon.get_tile(center_last_room)
-	down_tile.set_tile_type("down_stairs")
+	down_tile.set_tile_type(Tile.TileTypeKeys.DOWN_STAIRS)
 	
 	dungeon.setup_pathfinding()
 	return dungeon
