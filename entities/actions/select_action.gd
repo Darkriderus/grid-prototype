@@ -6,6 +6,13 @@ func perform() -> bool:
 	var diff: Vector2i = offset - entity.grid_position
 	var distance: int = max(abs(diff.x), abs(diff.y))
 	if distance <= 1:
+		var item: Entity = get_map_data().get_item_at_location(offset)
+		
+		if item:
+			BumpAction.new(entity, diff.x, diff.y).perform()
+			return PickupAction.new(entity).perform()
+	
+		
 		return BumpAction.new(entity, diff.x, diff.y).perform()
 	else:
 		var target: Entity = get_map_data().get_actor_at_location(offset)

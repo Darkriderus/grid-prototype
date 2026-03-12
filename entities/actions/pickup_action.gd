@@ -2,6 +2,7 @@ class_name PickupAction
 extends Action
 
 
+# TODO: Change to Offset-Action
 func perform() -> bool:
 	var inventory: InventoryComponent = entity.inventory_component
 	var map_data: MapData = get_map_data()

@@ -105,6 +105,19 @@ func get_actors() -> Array[Entity]:
 	return actors
 
 
+func get_entity_at_location(location: Vector2i) -> Entity:
+	for entity in entities:
+		if entity.grid_position == location:
+			return entity
+	return null
+
+
+func get_item_at_location(location: Vector2i) -> Entity:
+	for item in get_items():
+		if item.grid_position == location:
+			return item
+	return null
+
 func get_actor_at_location(location: Vector2i) -> Entity:
 	for actor in get_actors():
 		if actor.grid_position == location:
