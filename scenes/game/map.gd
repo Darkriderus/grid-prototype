@@ -56,6 +56,12 @@ func _draw_path_to_mouse():
 	if mouse_grid_cord != current_mouse_grid_coord:
 		current_mouse_grid_coord = mouse_grid_cord
 		
+		var last_dot_icon = null
+		if map_data.get_item_at_location(mouse_grid_cord) or map_data.get_lootable_at_location(mouse_grid_cord):
+			last_dot_icon = preload("uid://du36gx4ikxepa")
+		if map_data.get_actor_at_location(mouse_grid_cord):
+			last_dot_icon = preload("uid://bnci2a8bv346l")
+		
 		var diff: Vector2i = current_mouse_grid_coord - map_data.player.grid_position
 		var distance: int = max(abs(diff.x), abs(diff.y))
 		
@@ -66,7 +72,8 @@ func _draw_path_to_mouse():
 		if distance <= 1:
 			var dot = path_dot_scene.instantiate()
 			dot.position = Grid.grid_to_world(current_mouse_grid_coord)
-			dot.is_last_dot = true	
+			dot.is_last_dot = true
+			dot.texture = last_dot_icon
 			path_dots.add_child(dot)
 		else:
 			# TODO: move pathfinding into a helper
@@ -85,7 +92,9 @@ func _draw_path_to_mouse():
 			for step in path:
 				var dot = path_dot_scene.instantiate()
 				dot.position = Grid.grid_to_world(step)
-				dot.is_last_dot = path[-1] == step			
+				dot.is_last_dot = path[-1] == step
+				if dot.is_last_dot:
+					dot.texture = last_dot_icon
 				path_dots.add_child(dot)
 
 

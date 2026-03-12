@@ -92,7 +92,7 @@ func unregister_blocking_entity(entity: Entity) -> void:
 func get_lootable_entities() -> Array[Entity]:
 	var lootables: Array[Entity] = []
 	for entity in entities:
-		if entity.inventory_component:
+		if entity.inventory_component and not entity.is_alive():
 			lootables.append(entity)
 	return lootables
 
@@ -104,6 +104,12 @@ func get_actors() -> Array[Entity]:
 			actors.append(entity)
 	return actors
 
+
+func get_lootable_at_location(location: Vector2i) -> Entity:
+	for lootable in get_lootable_entities():
+		if lootable.grid_position == location:
+			return lootable
+	return null
 
 func get_entity_at_location(location: Vector2i) -> Entity:
 	for entity in entities:

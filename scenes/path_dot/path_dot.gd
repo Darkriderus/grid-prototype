@@ -3,6 +3,7 @@ extends Node2D
 
 var map_data: MapData
 @export var color : Color = Color.WHITE
+@export var texture: Texture
 @export var is_last_dot : bool = false
 
 @onready var dot: Sprite2D = $Dot
@@ -11,6 +12,9 @@ var map_data: MapData
 
 func _ready() -> void:
 	modulate = color
+	if texture:
+		dot.texture = texture
+		last_dot.texture = texture
 	last_dot.visible = is_last_dot
 	dot.visible = not is_last_dot
 	# hide()

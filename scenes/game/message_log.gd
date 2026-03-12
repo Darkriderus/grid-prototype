@@ -22,4 +22,5 @@ func add_message(text: String, color: Color) -> void:
 		ensure_control_visible(message)
 		
 static func send_message(text: String, color: Color) -> void:
+	print(text)
 	SignalBus.message_sent.emit(text, color)
