@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://8jn1pcdm7ov1"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://8jn1pcdm7ov1"]
+
+[ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="1_0o3jg"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5ir01"]
 load_path = "res://.godot/imported/monochrome_packed.png-b00e14e3471387105813a7675a4b5d21.ctex"
@@ -19,5 +21,8 @@ texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 
 [resource]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 1)
+Label/constants/outline_size = 4
+Label/fonts/font = ExtResource("1_0o3jg")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_e0152")
-UIButton/base_type = &"Button"

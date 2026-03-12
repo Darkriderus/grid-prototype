@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bylbmsqm21hkt"]
+[gd_scene load_steps=24 format=3 uid="uid://bylbmsqm21hkt"]
 
 [ext_resource type="Script" uid="uid://ey8xkfl4u6kb" path="res://scenes/game/game_root.gd" id="1_3xj4h"]
 [ext_resource type="Script" uid="uid://bylqdyktoeg8d" path="res://scenes/game/game.gd" id="1_7h61r"]
@@ -10,9 +10,12 @@
 [ext_resource type="Script" uid="uid://bgtkanxtvjtl3" path="res://scenes/game/mouseover_checker.gd" id="5_vaxfo"]
 [ext_resource type="Script" uid="uid://c2ajep0v5b12s" path="res://entities/input_handler/main_game_input_handler.gd" id="6_bdhmt"]
 [ext_resource type="Script" uid="uid://cymvdo1n1fp46" path="res://entities/input_handler/game_over_input_handler.gd" id="7_87uf6"]
+[ext_resource type="Script" uid="uid://ba0m4vu8nbisj" path="res://scenes/game/hp_display.gd" id="9_4j704"]
 [ext_resource type="Script" uid="uid://d4iw6p738srb6" path="res://entities/input_handler/base_input_handler.gd" id="10_ftsea"]
 [ext_resource type="Script" uid="uid://cf7pj2anp1lu" path="res://scenes/game/button_bar.gd" id="12_vaxfo"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="13_pg2xm"]
+[ext_resource type="LabelSettings" uid="uid://oxqr4cx2amjb" path="res://assets/styling/message_label_settings.tres" id="15_otnwt"]
+[ext_resource type="Script" uid="uid://du83kawnhq1cy" path="res://scenes/game/xp_display.gd" id="16_uyinl"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vaxfo"]
 load_path = "res://.godot/imported/monochrome-transparent_packed.png-5feff330354783b2022e23b32a4b2a10.ctex"
@@ -24,6 +27,18 @@ region = Rect2(384, 160, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5jirj"]
 atlas = ExtResource("13_pg2xm")
 region = Rect2(720, 64, 16, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ftsea"]
+bg_color = Color(0.49803922, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_otnwt"]
+bg_color = Color(0, 0.49803922, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xj4h"]
+bg_color = Color(0.0617468, 0.33871287, 0.4807731, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5v6r0"]
+bg_color = Color(0.45177007, 0.43642756, 0.98286134, 1)
 
 [node name="InterfaceRoot" type="Control"]
 layout_mode = 3
@@ -146,5 +161,68 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatusContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/StatusContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HpDisplay" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("9_4j704")
+
+[node name="HpBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer/HpDisplay"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ftsea")
+theme_override_styles/fill = SubResource("StyleBoxFlat_otnwt")
+value = 50.0
+show_percentage = false
+
+[node name="HpLabel" type="Label" parent="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer/HpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "00 / 00"
+label_settings = ExtResource("15_otnwt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="XpDisplay" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("16_uyinl")
+
+[node name="XpBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer/XpDisplay"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_3xj4h")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5v6r0")
+value = 50.0
+show_percentage = false
+
+[node name="XpLabel" type="Label" parent="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer/XpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "00 / 00"
+label_settings = ExtResource("15_otnwt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="player_created" from="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer/HpDisplay" method="initialize"]
+[connection signal="player_created" from="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/HBoxContainer2/StatusContainer/MarginContainer/VBoxContainer/XpDisplay" method="initialize"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonBar/MarginContainer/HBoxContainer/CharacterButton" to="VBoxContainer/HBoxContainer2/ButtonBar" method="_on_character_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/ButtonBar/MarginContainer/HBoxContainer/InventoryButton" to="VBoxContainer/HBoxContainer2/ButtonBar" method="_on_inventory_button_pressed"]

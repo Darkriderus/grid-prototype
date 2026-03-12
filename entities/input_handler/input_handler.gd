@@ -8,7 +8,6 @@ enum InputHandlers {MAIN_GAME, GAME_OVER, HISTORY_VIEWER, DUMMY}
 @onready var input_handler_nodes := {
 	InputHandlers.MAIN_GAME: $MainGameInputHandler,
 	InputHandlers.GAME_OVER: $GameOverInputHandler,
-	InputHandlers.HISTORY_VIEWER: $HistoryViewerInputHandler,
 	InputHandlers.DUMMY: $DummyInputHandler,
 }
 
