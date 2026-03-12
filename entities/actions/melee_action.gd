@@ -9,6 +9,9 @@ func perform() -> bool:
 			MessageLog.send_message("Nothing to attack.", GameColors.IMPOSSIBLE)
 		return false
 	
+	const ATTACK_ANIM = preload("uid://tbng7bk63fmp")
+	entity.add_child(ATTACK_ANIM.instantiate())
+	
 	var damage: int = entity.fighter_component.melee_power - target.fighter_component.defense
 	var attack_color: Color
 	if entity == get_map_data().player:

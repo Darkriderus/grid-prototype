@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bylbmsqm21hkt"]
+[gd_scene load_steps=25 format=3 uid="uid://bylbmsqm21hkt"]
 
 [ext_resource type="Script" uid="uid://ey8xkfl4u6kb" path="res://scenes/game/game_root.gd" id="1_3xj4h"]
 [ext_resource type="Script" uid="uid://bylqdyktoeg8d" path="res://scenes/game/game.gd" id="1_7h61r"]
@@ -15,18 +15,9 @@
 [ext_resource type="Script" uid="uid://ba0m4vu8nbisj" path="res://scenes/game/hp_display.gd" id="9_4j704"]
 [ext_resource type="Script" uid="uid://d4iw6p738srb6" path="res://entities/input_handler/base_input_handler.gd" id="10_ftsea"]
 [ext_resource type="Script" uid="uid://bp0b3bbpanmri" path="res://scenes/game/message_log.gd" id="11_kp23o"]
-[ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="13_pg2xm"]
 [ext_resource type="Script" uid="uid://cvoi7gpc5rppq" path="res://scenes/game/dungeon_floor_label.gd" id="16_5v6r0"]
 [ext_resource type="Script" uid="uid://du83kawnhq1cy" path="res://scenes/game/xp_display.gd" id="16_uyinl"]
 [ext_resource type="Script" uid="uid://dlnye0bwfv0bd" path="res://scenes/game/character_info_box.gd" id="17_10c2w"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gc57s"]
-atlas = ExtResource("13_pg2xm")
-region = Rect2(384, 160, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8b66f"]
-atlas = ExtResource("13_pg2xm")
-region = Rect2(704, 144, 16, 16)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87uf6"]
 bg_color = Color(0.49803922, 0, 0, 1)
@@ -82,7 +73,7 @@ stretch = true
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1084, 536)
+size = Vector2i(1152, 536)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport"]
@@ -130,23 +121,6 @@ message_log_path = NodePath("../../../../../../InfoBar/MessagePanel/MessageLog")
 
 [node name="DummyInputHandler" type="Node" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
 script = ExtResource("10_ftsea")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="InventoryButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-icon = SubResource("AtlasTexture_gc57s")
-icon_alignment = 1
-expand_icon = true
-
-[node name="BackpackButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-icon = SubResource("AtlasTexture_8b66f")
-icon_alignment = 1
-expand_icon = true
 
 [node name="InfoBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -260,4 +234,3 @@ size_flags_horizontal = 3
 [connection signal="player_created" from="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/CharacterInfoBox" method="setup"]
 [connection signal="dungeon_floor_changed" from="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game/Map" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/DungeonFloorLabel" method="set_dungeon_floor"]
 [connection signal="entities_focussed" from="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game/Map/MouseoverChecker" to="VBoxContainer/InfoBar/StatsPanel/VBoxContainer/MouseoverLabel" method="set_text"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/InventoryButton" to="." method="_on_inventory_button_pressed"]

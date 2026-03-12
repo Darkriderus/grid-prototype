@@ -22,8 +22,3 @@ func new_game() -> void:
 func load_game() -> void:
 	if not game.load_game():
 		main_menu_requested.emit()
-
-
-# TODO cleanup - sidebar as own scene
-func _on_inventory_button_pressed() -> void:
-	Input.action_press("activate")

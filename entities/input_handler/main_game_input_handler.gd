@@ -42,14 +42,7 @@ func get_action(player: Entity) -> Action:
 		if Input.is_action_just_pressed(direction):
 			var offset: Vector2i = directions[direction]
 			action = BumpAction.new(player, offset.x, offset.y)
-	
-	if Input.is_action_just_pressed("select"):
-		var mouse_grid_coord: Vector2i = Grid.world_to_grid(Vector2i(map.get_global_mouse_position()))	
-		var clicked_tile = map.map_data.get_tile(mouse_grid_coord)
 		
-		if clicked_tile and clicked_tile.is_in_view:
-			action = SelectAction.new(player, mouse_grid_coord.x, mouse_grid_coord.y)
-	
 	if Input.is_action_just_pressed("wait"):
 		action = WaitAction.new(player)
 	
