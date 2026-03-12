@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://8jn1pcdm7ov1"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5ir01"]
+load_path = "res://.godot/imported/monochrome_packed.png-b00e14e3471387105813a7675a4b5d21.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o3jg"]
+atlas = SubResource("CompressedTexture2D_5ir01")
+region = Rect2(768, 336, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e0152"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+texture = SubResource("AtlasTexture_0o3jg")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[resource]
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_e0152")

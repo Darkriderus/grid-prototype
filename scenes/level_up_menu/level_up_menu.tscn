@@ -1,23 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://snopwjqg3h3j"]
+[gd_scene load_steps=16 format=3 uid="uid://snopwjqg3h3j"]
 
-[ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="1_j3eot"]
 [ext_resource type="Script" uid="uid://dvgt57qg5irk5" path="res://scenes/level_up_menu/level_up_menu.gd" id="1_ue5gx"]
 [ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="2_ue5gx"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bdhmt"]
-atlas = ExtResource("1_j3eot")
-region = Rect2(768, 336, 16, 16)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ue5gx"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 5.0
-texture = SubResource("AtlasTexture_bdhmt")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_eiolo"]
 font = ExtResource("2_ue5gx")
@@ -83,7 +67,6 @@ grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_ue5gx")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
 layout_mode = 2

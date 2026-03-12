@@ -13,7 +13,6 @@ config_version=5
 config/name="grid-prototype"
 run/main_scene="uid://dxs34qya0d5nx"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
 
 [autoload]
@@ -32,6 +31,10 @@ window/stretch/scale_mode="integer"
 [global_group]
 
 path_dots=""
+
+[gui]
+
+theme/custom="uid://8jn1pcdm7ov1"
 
 [input]
 
