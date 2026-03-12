@@ -5,14 +5,16 @@ enum TileTypeKeys {
 	FLOOR,
 	WALL,
 	DOWN_STAIRS,
-	DOOR
+	DOOR,
+	DOOR_OPEN
 }
 
 const tile_types = {
 	TileTypeKeys.FLOOR: preload("uid://bby8nrjwno8kf"),
 	TileTypeKeys.WALL: preload("uid://cxxd6wrpw0pu7"),
 	TileTypeKeys.DOWN_STAIRS: preload("uid://bm1wo6lgy1rkt"),
-	TileTypeKeys.DOOR: preload("uid://dfhkg7qoqmy5f")
+	TileTypeKeys.DOOR: preload("uid://dfhkg7qoqmy5f"),
+	TileTypeKeys.DOOR_OPEN: preload("uid://bo7y1wultg05s")
 }
 
 var key: TileTypeKeys
@@ -45,6 +47,9 @@ func set_tile_type(key: TileTypeKeys) -> void:
 	texture = _definition.texture
 	modulate = _definition.color_dark
 
+
+func is_closed_door() -> bool:
+	return key == TileTypeKeys.DOOR
 
 func is_walkable() -> bool:
 	return _definition.is_walkable

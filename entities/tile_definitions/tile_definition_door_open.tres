@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TileDefinition" load_steps=4 format=3 uid="uid://bo7y1wultg05s"]
+
+[ext_resource type="Script" uid="uid://dlg72a6rbcla5" path="res://entities/tile_definitions/tile_definition.gd" id="1_u0tfs"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v0mbl"]
+load_path = "res://.godot/imported/monochrome_packed.png-b00e14e3471387105813a7675a4b5d21.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0tfs"]
+atlas = SubResource("CompressedTexture2D_v0mbl")
+region = Rect2(96, 144, 16, 16)
+
+[resource]
+script = ExtResource("1_u0tfs")
+texture = SubResource("AtlasTexture_u0tfs")
+metadata/_custom_type_script = "uid://dlg72a6rbcla5"

@@ -92,6 +92,11 @@ func _carve_tile(dungeon: MapData, x: int, y: int) -> void:
 	var tile_position = Vector2i(x, y)
 	var tile: Tile = dungeon.get_tile(tile_position)
 	tile.set_tile_type(Tile.TileTypeKeys.FLOOR)
+	
+func _add_door(dungeon: MapData, x: int, y: int) -> void:
+	var tile_position = Vector2i(x, y)
+	var tile: Tile = dungeon.get_tile(tile_position)
+	tile.set_tile_type(Tile.TileTypeKeys.DOOR)
 
 func _carve_room(dungeon: MapData, room: Rect2i) -> void:
 	var inner: Rect2i = room.grow(-1)
@@ -102,14 +107,22 @@ func _carve_room(dungeon: MapData, room: Rect2i) -> void:
 func _tunnel_horizontal(dungeon: MapData, y: int, x_start: int, x_end: int) -> void:
 	var x_min: int = mini(x_start, x_end)
 	var x_max: int = maxi(x_start, x_end)
+
 	for x in range(x_min, x_max + 1):
 		_carve_tile(dungeon, x, y)
+		
+	#_add_door(dungeon, x_start, y)
+	#_add_door(dungeon, x_end, y)
 
 func _tunnel_vertical(dungeon: MapData, x: int, y_start: int, y_end: int) -> void:
 	var y_min: int = mini(y_start, y_end)
 	var y_max: int = maxi(y_start, y_end)
+	
 	for y in range(y_min, y_max + 1):
 		_carve_tile(dungeon, x, y)
+		
+	#_add_door(dungeon, x, y_start)
+	#_add_door(dungeon, x, y_end)
 
 func _tunnel_between(dungeon: MapData, start: Vector2i, end: Vector2i) -> void:
 	if _rng.randf() < 0.5:
