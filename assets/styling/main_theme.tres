@@ -20,3 +20,4 @@ texture_margin_bottom = 8.0
 
 [resource]
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_e0152")
+UIButton/base_type = &"Button"
