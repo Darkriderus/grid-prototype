@@ -88,6 +88,9 @@ func register_blocking_entity(entity: Entity) -> void:
 func unregister_blocking_entity(entity: Entity) -> void:
 	pathfinder.set_point_weight_scale(entity.grid_position, 0)
 
+func get_visible_entities() -> Array[Entity]:
+	return entities.filter(func (actor: Entity): return get_tile(actor.grid_position).is_in_view)
+
 
 func get_lootable_entities() -> Array[Entity]:
 	var lootables: Array[Entity] = []
@@ -96,7 +99,6 @@ func get_lootable_entities() -> Array[Entity]:
 			lootables.append(entity)
 	return lootables
 
-
 func get_actors() -> Array[Entity]:
 	var actors: Array[Entity] = []
 	for entity in entities:
@@ -104,6 +106,9 @@ func get_actors() -> Array[Entity]:
 			actors.append(entity)
 	return actors
 
+
+func get_visible_actors() -> Array[Entity]:
+	return get_actors().filter(func (actor: Entity): return get_tile(actor.grid_position).is_in_view)
 
 func get_actor_at_location(location: Vector2i) -> Entity:
 	for actor in get_actors():

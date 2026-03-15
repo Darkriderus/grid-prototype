@@ -63,22 +63,38 @@ func get_action(player: Entity) -> Action:
 		action = EscapeAction.new(player)
 		
 	if Input.is_action_just_pressed("look"):
-		await get_grid_position(player, 0)
+		var entities_in_sight := player.map_data.get_visible_entities()
+		
+		entities_in_sight.sort_custom(func (a: Entity, b: Entity):
+			if player.distance(a.grid_position) < player.distance(b.grid_position):
+				return true
+			return false
+		)
+		
+		await get_grid_position(player, 0, entities_in_sight)
 		
 	if Input.is_action_just_pressed("fire_weapon"):
-		var target : Vector2i = await get_grid_position(player, 0)
-		print(target)
-		var offset : Vector2i = target - player.grid_position
-		
-		action = RangedAction.new(player, offset.x, offset.y)
-	
+		if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED_WEAPON):
+			MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
+		else:
+			var enemies_in_sight := player.map_data.get_visible_actors()
+			enemies_in_sight.erase(player)
+			enemies_in_sight.sort_custom(func (a: Entity, b: Entity):
+				if player.distance(a.grid_position) < player.distance(b.grid_position):
+					return true
+				return false
+			)
+			
+			var target : Vector2i = await get_grid_position(player, 0, enemies_in_sight)
+			var offset : Vector2i = target - player.grid_position
+			
+			action = RangedAction.new(player, offset.x, offset.y)
+
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)
 	
 	return action
-
-
-
+	
 
 func activate_item(player: Entity) -> Action:
 	var selected_item: Entity = await get_item("Select an item to use", player.inventory_component, true)
@@ -95,9 +111,11 @@ func activate_item(player: Entity) -> Action:
 	return ItemAction.new(player, selected_item, target_position)
 
 
-func get_grid_position(player: Entity, radius: int) -> Vector2i:
+func get_grid_position(player: Entity, radius: int, tabbable_targets: Array[Entity] = []) -> Vector2i:
 	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
-	var selected_position: Vector2i = await reticle.select_position(player, radius)
+	var selected_position: Vector2i = await reticle.select_position(player, radius, tabbable_targets)
 	await get_tree().physics_frame
 	get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
 	return selected_position
+	
+	
