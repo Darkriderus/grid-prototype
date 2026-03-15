@@ -62,9 +62,16 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
 		
-	#if Input.is_action_just_pressed("look"):
-		#await get_grid_position(player, 0)
+	if Input.is_action_just_pressed("look"):
+		await get_grid_position(player, 0)
 		
+	if Input.is_action_just_pressed("fire_weapon"):
+		var target : Vector2i = await get_grid_position(player, 0)
+		print(target)
+		var offset : Vector2i = target - player.grid_position
+		
+		action = RangedAction.new(player, offset.x, offset.y)
+	
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)
 	
