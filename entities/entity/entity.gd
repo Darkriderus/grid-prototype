@@ -19,6 +19,7 @@ enum EntityKey {
 	CHAINMAIL,
 	LEATHER_ARMOR,
 	CROSSBOW,
+	CHEST,
 	NOTHING
 }
 
@@ -35,6 +36,7 @@ const ENTITY_DEFINITION_PATHS := {
 	EntityKey.CHAINMAIL: "uid://cvbk872p5bt0d",
 	EntityKey.LEATHER_ARMOR: "uid://467c55dlqcbx",
 	EntityKey.CROSSBOW: "uid://cdmvyyqbt7jow",
+	EntityKey.CHEST: "uid://b4cui42b8sdjs",
 }
 
 var key: EntityKey
@@ -128,8 +130,24 @@ func is_alive() -> bool:
 	return ai_component != null
 
 
+func has_inventory() -> bool:
+	return inventory_component != null
+
+
+func is_lootable() -> bool:
+	return has_inventory() and not is_alive()
+	
+
 func get_entity_name() -> String:
-	return entity_name
+	var full_entity_name = entity_name
+	
+	if is_lootable():
+		var items_to_loot = inventory_component.items
+		var joined_names := ", ".join(items_to_loot.map(func(i): return i.entity_name))
+		joined_names = joined_names if joined_names.length() > 0 else "Empty"
+		full_entity_name = "%s (%s)" % [full_entity_name, joined_names]
+			
+	return full_entity_name
 
 
 func distance(other_position: Vector2i) -> int:

@@ -3,6 +3,7 @@ extends Node
 
 const LOOT_ASCII_SYMBOL := "L"
 const MONSTER_ASCII_SYMBOL := "M"
+const CONTAINER_ASCII_SYMBOL := "C"
 
 
 @export_category("Map Dimensions")
@@ -95,10 +96,7 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 	var dungeon := MapData.new(map_width, map_height, player)
 	dungeon.current_floor = current_floor
 	dungeon.entities.append(player)
-	
-	for key in Tile.TileTypeKeys.values():
-		print(Tile.tile_types[key].ascii_char)
-	
+		
 	var file = FileAccess.open("res://assets/dungeons/dungeon_1.txt", FileAccess.READ)
 
 	var y := 0
@@ -130,6 +128,9 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 					
 			if ascii_char == LOOT_ASCII_SYMBOL:
 				_set_entity(coord, item_chances, dungeon)
+				
+			if ascii_char == CONTAINER_ASCII_SYMBOL:
+				_set_container(coord, item_chances, dungeon, 5)
 		y += 1
 #
 	file.close()
@@ -137,8 +138,21 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 	dungeon.setup_pathfinding()
 	return dungeon
 	
-func _set_entity(coord: Vector2i, spawn_chances: Dictionary, dungeon: MapData):
-	var entities: Array[Entity.EntityKey] = _get_entities_at_random(spawn_chances, 1, dungeon.current_floor)
+
+func _set_container(coord: Vector2i, spawn_chances: Dictionary, dungeon: MapData, amount: int = 1):
+	var items: Array[Entity.EntityKey] = _get_entities_at_random(spawn_chances, amount, dungeon.current_floor)
+	
+	if items.size() > 0:
+		var new_container_entity := Entity.new(dungeon, coord, Entity.EntityKey.CHEST)
+		
+		for entity_key_to_spawn in items:
+			if entity_key_to_spawn != Entity.EntityKey.NOTHING:
+				var item := Entity.new(null, Vector2i.ZERO, entity_key_to_spawn)
+				new_container_entity.inventory_component.items.append(item)
+		dungeon.entities.append(new_container_entity)
+	
+func _set_entity(coord: Vector2i, spawn_chances: Dictionary, dungeon: MapData, amount: int = 1):
+	var entities: Array[Entity.EntityKey] = _get_entities_at_random(spawn_chances, amount, dungeon.current_floor)
 	
 	if entities.size() > 0:
 		var entity_key_to_spawn = entities.pick_random()

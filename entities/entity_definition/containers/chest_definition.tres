@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=4 format=3 uid="uid://b4cui42b8sdjs"]
+
+[ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_rehbu"]
+[ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="2_solwr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yk183"]
+atlas = ExtResource("2_solwr")
+region = Rect2(128, 96, 16, 16)
+
+[resource]
+script = ExtResource("1_rehbu")
+name = "Chest"
+texture = SubResource("AtlasTexture_yk183")
+color = Color(0.5075168, 0.4683934, 3.85046e-07, 1)
+is_blocking_movement = false
+inventory_capacity = 10
+metadata/_custom_type_script = "uid://dicrn4lo1fk4x"
