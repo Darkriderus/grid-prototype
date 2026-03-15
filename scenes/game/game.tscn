@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://c0ugpchiqhcyt" path="res://scenes/game/map.gd" id="2_0sr1o"]
 [ext_resource type="Script" uid="uid://bexblnv4queky" path="res://entities/input_handler/input_handler.gd" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://rgg38k4w5ef2" path="res://scenes/reticle/reticle.tscn" id="3_otnwt"]
-[ext_resource type="Script" uid="uid://dkxmpoqtqm10q" path="res://scenes/game/dungeon_generator.gd" id="4_kelw5"]
 [ext_resource type="Script" uid="uid://dpdtksv7cxtoy" path="res://entities/field_of_view/field_of_view.gd" id="4_lfrn8"]
+[ext_resource type="Script" uid="uid://dqgpeaakqytpe" path="res://scenes/game/preset_dungeon_generator.gd" id="5_uyinl"]
 [ext_resource type="Script" uid="uid://bgtkanxtvjtl3" path="res://scenes/game/mouseover_checker.gd" id="5_vaxfo"]
 [ext_resource type="Script" uid="uid://c2ajep0v5b12s" path="res://entities/input_handler/main_game_input_handler.gd" id="6_bdhmt"]
 [ext_resource type="Script" uid="uid://cymvdo1n1fp46" path="res://entities/input_handler/game_over_input_handler.gd" id="7_87uf6"]
@@ -89,7 +89,7 @@ script = ExtResource("2_0sr1o")
 [node name="Reticle" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game/Map" instance=ExtResource("3_otnwt")]
 
 [node name="DungeonGenerator" type="Node" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game/Map" groups=["path_dots"]]
-script = ExtResource("4_kelw5")
+script = ExtResource("5_uyinl")
 
 [node name="FieldOfView" type="Node" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 script = ExtResource("4_lfrn8")

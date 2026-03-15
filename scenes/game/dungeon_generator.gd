@@ -1,4 +1,4 @@
-class_name DungeonGenerator
+class_name OldDungeonGenerator
 extends Node
 
 @export_category("Map Dimensions")

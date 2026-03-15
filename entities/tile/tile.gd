@@ -5,6 +5,7 @@ enum TileTypeKeys {
 	FLOOR,
 	WALL,
 	DOWN_STAIRS,
+	UP_STAIRS,
 	DOOR,
 	DOOR_OPEN
 }
@@ -13,6 +14,7 @@ const tile_types = {
 	TileTypeKeys.FLOOR: preload("uid://bby8nrjwno8kf"),
 	TileTypeKeys.WALL: preload("uid://cxxd6wrpw0pu7"),
 	TileTypeKeys.DOWN_STAIRS: preload("uid://bm1wo6lgy1rkt"),
+	TileTypeKeys.UP_STAIRS: preload("uid://dfuvsl3v7jblq"),
 	TileTypeKeys.DOOR: preload("uid://dfhkg7qoqmy5f"),
 	TileTypeKeys.DOOR_OPEN: preload("uid://bo7y1wultg05s")
 }

@@ -12,4 +12,5 @@ region = Rect2(96, 144, 16, 16)
 [resource]
 script = ExtResource("1_u0tfs")
 texture = SubResource("AtlasTexture_u0tfs")
+ascii_char = "'"
 metadata/_custom_type_script = "uid://dlg72a6rbcla5"
