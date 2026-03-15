@@ -10,6 +10,7 @@ region = Rect2(80, 144, 16, 16)
 [resource]
 script = ExtResource("1_7ncvi")
 texture = SubResource("AtlasTexture_4o8e6")
+ascii_char = "/"
 is_walkable = false
 is_transparent = false
 metadata/_custom_type_script = "uid://dlg72a6rbcla5"
