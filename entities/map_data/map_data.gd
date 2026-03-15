@@ -91,6 +91,13 @@ func unregister_blocking_entity(entity: Entity) -> void:
 func get_visible_entities() -> Array[Entity]:
 	return entities.filter(func (actor: Entity): return get_tile(actor.grid_position).is_in_view)
 
+func get_entities_at_location(location: Vector2i) -> Array[Entity]:
+	var found_entities : Array[Entity] = []
+	for entity in entities:
+		if entity.grid_position == location:
+			found_entities.append(entity)
+	return found_entities
+
 
 func get_lootable_entities() -> Array[Entity]:
 	var lootables: Array[Entity] = []

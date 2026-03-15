@@ -4,7 +4,9 @@ extends Node2D
 signal dungeon_floor_changed(floor)
 
 var map_data: MapData
-var current_mouse_grid_coord : Vector2i = Vector2i.ZERO
+
+#func get_current_camera() -> Camera2D:
+	
 
 @onready var tiles: Node2D = $Tiles
 @onready var entities: Node2D = $Entities

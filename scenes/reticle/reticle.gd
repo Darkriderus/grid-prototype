@@ -18,12 +18,12 @@ var grid_position: Vector2i:
 	set(value):
 		grid_position = value
 		position = Grid.grid_to_world(grid_position)
+		SignalBus.entities_focussed.emit(map_data.get_entities_at_location(grid_position))
 
 var map_data: MapData
 var tabbable_targets : Array[Entity] = []
 var tab_index := 0
 var last_target : Entity
-
 
 @onready var camera: Camera2D = $Camera2D
 @onready var border: Line2D = $Line2D
@@ -88,5 +88,7 @@ func _physics_process(delta: float) -> void:
 		grid_position = tabbable_targets[tab_index].grid_position
 	if Input.is_action_just_pressed("ui_accept"):
 		position_selected.emit(grid_position)
+		grid_position = Vector2i(-1, -1)
 	if Input.is_action_just_pressed("ui_back"):
-		position_selected.emit(Vector2i(-1, -1))
+		grid_position = Vector2i(-1, -1)
+		position_selected.emit(grid_position)

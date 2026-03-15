@@ -14,6 +14,7 @@ func perform() -> bool:
 	
 	if destination_tile.is_closed_door():
 		destination_tile.set_tile_type(Tile.TileTypeKeys.DOOR_OPEN)
+		map_data.setup_pathfinding()
 		entity.move(offset)
 		return true
 	
