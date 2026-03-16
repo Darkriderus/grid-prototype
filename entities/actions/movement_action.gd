@@ -11,13 +11,7 @@ func perform() -> bool:
 		if entity == get_map_data().player:
 			MessageLog.send_message("That way is blocked.", GameColors.IMPOSSIBLE)
 		return false
-	
-	if destination_tile.is_closed_door():
-		destination_tile.set_tile_type(Tile.TileTypeKeys.DOOR_OPEN)
-		map_data.setup_pathfinding()
-		entity.move(offset)
-		return true
-	
+		
 	if not destination_tile.is_walkable() or get_blocking_entity_at_destination():
 		if entity == get_map_data().player:
 			MessageLog.send_message("That way is blocked.", GameColors.IMPOSSIBLE)

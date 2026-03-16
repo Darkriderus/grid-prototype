@@ -59,6 +59,14 @@ func is_in_bounds(coordinate: Vector2i) -> bool:
 	)
 
 
+func get_visible_tiles_by_type(type: Tile.TileTypeKeys)-> Array[Tile]:
+	var visible_tiles : Array[Tile] = []
+	for tile in tiles:
+		if tile.is_in_view and tile.key == type:
+			visible_tiles.append(tile)
+	return visible_tiles
+
+
 func get_blocking_entity_at_location(grid_position: Vector2i) -> Entity:
 	for entity in entities:
 		if entity.is_blocking_movement() and entity.grid_position == grid_position:
@@ -89,7 +97,7 @@ func unregister_blocking_entity(entity: Entity) -> void:
 	pathfinder.set_point_weight_scale(entity.grid_position, 0)
 
 func get_visible_entities() -> Array[Entity]:
-	return entities.filter(func (actor: Entity): return get_tile(actor.grid_position).is_in_view)
+	return entities.filter(func (e: Entity): return get_tile(e.grid_position).is_in_view)
 
 func get_entities_at_location(location: Vector2i) -> Array[Entity]:
 	var found_entities : Array[Entity] = []

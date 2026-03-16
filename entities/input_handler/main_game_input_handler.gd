@@ -51,6 +51,32 @@ func get_action(player: Entity) -> Action:
 			
 	if Input.is_action_just_pressed("pickup"):
 		action = PickupAction.new(player)
+		
+	if Input.is_action_just_pressed("open_door"):
+		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR)
+		var doors_in_range : Array[Tile] = visible_doors.filter(func (t : Tile): return player.distance(t.grid_position) == 1)
+		#await get_grid_position(player, 0, doors_in_range)
+		var target : Vector2i
+		if doors_in_range.size() == 1:
+			target = doors_in_range[0].grid_position
+		else:
+			# TODO: Add possibility to select door
+			target = player.grid_position
+		
+		action = OpenDoorAction.new(player, target.x, target.y)
+		
+	if Input.is_action_just_pressed("close_door"):
+		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR_OPEN)
+		var doors_in_range : Array[Tile] = visible_doors.filter(func (t : Tile): return player.distance(t.grid_position) == 1)
+		#await get_grid_position(player, 0, doors_in_range)
+		var target : Vector2i
+		if doors_in_range.size() == 1:
+			target = doors_in_range[0].grid_position
+		else:
+			# TODO: Add possibility to select door
+			target = player.grid_position
+		
+		action = CloseDoorAction.new(player, target.x, target.y)
 	
 	if Input.is_action_just_pressed("drop"):
 		var selected_item: Entity = await get_item("Select an item to drop", player.inventory_component)

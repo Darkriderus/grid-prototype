@@ -35,6 +35,10 @@ var is_in_view: bool = false:
 		modulate = _definition.color_lit if is_in_view else _definition.color_dark
 		if is_in_view and not is_explored:
 			is_explored = true
+			
+var grid_position: Vector2i:
+	get:
+		return Grid.world_to_grid(position)
 
 func _init(grid_position: Vector2i, key: TileTypeKeys) -> void:
 	visible = false
@@ -49,6 +53,9 @@ func set_tile_type(key: TileTypeKeys) -> void:
 	texture = _definition.texture
 	modulate = _definition.color_dark
 
+
+func is_open_door() -> bool:
+	return key == TileTypeKeys.DOOR_OPEN
 
 func is_closed_door() -> bool:
 	return key == TileTypeKeys.DOOR
