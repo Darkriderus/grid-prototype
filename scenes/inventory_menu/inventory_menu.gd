@@ -20,14 +20,9 @@ func button_pressed(item: Entity = null) -> void:
 
 func _register_item(index: int, item: Entity, is_equipped: bool) -> void:
 	var item_button: Button = inventory_menu_item_scene.instantiate()
-	var char: String = String.chr("a".unicode_at(0) + index)
-	item_button.text = "( %s ) %s" % [char, item.get_entity_name()]
+	item_button.text = "%s" % [item.get_entity_name()]
 	if is_equipped:
-		item_button.text += " (E)"
-	var shortcut_event := InputEventKey.new()
-	shortcut_event.keycode = KEY_A + index
-	item_button.shortcut = Shortcut.new()
-	item_button.shortcut.events = [shortcut_event]
+		item_button.text = "(E) " + item_button.text
 	item_button.pressed.connect(button_pressed.bind(item))
 	inventory_list.add_child(item_button)
 
