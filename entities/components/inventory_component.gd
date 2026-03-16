@@ -9,6 +9,18 @@ func _init(capacity: int) -> void:
 	items = []
 	self.capacity = capacity
 
+
+func get_items_by_type(type: Entity.EntityKey) -> Array[Entity]:
+	var type_items : Array[Entity] = []
+	for item in items:
+		if item.key == type:
+			type_items.append(item)
+	return type_items
+
+func has_item_type(type: Entity.EntityKey) -> bool:
+	return get_items_by_type(type).size() > 0
+
+
 func drop(item: Entity, silent: bool = false) -> Entity:
 	items.erase(item)
 	var map_data: MapData = get_map_data()
