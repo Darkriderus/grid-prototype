@@ -55,7 +55,7 @@ func get_action(player: Entity) -> Action:
 		
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
 		var offset : Vector2i = target - player.grid_position
-		print(offset)
+
 		action = PickupAction.new(player, offset.x, offset.y)
 		
 	if Input.is_action_just_pressed("open_door"):
