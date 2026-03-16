@@ -71,11 +71,72 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 stretch = true
 
+[node name="DetailPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer/SubViewportContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("13_10c2w")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "__ENTITY_NAME__"
+
+[node name="DetailHpDisplay" type="MarginContainer" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DetailHpBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer/DetailHpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_87uf6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2a8rs")
+step = 1.0
+show_percentage = false
+
+[node name="DetailHpLabel" type="Label" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer/DetailHpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_4j704")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DetailStatsDisplay" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DetailMeleePowerLabel" type="Label" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer/DetailStatsDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_vaxfo")
+horizontal_alignment = 1
+
+[node name="DetailRangedPowerLabel" type="Label" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer/DetailStatsDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_vaxfo")
+horizontal_alignment = 1
+
+[node name="DefenseDefenseLabel" type="Label" parent="VBoxContainer/HBoxContainer/SubViewportContainer/DetailPanel/MarginContainer/VBoxContainer/DetailStatsDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = SubResource("LabelSettings_vaxfo")
+horizontal_alignment = 1
+
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(956, 536)
+size = Vector2i(1152, 536)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport"]
@@ -126,67 +187,6 @@ message_log_path = NodePath("../../../../../../InfoBar/MessagePanel/MessageLog")
 
 [node name="DummyInputHandler" type="Node" parent="VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
 script = ExtResource("10_ftsea")
-
-[node name="DetailPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("13_10c2w")
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/DetailPanel"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer"]
-layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "__ENTITY_NAME__"
-
-[node name="DetailHpDisplay" type="MarginContainer" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="DetailHpBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/DetailHpDisplay"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_87uf6")
-theme_override_styles/fill = SubResource("StyleBoxFlat_2a8rs")
-step = 1.0
-show_percentage = false
-
-[node name="DetailHpLabel" type="Label" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/DetailHpDisplay"]
-unique_name_in_owner = true
-layout_mode = 2
-label_settings = SubResource("LabelSettings_4j704")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DetailStatsDisplay" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="DetailMeleePowerLabel" type="Label" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/DetailStatsDisplay"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-label_settings = SubResource("LabelSettings_vaxfo")
-horizontal_alignment = 1
-
-[node name="DetailRangedPowerLabel" type="Label" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/DetailStatsDisplay"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-label_settings = SubResource("LabelSettings_vaxfo")
-horizontal_alignment = 1
-
-[node name="DefenseDefenseLabel" type="Label" parent="VBoxContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/DetailStatsDisplay"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-label_settings = SubResource("LabelSettings_vaxfo")
-horizontal_alignment = 1
 
 [node name="InfoBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
