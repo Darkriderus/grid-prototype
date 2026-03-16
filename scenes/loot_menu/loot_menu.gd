@@ -19,10 +19,12 @@ func button_pressed(item: Entity, button: Button) -> void:
 		player.inventory_component.drop(item, true)
 		entity_to_loot.inventory_component.pickup(item)
 		button.reparent(loot_list)
+		loot_list.get_child(-1).grab_focus()
 	else:
 		entity_to_loot.inventory_component.drop(item, true)
 		player.inventory_component.pickup(item)
 		button.reparent(inventory_list)
+		inventory_list.get_child(-1).grab_focus()
 	
 
 func _ready() -> void:
