@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkc6r0uyjfbq4"]
+
+[ext_resource type="Script" uid="uid://bnyj0n5rbfnp7" path="res://scenes/game/detail_panel.gd" id="1_gqcdh"]
+[ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="2_xyca0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87uf6"]
+bg_color = Color(0.49803922, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2a8rs"]
+bg_color = Color(0, 0.49803922, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4j704"]
+font = ExtResource("2_xyca0")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_gqcdh")
+
+[node name="DetailPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(150, 0)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="DetailPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DetailPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="DetailPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "__ENTITY_NAME__"
+
+[node name="DetailHpDisplay" type="MarginContainer" parent="DetailPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DetailHpBar" type="ProgressBar" parent="DetailPanel/MarginContainer/VBoxContainer/DetailHpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_87uf6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2a8rs")
+step = 1.0
+show_percentage = false
+
+[node name="DetailHpLabel" type="Label" parent="DetailPanel/MarginContainer/VBoxContainer/DetailHpDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_4j704")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -13,6 +13,7 @@ const directions = {
 }
 
 const inventory_menu_scene = preload("uid://dy7s6c7w2b12c")
+const LOOT_MENU_SCENE = preload("uid://dh5x356856lj4")
 
 @export var reticle: Reticle
 @export var map: Map
@@ -34,6 +35,14 @@ func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_
 		get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
 	return selected_item
 	
+func open_loot_menu(window_title: String, player: Entity, entity_to_loot: Entity) -> void:
+	var loot_menu: LootMenu = LOOT_MENU_SCENE.instantiate()
+	add_child(loot_menu)
+	loot_menu.build(window_title, player, entity_to_loot)
+	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
+	await loot_menu.looting_done
+	await get_tree().physics_frame
+	get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
 
 func get_action(player: Entity) -> Action:
 	var action: Action = null
@@ -56,7 +65,10 @@ func get_action(player: Entity) -> Action:
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
 		var offset : Vector2i = target - player.grid_position
 
-		action = PickupAction.new(player, offset.x, offset.y)
+		open_loot_menu("Lootyloot", player, player.map_data.get_entities_at_location(target)[0])
+		
+
+		#action = PickupAction.new(player, offset.x, offset.y)
 		
 	if Input.is_action_just_pressed("open_door"):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR)

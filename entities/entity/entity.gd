@@ -144,10 +144,10 @@ func get_entity_name() -> String:
 	var full_entity_name = entity_name
 	
 	if is_lootable():
-		var items_to_loot = inventory_component.items
-		var joined_names := ", ".join(items_to_loot.map(func(i): return i.entity_name))
-		joined_names = joined_names if joined_names.length() > 0 else "Empty"
-		full_entity_name = "%s (%s)" % [full_entity_name, joined_names]
+		if inventory_component.items.size() > 0:
+			full_entity_name += " (%s items)" % inventory_component.items.size()
+		else:
+			full_entity_name += " (Empty)"
 			
 	return full_entity_name
 

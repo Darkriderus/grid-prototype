@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh5x356856lj4"]
+
+[ext_resource type="Script" uid="uid://8xelf5j1mrbv" path="res://scenes/loot_menu/loot_menu.gd" id="1_re42d"]
+[ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="2_8qqw2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_41g57"]
+font = ExtResource("2_8qqw2")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qj1x6"]
+color = Color(1, 1, 1, 1)
+
+[node name="LootMenu" type="CanvasLayer"]
+script = ExtResource("1_re42d")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_41g57")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_qj1x6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="InventoryList" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LootList" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
