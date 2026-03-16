@@ -68,11 +68,12 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("close_door"):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR_OPEN)
 		var doors_in_range : Array[Tile] = visible_doors.filter(func (t : Tile): return player.distance(t.grid_position) == 1)
-		#await get_grid_position(player, 0, doors_in_range)
-		var target : Vector2i
+		var target : Vector2i = Vector2i(-1,-1)
+		
 		if doors_in_range.size() == 1:
 			target = doors_in_range[0].grid_position
-		else:
+		elif doors_in_range.size() > 1:
+			#await get_grid_position(player, 0, doors_in_range)
 			# TODO: Add possibility to select door
 			target = player.grid_position
 		
