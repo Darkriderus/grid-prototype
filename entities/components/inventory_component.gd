@@ -34,6 +34,23 @@ func drop(item: Entity, silent: bool = false) -> Entity:
 	return item
 
 
+func pickup(item: Entity):	
+	if items.size() >= capacity:
+		MessageLog.send_message("Your inventory is full.", GameColors.IMPOSSIBLE)
+		return false
+		
+	var map_data: MapData = get_map_data()
+	map_data.entities.erase(item)
+	item.get_parent().remove_child(item)
+	items.append(item)
+	MessageLog.send_message(
+		"You picked up the %s!" % item.get_entity_name(),
+		Color.WHITE
+	)
+	
+	return item
+
+
 func get_save_data() -> Dictionary:
 	var save_data: Dictionary = {
 		"capacity": capacity,

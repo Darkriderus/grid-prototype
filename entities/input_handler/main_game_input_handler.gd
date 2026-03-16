@@ -64,9 +64,9 @@ func get_action(player: Entity) -> Action:
 		
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
 		var offset : Vector2i = target - player.grid_position
-
-		open_loot_menu("Lootyloot", player, player.map_data.get_entities_at_location(target)[0])
 		
+		var entity_to_loot := player.map_data.get_entities_at_location(target)[0]
+		await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
 
 		#action = PickupAction.new(player, offset.x, offset.y)
 		
@@ -164,6 +164,7 @@ func get_grid_position(player: Entity, radius: int, tabbable_targets: Array[Enti
 	var selected_position: Vector2i = await reticle.select_position(player, radius, tabbable_targets)
 	await get_tree().physics_frame
 	get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
+	await get_tree().physics_frame
 	return selected_position
 	
 	

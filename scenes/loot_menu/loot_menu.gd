@@ -14,15 +14,16 @@ var player : Entity
 var entity_to_loot : Entity
 
 
-func button_pressed(item: Entity) -> void:
+func button_pressed(item: Entity, button: Button) -> void:
 	if player.inventory_component.items.has(item):
 		player.inventory_component.drop(item, true)
-		entity_to_loot.inventory_component.items.append(item)
+		entity_to_loot.inventory_component.pickup(item)
+		button.reparent(loot_list)
 	else:
 		entity_to_loot.inventory_component.drop(item, true)
-		player.inventory_component.items.append(item)
-
-	build("Lootylooty", player, entity_to_loot)
+		player.inventory_component.pickup(item)
+		button.reparent(inventory_list)
+	
 
 func _ready() -> void:
 	hide()
@@ -41,7 +42,7 @@ func _register_item(index: int, item: Entity, is_equipped: bool, entity: Entity)
 		loot_list.add_child(item_button)
 		
 	
-	item_button.pressed.connect(button_pressed.bind(item))
+	item_button.pressed.connect(button_pressed.bind(item, item_button))
 
 
 
