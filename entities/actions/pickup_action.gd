@@ -1,18 +1,20 @@
 class_name PickupAction
-extends Action
+extends ActionWithDirection
 
 
 func perform() -> bool:
 	var map_data: MapData = get_map_data()
+	var selected_position := entity.grid_position + offset
 	
+	# TODO: Remove this after container rewrite
 	for item in map_data.get_items():
-		if entity.grid_position == item.grid_position:
+		if selected_position == item.grid_position:
 			return _pickup_item(item, map_data, null)
 		
 	var lootable_at_coord := false
 	
 	for lootable in map_data.get_lootable_entities():
-		if entity != lootable and entity.grid_position == lootable.grid_position:
+		if entity != lootable and selected_position == lootable.grid_position:
 			lootable_at_coord = true
 			
 			var items_to_drop = lootable.inventory_component.items.duplicate()

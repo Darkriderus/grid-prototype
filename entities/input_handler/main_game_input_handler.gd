@@ -50,7 +50,13 @@ func get_action(player: Entity) -> Action:
 		get_parent().transition_to(InputHandler.InputHandlers.HISTORY_VIEWER)
 			
 	if Input.is_action_just_pressed("pickup"):
-		action = PickupAction.new(player)
+		var visible_lootables := player.map_data.get_visible_lootable_entities()
+		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return player.distance(e.grid_position) == 1)
+		
+		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
+		var offset : Vector2i = target - player.grid_position
+		print(offset)
+		action = PickupAction.new(player, offset.x, offset.y)
 		
 	if Input.is_action_just_pressed("open_door"):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR)

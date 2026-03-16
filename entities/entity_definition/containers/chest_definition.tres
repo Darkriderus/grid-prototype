@@ -12,6 +12,5 @@ script = ExtResource("1_rehbu")
 name = "Chest"
 texture = SubResource("AtlasTexture_yk183")
 color = Color(0.5075168, 0.4683934, 3.85046e-07, 1)
-is_blocking_movement = false
 inventory_capacity = 10
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

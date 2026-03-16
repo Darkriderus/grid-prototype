@@ -113,6 +113,10 @@ func get_lootable_entities() -> Array[Entity]:
 		if entity.inventory_component:
 			lootables.append(entity)
 	return lootables
+	
+
+func get_visible_lootable_entities() -> Array[Entity]:
+	return get_lootable_entities().filter(func (e: Entity): return get_tile(e.grid_position).is_in_view)
 
 func get_actors() -> Array[Entity]:
 	var actors: Array[Entity] = []
@@ -138,6 +142,8 @@ func get_items() -> Array[Entity]:
 			items.append(entity)
 	return items
 	
+func get_visible_items() -> Array[Entity]:
+	return get_items().filter(func (e: Entity): return get_tile(e.grid_position).is_in_view)
 
 func get_save_data() -> Dictionary:
 	var save_data := {
