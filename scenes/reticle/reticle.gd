@@ -86,6 +86,12 @@ func _physics_process(delta: float) -> void:
 		tab_index = (tab_index + 1) % tabbable_targets.size()
 		last_target = tabbable_targets[tab_index]
 		grid_position = tabbable_targets[tab_index].grid_position
+	if Input.is_action_just_pressed("prev_target"):	
+		if tabbable_targets.size() == 0:
+			return
+		tab_index = (tab_index - 1) % tabbable_targets.size()
+		last_target = tabbable_targets[tab_index]
+		grid_position = tabbable_targets[tab_index].grid_position
 	if Input.is_action_just_pressed("ui_accept"):
 		position_selected.emit(grid_position)
 		grid_position = Vector2i(-1, -1)
