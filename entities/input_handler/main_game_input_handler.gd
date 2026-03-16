@@ -92,6 +92,9 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("activate"):
 		action = await activate_item(player)
 		
+	if Input.is_action_just_pressed("inventory"):
+		await get_item("Inventory", player.inventory_component)
+		
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
 		
