@@ -8,6 +8,7 @@
 script = ExtResource("1_bs4p2")
 equipment_type = 2
 ranged_power_bonus = 3
+attack_range = 3
 metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sqf0r"]

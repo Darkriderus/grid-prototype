@@ -16,7 +16,7 @@ var hp: int:
 			die(not die_silently)
 var base_defense: int
 var base_ranged_power: int
-var base_melee_power
+var base_melee_power : int
 var defense: int: 
 	get:
 		return base_defense + get_defense_bonus()

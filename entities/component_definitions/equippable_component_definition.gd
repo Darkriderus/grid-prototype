@@ -4,4 +4,5 @@ extends ItemComponentDefinition
 @export var equipment_type: EquippableComponent.EquipmentType
 @export var melee_power_bonus: int = 0
 @export var ranged_power_bonus: int = 0
+@export var attack_range: int = 1
 @export var defense_bonus: int = 0

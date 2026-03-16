@@ -6,13 +6,22 @@ func perform() -> bool:
 	if not entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED_WEAPON):
 		MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
 		return false
-	#
+	
+	var ranged_weapon : Entity = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED_WEAPON)
+		
+	# TODO: needs rewrite if we add buff-items
 	var target: Entity = get_target_actor()
 	if not target:
 		if entity == get_map_data().player:
 			MessageLog.send_message("Nothing to attack.", GameColors.IMPOSSIBLE)
 		return false
 	#
+	
+	if entity.distance(target.grid_position) > ranged_weapon.equippable_component.attack_range:
+		if entity == get_map_data().player:
+			MessageLog.send_message("Target too far.", GameColors.IMPOSSIBLE)
+		return false
+	
 	var damage: int = entity.fighter_component.ranged_power - target.fighter_component.defense
 	var attack_color: Color
 	if entity == get_map_data().player:
