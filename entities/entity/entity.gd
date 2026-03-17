@@ -1,5 +1,8 @@
 class_name Entity
-extends Sprite2D
+extends Node2D
+
+const ENTITY_SCENE_PREFAB = preload("uid://cc4g2j2qdymr7")
+var entity_scene : Sprite2D
 
 enum AIType {INANIMATE, HOSTILE, NO_AI}
 
@@ -66,9 +69,17 @@ var grid_position: Vector2i:
 		grid_position = value
 		position = Grid.grid_to_world(grid_position)
 
+var texture: Texture2D:
+	get:
+		return entity_scene.texture
+	set(value):
+		entity_scene.texture = value
 
 func _init(map_data: MapData, start_position: Vector2i, key: EntityKey = EntityKey.UNKNOWN) -> void:
-	centered = false
+	if not entity_scene:
+		entity_scene = ENTITY_SCENE_PREFAB.instantiate()
+		add_child(entity_scene)
+	
 	grid_position = start_position
 	self.map_data = map_data
 	if key != EntityKey.UNKNOWN:

@@ -63,10 +63,12 @@ func get_action(player: Entity) -> Action:
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return player.distance(e.grid_position) == 1)
 		
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
-		var offset : Vector2i = target - player.grid_position
 		
-		var entity_to_loot := player.map_data.get_entities_at_location(target)[0]
-		await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
+		if target != Vector2i(-1, -1):
+			var offset : Vector2i = target - player.grid_position
+			
+			var entity_to_loot := player.map_data.get_entities_at_location(target)[0]
+			await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
 
 		#action = PickupAction.new(player, offset.x, offset.y)
 		
