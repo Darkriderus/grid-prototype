@@ -20,38 +20,6 @@ func get_items_by_type(type: Entity.EntityKey) -> Array[Entity]:
 func has_item_type(type: Entity.EntityKey) -> bool:
 	return get_items_by_type(type).size() > 0
 
-
-# TODO: Rewrite
-func drop(item: Entity, silent: bool = false) -> Entity:
-	items.erase(item)
-	var map_data: MapData = get_map_data()
-	map_data.entities.append(item)
-	map_data.entity_placed.emit(item)
-	item.map_data = map_data
-	item.grid_position = entity.grid_position
-	if not silent:
-		MessageLog.send_message("You dropped the %s." % item.get_entity_name(), Color.WHITE)
-		
-	return item
-
-
-func pickup(item: Entity):	
-	if items.size() >= capacity:
-		MessageLog.send_message("Your inventory is full.", GameColors.IMPOSSIBLE)
-		return false
-		
-	var map_data: MapData = get_map_data()
-	map_data.entities.erase(item)
-	item.get_parent().remove_child(item)
-	items.append(item)
-	MessageLog.send_message(
-		"You picked up the %s!" % item.get_entity_name(),
-		Color.WHITE
-	)
-	
-	return item
-
-
 func get_save_data() -> Dictionary:
 	var save_data: Dictionary = {
 		"capacity": capacity,

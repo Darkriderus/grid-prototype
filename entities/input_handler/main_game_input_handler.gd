@@ -72,7 +72,7 @@ func get_action(player: Entity) -> Action:
 				var entity_to_loot := all_lootables[0]
 				await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
 				
-				if entity_to_loot.key == Entity.EntityKey.DROPPED and entity_to_loot.inventory_component.items.size() == 0:
+				if entity_to_loot.inventory_component.items.size() == 0 and entity_to_loot.inventory_component.delete_if_empty:
 					player.map_data.entities.erase(entity_to_loot)
 					player.map_data.entity_removed.emit(entity_to_loot)
 			else:
@@ -125,7 +125,6 @@ func get_action(player: Entity) -> Action:
 				
 				await open_loot_menu(container.entity_name, player, container)
 				
-				# TODO: add to component
 				if container.inventory_component.items.size() == 0 and container.inventory_component.delete_if_empty:
 					player.map_data.entities.erase(container)
 					player.map_data.entity_removed.emit(container)

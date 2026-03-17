@@ -60,6 +60,22 @@ func is_in_bounds(coordinate: Vector2i) -> bool:
 	)
 
 
+func add_entity(_entity: Entity) -> Entity:
+	entities.append(_entity)
+	entity_placed.emit(_entity)
+	_entity.map_data = self
+	return _entity
+	
+
+func remove_entity(_entity: Entity) -> Entity:
+	entities.erase(_entity)
+	if _entity.get_parent():
+		_entity.get_parent().remove_child(_entity)
+	entity_removed.emit(_entity)
+	return _entity
+
+
+
 func get_visible_tiles_by_type(type: Tile.TileTypeKeys)-> Array[Tile]:
 	var visible_tiles : Array[Tile] = []
 	for tile in tiles:
