@@ -18,12 +18,12 @@ func button_pressed(item: Entity = null) -> void:
 	queue_free()
 	
 
-func _register_item(index: int, item: Entity, is_equipped: bool) -> void:
+func _register_item(_index: int, _item: Entity, _is_equipped: bool) -> void:
 	var item_button: Button = inventory_menu_item_scene.instantiate()
-	item_button.text = "%s" % [item.get_entity_name()]
-	if is_equipped:
+	item_button.text = "%s" % [_item.get_entity_name()]
+	if _is_equipped:
 		item_button.text = "(E) " + item_button.text
-	item_button.pressed.connect(button_pressed.bind(item))
+	item_button.pressed.connect(button_pressed.bind(_item))
 	inventory_list.add_child(item_button)
 
 

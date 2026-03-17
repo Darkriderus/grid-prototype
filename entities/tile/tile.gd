@@ -40,15 +40,15 @@ var grid_position: Vector2i:
 	get:
 		return Grid.world_to_grid(position)
 
-func _init(grid_position: Vector2i, key: TileTypeKeys) -> void:
+func _init(_grid_position: Vector2i, _key: TileTypeKeys) -> void:
 	visible = false
 	centered = false
-	position = Grid.grid_to_world(grid_position)
-	set_tile_type(key)
+	position = Grid.grid_to_world(_grid_position)
+	set_tile_type(_key)
 	
 
-func set_tile_type(key: TileTypeKeys) -> void:
-	self.key = key
+func set_tile_type(_key: TileTypeKeys) -> void:
+	key = _key
 	_definition = tile_types[key]
 	texture = _definition.texture
 	modulate = _definition.color_dark

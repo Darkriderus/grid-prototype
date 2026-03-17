@@ -10,8 +10,8 @@ func _ready() -> void:
 	entity.ai_component = self
 
 
-func _init(turns_remaining: int) -> void:
-	self.turns_remaining = turns_remaining
+func _init(_turns_remaining: int) -> void:
+	turns_remaining = _turns_remaining
 
 
 func perform() -> void:

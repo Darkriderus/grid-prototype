@@ -6,7 +6,7 @@ func _process(_delta: float) -> void:
 	var mouse_position: Vector2 = get_local_mouse_position()
 	var tile_position: Vector2i = Grid.world_to_grid(mouse_position)
 	var entity_names = get_names_at_location(tile_position)
-	#SignalBus.entities_focussed.emit(entity_names)
+	SignalBus.entities_focussed.emit(entity_names)
 
 func get_names_at_location(grid_position: Vector2i) -> String:
 	var entity_names := ""

@@ -110,23 +110,25 @@ func get_action(player: Entity) -> Action:
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
 		
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
-		
-		if target != Vector2i(-1, -1):
-			var all_lootables := player.map_data.get_lootable_entities_at_location(target)
-			var container : Entity
-			if all_lootables.size() == 0:
-				container = Entity.new(player.map_data, target, Entity.EntityKey.DROPPED)
-				player.map_data.entities.append(container)
-				player.map_data.entity_placed.emit(container)
-			else:
-				container = all_lootables[0]
-			
-			await open_loot_menu(container.entity_name, player, container)
-			
-			# TODO: add to component
-			if container.key == Entity.EntityKey.DROPPED and container.inventory_component.items.size() == 0:
-				player.map_data.entities.erase(container)
-				player.map_data.entity_removed.emit(container)
+		if player.distance(target) > 1:
+			MessageLog.send_message("Too far away.", GameColors.IMPOSSIBLE)
+		else:
+			if target != Vector2i(-1, -1):
+				var all_lootables := player.map_data.get_lootable_entities_at_location(target)
+				var container : Entity
+				if all_lootables.size() == 0:
+					container = Entity.new(player.map_data, target, Entity.EntityKey.DROPPED)
+					player.map_data.entities.append(container)
+					player.map_data.entity_placed.emit(container)
+				else:
+					container = all_lootables[0]
+				
+				await open_loot_menu(container.entity_name, player, container)
+				
+				# TODO: add to component
+				if container.key == Entity.EntityKey.DROPPED and container.inventory_component.items.size() == 0:
+					player.map_data.entities.erase(container)
+					player.map_data.entity_removed.emit(container)
 	
 	if Input.is_action_just_pressed("activate"):
 		action = await activate_item(player)

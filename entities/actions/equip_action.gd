@@ -1,14 +1,14 @@
 class_name EquipAction
 extends Action
 
-var _item: Entity
+var item: Entity
 
 
-func _init(entity: Entity, item: Entity) -> void:
-	super._init(entity)
-	_item = item
+func _init(_entity: Entity, _item: Entity) -> void:
+	super._init(_entity)
+	item = _item
 
 
 func perform() -> bool:
-	entity.equipment_component.toggle_equip(_item)
+	entity.equipment_component.toggle_equip(item)
 	return true

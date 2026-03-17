@@ -5,9 +5,9 @@ var items: Array[Entity]
 var capacity: int
 
 
-func _init(capacity: int) -> void:
+func _init(_capacity: int) -> void:
 	items = []
-	self.capacity = capacity
+	capacity = _capacity
 
 
 func get_items_by_type(type: Entity.EntityKey) -> Array[Entity]:

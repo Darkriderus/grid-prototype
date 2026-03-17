@@ -77,19 +77,19 @@ var texture: Texture2D:
 	set(value):
 		entity_scene.texture = value
 
-func _init(map_data: MapData, start_position: Vector2i, key: EntityKey = EntityKey.UNKNOWN) -> void:
+func _init(_map_data: MapData, _start_position: Vector2i, _key: EntityKey = EntityKey.UNKNOWN) -> void:
 	if not entity_scene:
 		entity_scene = ENTITY_SCENE_PREFAB.instantiate()
 		add_child(entity_scene)
 	
-	grid_position = start_position
-	self.map_data = map_data
-	if key != EntityKey.UNKNOWN:
-		set_entity_definition(key)
+	grid_position = _start_position
+	map_data = _map_data
+	if _key != EntityKey.UNKNOWN:
+		set_entity_definition(_key)
 	
 	
-func set_entity_definition(key: EntityKey) -> void:
-	self.key = key
+func set_entity_definition(_key: EntityKey) -> void:
+	key = _key
 	var entity_definition: EntityDefinition = load(ENTITY_DEFINITION_PATHS[key])
 	_definition = entity_definition
 	type = _definition.type
@@ -151,6 +151,10 @@ func has_inventory() -> bool:
 
 func is_lootable() -> bool:
 	return has_inventory() and not is_alive()
+
+
+func is_equippable():
+	return equippable_component != null
 	
 
 func get_entity_name() -> String:

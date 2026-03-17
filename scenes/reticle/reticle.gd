@@ -46,19 +46,19 @@ func _ready() -> void:
 	set_physics_process(false)
 	
 	
-func select_position(player: Entity, radius: int, tabbable_targets: Array[Entity] = []) -> Vector2i:
-	map_data = player.map_data
-	self.tabbable_targets = tabbable_targets
+func select_position(_player: Entity, _radius: int, _tabbable_targets: Array[Entity] = []) -> Vector2i:
+	map_data = _player.map_data
+	tabbable_targets = _tabbable_targets
 	tab_index = tabbable_targets.find(last_target) if tabbable_targets and tabbable_targets.find(last_target) >= 0 else 0
 	
 	if tabbable_targets.size() > 0:
 		grid_position = tabbable_targets[tab_index].grid_position
 	else:
-		grid_position = player.grid_position
+		grid_position = _player.grid_position
 	
 	var player_camera: Camera2D = get_viewport().get_camera_2d()
 	camera.make_current()
-	_setup_border(radius)
+	_setup_border(_radius)
 	show()
 	await get_tree().physics_frame
 	set_physics_process.call_deferred(true)
@@ -72,7 +72,7 @@ func select_position(player: Entity, radius: int, tabbable_targets: Array[Entity
 	return selected_position
 	
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var offset := Vector2i.ZERO
 	for direction in directions:
 		if Input.is_action_just_pressed(direction):

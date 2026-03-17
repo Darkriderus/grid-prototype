@@ -21,10 +21,10 @@ var current_floor: int = 0
 var pathfinder: AStarGrid2D
 
 
-func _init(map_width: int, map_height: int, player: Entity) -> void:
-	width = map_width
-	height = map_height
-	self.player = player
+func _init(_map_width: int, _map_height: int, _player: Entity) -> void:
+	width = _map_width
+	height = _map_height
+	player = _player
 	entities = []
 	_setup_tiles()
 	

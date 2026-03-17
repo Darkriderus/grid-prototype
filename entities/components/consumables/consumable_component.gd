@@ -6,7 +6,7 @@ func get_action(consumer: Entity) -> Action:
 	return ItemAction.new(consumer, entity)
 
 
-func activate(action: ItemAction) -> bool:
+func activate(_action: ItemAction) -> bool:
 	return false
 	
 	

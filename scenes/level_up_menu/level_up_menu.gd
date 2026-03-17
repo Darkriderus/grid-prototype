@@ -10,8 +10,8 @@ var player: Entity
 @onready var defense_upgrade_button: Button = %DefenseUpgradeButton
 
 
-func setup(player: Entity) -> void:
-	self.player = player
+func setup(_player: Entity) -> void:
+	player = _player
 	var fighter: FighterComponent = player.fighter_component
 	health_upgrade_button.text = "(a) Constitution (+20 HP, from %d)" % fighter.max_hp
 	power_upgrade_button.text = "(b) Strength (+1 attack, from %d)" % fighter.power
