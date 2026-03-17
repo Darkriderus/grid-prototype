@@ -150,7 +150,7 @@ func get_action(player: Entity) -> Action:
 		await get_grid_position(player, 0, entities_in_sight)
 		
 	if Input.is_action_just_pressed("fire_weapon"):
-		if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED_WEAPON):
+		if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
 			MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
 		else:
 			var enemies_in_sight := player.map_data.get_visible_actors()

@@ -3,7 +3,7 @@ extends ActionWithDirection
 
 
 func perform() -> bool:
-	if not entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED_WEAPON):
+	if not entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
 		if entity == get_map_data().player:
 			MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
 		return false
@@ -14,7 +14,7 @@ func perform() -> bool:
 			MessageLog.send_message("No ammo left.", GameColors.IMPOSSIBLE)
 		return false
 	
-	var ranged_weapon : Entity = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED_WEAPON)
+	var ranged_weapon : Entity = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		
 	# TODO: needs rewrite if we add buff-items
 	var target: Entity = get_target_actor()

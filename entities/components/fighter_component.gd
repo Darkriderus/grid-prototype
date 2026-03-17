@@ -2,7 +2,6 @@ class_name FighterComponent
 extends Component
 
 signal changed
-signal hp_changed(hp, max_hp)
 #
 #var max_hp: int
 #var hp: int:
@@ -31,27 +30,73 @@ signal hp_changed(hp, max_hp)
 	#if entity.equipment_component:
 		#return entity.equipment_component.get_defense_bonus()
 	#return 0
-	
-var base_strength: int 
-var base_agility: int 
-var base_perception: int 
-var base_vitality: int
-var base_willpower: int 
 
-var health: int
+# Static Stats
+var base_strength: int 
+var strength: int:
+	get:
+		return base_strength	
+	
+var base_agility: int 
+var agility: int:
+	get:
+		return base_agility	
+
+var base_perception: int 
+var perception: int:
+	get:
+		return base_perception	
+
+var base_vitality: int
+var vitality: int:
+	get:
+		return base_vitality	
+		
+var base_willpower: int 
+var willpower: int:
+	get:
+		return base_willpower	
+
+# Dynamic Stats
+var melee_damage_percentage: int:
+	get:
+		return 100 + (2*strength)
+		
+var ranged_damage_percentage: int:
+	get:
+		return 100 + (2*perception)
+		
+var accuracy: int:
+	get:
+		return 80 + (2*perception)
+		
+var max_health: int:
+	get:
+		return 100 + (5*vitality)
+		
+var dodge: int:
+	get:
+		return 5 + (1*agility)
+
+
+# Changing stats
+var health: int:
+	set(value):
+		health = clampi(value, 0, max_health)
+		changed.emit()
+		if health <= 0:
+			var die_silently := false
+			if not is_inside_tree():
+				die_silently = true
+				await ready
+			die(not die_silently)
+
 
 var death_texture: Texture
 var death_color: Color
 
 
 func _init(definition: FighterComponentDefinition) -> void:
-	# TODO: checks for every component
-	assert(entity.equipment_component != null, "Entity %s is fighter but has no equipment component" % entity.entity_name)
-	assert(entity.inventory_component != null, "Entity %s is fighter but has no inventory component" % entity.entity_name)
-	assert(entity.level_component != null, "Entity %s is fighter but has no level component" % entity.entity_name)
-	assert(entity.ai_component != null, "Entity %s is fighter but has no ai component" % entity.entity_name)
-	assert(entity.type != Entity.EntityType.ACTOR, "Entity %s is fighter but is no actor" % entity.entity_name)
-	
 	base_strength = definition.strength
 	base_agility = definition.agility
 	base_perception = definition.perception
@@ -87,36 +132,38 @@ func die(trigger_side_effects := true) -> void:
 	
 	
 func heal(amount: int) -> int:
-	if hp == max_hp:
+	if health == max_health:
 		return 0
 	
-	var new_hp_value: int = hp + amount
+	var new_health: int = health + amount
 	
-	if new_hp_value > max_hp:
-		new_hp_value = max_hp
+	if new_health > max_health:
+		new_health = max_health
 		
-	var amount_recovered: int = new_hp_value - hp
-	hp = new_hp_value
+	var amount_recovered: int = new_health - health
+	health = new_health
 	return amount_recovered
 
 
 func take_damage(amount: int) -> void:
-	hp -= amount
+	health -= amount
 	
 	
 func get_save_data() -> Dictionary:
 	return {
-		"max_hp": max_hp,
-		"hp": hp,
-		"melee_power": base_melee_power,
-		"ranged_power": base_ranged_power,
-		"defense": base_defense
+		"base_strength": base_strength,
+		"base_agility": base_agility,
+		"base_perception": base_perception,
+		"base_vitality": base_vitality,
+		"base_willpower": base_willpower,
+		"health": health
 	}
 
 
 func restore(save_data: Dictionary) -> void:
-	max_hp = save_data["max_hp"]
-	hp = save_data["hp"]
-	base_melee_power = save_data["melee_power"]
-	base_ranged_power = save_data["ranged_power"]
-	base_defense = save_data["defense"]
+	base_strength = save_data["base_strength"]
+	base_agility = save_data["base_agility"]
+	base_perception = save_data["base_perception"]
+	base_vitality = save_data["base_vitality"]
+	base_willpower = save_data["base_willpower"]
+	health = save_data["health"]
