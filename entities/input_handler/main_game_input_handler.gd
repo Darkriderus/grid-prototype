@@ -60,15 +60,20 @@ func get_action(player: Entity) -> Action:
 			
 	if Input.is_action_just_pressed("pickup"):
 		var visible_lootables := player.map_data.get_visible_lootable_entities()
-		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return player.distance(e.grid_position) == 1)
+		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
 		
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
 		
 		if target != Vector2i(-1, -1):
-			var offset : Vector2i = target - player.grid_position
+			#var offset : Vector2i = target - player.grid_position
+			var all_lootables := player.map_data.get_lootable_entities_at_location(target)
 			
-			var entity_to_loot := player.map_data.get_entities_at_location(target)[0]
-			await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
+			if all_lootables.size() > 0:
+				var entity_to_loot := all_lootables[0]
+				await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
+			else:
+				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
+				
 
 		#action = PickupAction.new(player, offset.x, offset.y)
 		

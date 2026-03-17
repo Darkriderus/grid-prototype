@@ -107,10 +107,17 @@ func get_entities_at_location(location: Vector2i) -> Array[Entity]:
 	return found_entities
 
 
+func get_lootable_entities_at_location(location: Vector2i) -> Array[Entity]:
+	var lootables: Array[Entity] = []
+	for lootable in get_lootable_entities():
+		if lootable.grid_position == location:
+			lootables.append(lootable)
+	return lootables
+
 func get_lootable_entities() -> Array[Entity]:
 	var lootables: Array[Entity] = []
 	for entity in entities:
-		if entity.inventory_component:
+		if entity.inventory_component and not entity.is_alive():
 			lootables.append(entity)
 	return lootables
 	

@@ -23,6 +23,7 @@ enum EntityKey {
 	LEATHER_ARMOR,
 	CROSSBOW,
 	CHEST,
+	DROPPED,
 	ARROWS,
 	NOTHING
 }
@@ -41,7 +42,8 @@ const ENTITY_DEFINITION_PATHS := {
 	EntityKey.LEATHER_ARMOR: "uid://467c55dlqcbx",
 	EntityKey.CROSSBOW: "uid://cdmvyyqbt7jow",
 	EntityKey.CHEST: "uid://b4cui42b8sdjs",
-	EntityKey.ARROWS: "uid://demvf2bx0coki"
+	EntityKey.ARROWS: "uid://demvf2bx0coki",
+	EntityKey.DROPPED: "uid://dopb45xye6uny"
 }
 
 var key: EntityKey
