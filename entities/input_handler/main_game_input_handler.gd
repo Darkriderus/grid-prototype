@@ -71,9 +71,14 @@ func get_action(player: Entity) -> Action:
 			if all_lootables.size() > 0:
 				var entity_to_loot := all_lootables[0]
 				await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
+				
+				if entity_to_loot.key == Entity.EntityKey.DROPPED and entity_to_loot.inventory_component.items.size() == 0:
+					player.map_data.entities.erase(entity_to_loot)
+					player.map_data.entity_removed.emit(entity_to_loot)
 			else:
 				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
 				
+			
 
 		#action = PickupAction.new(player, offset.x, offset.y)
 		
@@ -105,8 +110,32 @@ func get_action(player: Entity) -> Action:
 		action = CloseDoorAction.new(player, target.x, target.y)
 	
 	if Input.is_action_just_pressed("drop"):
-		var selected_item: Entity = await get_item("Select an item to drop", player.inventory_component)
-		action = DropItemAction.new(player, selected_item)
+		# if container not there -> generate it. Then open loot window. If dropped empty -> kill
+		var visible_lootables := player.map_data.get_visible_lootable_entities()
+		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
+		
+		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
+		
+		if target != Vector2i(-1, -1):
+			var all_lootables := player.map_data.get_lootable_entities_at_location(target)
+			var container : Entity
+			if all_lootables.size() == 0:
+				container = Entity.new(player.map_data, target, Entity.EntityKey.DROPPED)
+				player.map_data.entities.append(container)
+				player.map_data.entity_placed.emit(container)
+			else:
+				container = all_lootables[0]
+			
+			await open_loot_menu(container.entity_name, player, container)
+			
+			# TODO: add to component
+			if container.key == Entity.EntityKey.DROPPED and container.inventory_component.items.size() == 0:
+				player.map_data.entities.erase(container)
+				player.map_data.entity_removed.emit(container)
+		
+		
+		#var selected_item: Entity = await get_item("Select an item to drop", player.inventory_component)
+		#action = DropItemAction.new(player, selected_item)
 	
 	if Input.is_action_just_pressed("activate"):
 		action = await activate_item(player)

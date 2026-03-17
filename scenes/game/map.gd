@@ -36,6 +36,8 @@ func generate(player: Entity, current_floor: int = 1) -> void:
 	map_data = dungeon_generator.generate_dungeon(player, current_floor)
 	if not map_data.entity_placed.is_connected(entities.add_child):
 		map_data.entity_placed.connect(entities.add_child)
+	if not map_data.entity_removed.is_connected(entities.add_child):
+		map_data.entity_removed.connect(entities.remove_child)
 	_place_tiles()
 	_place_entities()
 	dungeon_floor_changed.emit(current_floor)
@@ -60,6 +62,7 @@ func _place_tiles() -> void:
 func load_game(player: Entity) -> bool:
 	map_data = MapData.new(0, 0, player)
 	map_data.entity_placed.connect(entities.add_child)
+	map_data.entity_removed.connect(entities.remove_child)
 	if not map_data.load_game():
 		return false
 	_place_tiles()

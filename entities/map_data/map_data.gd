@@ -2,6 +2,7 @@ class_name MapData
 extends RefCounted
 
 signal entity_placed(entity)
+signal entity_removed(entity)
 
 const tile_types = {
 	"floor": preload("uid://bby8nrjwno8kf"),
