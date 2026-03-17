@@ -1,60 +1,63 @@
 class_name FighterComponent
 extends Component
 
+signal changed
 signal hp_changed(hp, max_hp)
+#
+#var max_hp: int
+#var hp: int:
+	#set(value):
+		#hp = clampi(value, 0, max_hp)
+		#hp_changed.emit(hp, max_hp)
+		#if hp <= 0:
+			#var die_silently := false
+			#if not is_inside_tree():
+				#die_silently = true
+				#await ready
+			#die(not die_silently)
+#var base_defense: int
+#var base_ranged_power: int
+#var base_melee_power : int
+#var defense: int: 
+	#get:
+		#return base_defense + get_defense_bonus()
+#var melee_power: int: 
+	#get:
+		#return base_melee_power + get_melee_power_bonus()
+#var ranged_power: int: 
+	#get:
+		#return base_ranged_power + get_ranged_power_bonus()
+#func get_defense_bonus() -> int:
+	#if entity.equipment_component:
+		#return entity.equipment_component.get_defense_bonus()
+	#return 0
+	
+var base_strength: int 
+var base_agility: int 
+var base_perception: int 
+var base_vitality: int
+var base_willpower: int 
 
-var max_hp: int
-var hp: int:
-	set(value):
-		hp = clampi(value, 0, max_hp)
-		hp_changed.emit(hp, max_hp)
-		if hp <= 0:
-			var die_silently := false
-			if not is_inside_tree():
-				die_silently = true
-				await ready
-			die(not die_silently)
-var base_defense: int
-var base_ranged_power: int
-var base_melee_power : int
-var defense: int: 
-	get:
-		return base_defense + get_defense_bonus()
-var melee_power: int: 
-	get:
-		return base_melee_power + get_melee_power_bonus()
-var ranged_power: int: 
-	get:
-		return base_ranged_power + get_ranged_power_bonus()
+var health: int
 
 var death_texture: Texture
 var death_color: Color
 
 
-func get_defense_bonus() -> int:
-	if entity.equipment_component:
-		return entity.equipment_component.get_defense_bonus()
-	return 0
-
-
-func get_melee_power_bonus() -> int:
-	if entity.equipment_component:
-		return entity.equipment_component.get_melee_power_bonus()
-	return 0
-	
-
-func get_ranged_power_bonus() -> int:
-	if entity.equipment_component:
-		return entity.equipment_component.get_ranged_power_bonus()
-	return 0
-	
-
 func _init(definition: FighterComponentDefinition) -> void:
-	max_hp = definition.max_hp
-	hp = definition.max_hp
-	base_defense = definition.defense
-	base_melee_power = definition.melee_power
-	base_ranged_power = definition.ranged_power
+	# TODO: checks for every component
+	assert(entity.equipment_component != null, "Entity %s is fighter but has no equipment component" % entity.entity_name)
+	assert(entity.inventory_component != null, "Entity %s is fighter but has no inventory component" % entity.entity_name)
+	assert(entity.level_component != null, "Entity %s is fighter but has no level component" % entity.entity_name)
+	assert(entity.ai_component != null, "Entity %s is fighter but has no ai component" % entity.entity_name)
+	assert(entity.type != Entity.EntityType.ACTOR, "Entity %s is fighter but is no actor" % entity.entity_name)
+	
+	base_strength = definition.strength
+	base_agility = definition.agility
+	base_perception = definition.perception
+	base_vitality = definition.vitality
+	base_willpower = definition.willpower
+	
 	death_texture = definition.death_texture
 	death_color = definition.death_color
 	

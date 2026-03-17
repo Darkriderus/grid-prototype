@@ -2,10 +2,11 @@ class_name FighterComponentDefinition
 extends Resource
 
 @export_category("Stats")
-@export var max_hp: int
-@export var melee_power: int = 1
-@export var ranged_power: int = 1
-@export var defense: int = 0
+@export var strength: int = 10
+@export var agility: int = 10
+@export var perception: int = 10
+@export var vitality: int = 10
+@export var willpower: int = 10
 
 @export_category("Visuals")
 @export var death_texture: AtlasTexture = preload("uid://cikrfsq0axk2j")
