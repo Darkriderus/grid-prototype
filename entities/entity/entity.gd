@@ -110,8 +110,8 @@ func set_entity_definition(_key: EntityKey) -> void:
 		fighter_component = FighterComponent.new(entity_definition.fighter_definition)
 		add_child(fighter_component)
 	
-	if entity_definition.inventory_capacity > 0:
-		inventory_component = InventoryComponent.new(entity_definition.inventory_capacity)
+	if entity_definition.inventory_definition:
+		inventory_component = InventoryComponent.new(entity_definition.inventory_definition)
 		add_child(inventory_component)
 		
 	if entity_definition.level_info:

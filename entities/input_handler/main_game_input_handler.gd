@@ -126,7 +126,7 @@ func get_action(player: Entity) -> Action:
 				await open_loot_menu(container.entity_name, player, container)
 				
 				# TODO: add to component
-				if container.key == Entity.EntityKey.DROPPED and container.inventory_component.items.size() == 0:
+				if container.inventory_component.items.size() == 0 and container.inventory_component.delete_if_empty:
 					player.map_data.entities.erase(container)
 					player.map_data.entity_removed.emit(container)
 	

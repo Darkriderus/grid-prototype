@@ -18,6 +18,6 @@ extends Resource
 @export var fighter_definition: FighterComponentDefinition
 @export var ai_type: Entity.AIType
 @export var item_definition: ItemComponentDefinition
-@export var inventory_capacity: int = 0
+@export var inventory_definition: InventoryComponentDefinition
 @export var level_info: LevelComponentDefinition
 @export var has_equipment: bool = false

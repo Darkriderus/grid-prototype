@@ -1,15 +1,21 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://dgtkb8ig8pwt0"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=11 format=3 uid="uid://dgtkb8ig8pwt0"]
 
 [ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/fighter_component_definition.gd" id="1_d6gd7"]
 [ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="1_gutnb"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_rh3l6"]
 [ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/component_definitions/level_component_definition.gd" id="3_50ym3"]
+[ext_resource type="Script" uid="uid://b0q3oxcma5q58" path="res://entities/component_definitions/inventory_component_definition.gd" id="3_yehk2"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="5_50ym3"]
 
 [sub_resource type="Resource" id="Resource_gutnb"]
 script = ExtResource("1_d6gd7")
 max_hp = 30
 metadata/_custom_type_script = "uid://x0nxlyvawv7n"
+
+[sub_resource type="Resource" id="Resource_a4bc2"]
+script = ExtResource("3_yehk2")
+capacity = 64
+metadata/_custom_type_script = "uid://b0q3oxcma5q58"
 
 [sub_resource type="Resource" id="Resource_yehk2"]
 script = ExtResource("3_50ym3")
@@ -26,7 +32,7 @@ name = "Player"
 texture = SubResource("AtlasTexture_d6gd7")
 fighter_definition = SubResource("Resource_gutnb")
 ai_type = 2
-inventory_capacity = 26
+inventory_definition = SubResource("Resource_a4bc2")
 level_info = SubResource("Resource_yehk2")
 has_equipment = true
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

@@ -3,12 +3,12 @@ extends Component
 
 var items: Array[Entity]
 var capacity: int
+var delete_if_empty: bool
 
-
-func _init(_capacity: int) -> void:
+func _init(definition: InventoryComponentDefinition) -> void:
 	items = []
-	capacity = _capacity
-
+	capacity = definition.capacity
+	delete_if_empty = definition.delete_if_empty
 
 func get_items_by_type(type: Entity.EntityKey) -> Array[Entity]:
 	var type_items : Array[Entity] = []
@@ -21,6 +21,7 @@ func has_item_type(type: Entity.EntityKey) -> bool:
 	return get_items_by_type(type).size() > 0
 
 
+# TODO: Rewrite
 func drop(item: Entity, silent: bool = false) -> Entity:
 	items.erase(item)
 	var map_data: MapData = get_map_data()

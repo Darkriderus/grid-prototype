@@ -1,7 +1,14 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=4 format=3 uid="uid://dopb45xye6uny"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://dopb45xye6uny"]
 
+[ext_resource type="Script" uid="uid://b0q3oxcma5q58" path="res://entities/component_definitions/inventory_component_definition.gd" id="1_hquam"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_qwsuo"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="2_87usi"]
+
+[sub_resource type="Resource" id="Resource_a1rds"]
+script = ExtResource("1_hquam")
+capacity = 99
+delete_if_empty = true
+metadata/_custom_type_script = "uid://b0q3oxcma5q58"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hquam"]
 atlas = ExtResource("2_87usi")
@@ -14,5 +21,5 @@ texture = SubResource("AtlasTexture_hquam")
 color = Color(0.45177007, 0.43642756, 0.98286134, 1)
 is_blocking_movement = false
 type = 1
-inventory_capacity = 99
+inventory_definition = SubResource("Resource_a1rds")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"
