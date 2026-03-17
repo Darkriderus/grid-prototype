@@ -77,10 +77,6 @@ func get_action(player: Entity) -> Action:
 					player.map_data.entity_removed.emit(entity_to_loot)
 			else:
 				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
-				
-			
-
-		#action = PickupAction.new(player, offset.x, offset.y)
 		
 	if Input.is_action_just_pressed("open_door"):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR)
@@ -110,7 +106,6 @@ func get_action(player: Entity) -> Action:
 		action = CloseDoorAction.new(player, target.x, target.y)
 	
 	if Input.is_action_just_pressed("drop"):
-		# if container not there -> generate it. Then open loot window. If dropped empty -> kill
 		var visible_lootables := player.map_data.get_visible_lootable_entities()
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
 		
@@ -132,10 +127,6 @@ func get_action(player: Entity) -> Action:
 			if container.key == Entity.EntityKey.DROPPED and container.inventory_component.items.size() == 0:
 				player.map_data.entities.erase(container)
 				player.map_data.entity_removed.emit(container)
-		
-		
-		#var selected_item: Entity = await get_item("Select an item to drop", player.inventory_component)
-		#action = DropItemAction.new(player, selected_item)
 	
 	if Input.is_action_just_pressed("activate"):
 		action = await activate_item(player)
