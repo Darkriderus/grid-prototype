@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://b75nk2pcefvpa"]
+
+[ext_resource type="Script" uid="uid://cn6mpuyeyxm7f" path="res://scenes/character_panel/character_panel.gd" id="1_m44lm"]
+[ext_resource type="FontFile" uid="uid://dm7c3a2ekxyp4" path="res://assets/fonts/Kenney Pixel.ttf" id="2_l68l1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5efv4"]
+font = ExtResource("2_l68l1")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_mxx6d"]
+color = Color(1, 1, 1, 1)
+
+[node name="CharacterPanel" type="CanvasLayer"]
+script = ExtResource("1_m44lm")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = SubResource("LabelSettings_5efv4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_mxx6d")

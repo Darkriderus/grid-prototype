@@ -14,6 +14,8 @@ const directions = {
 
 const inventory_menu_scene = preload("uid://dy7s6c7w2b12c")
 const LOOT_MENU_SCENE = preload("uid://dh5x356856lj4")
+const CHARACTER_PANEL_SCENE = preload("uid://b75nk2pcefvpa")
+
 
 @export var reticle: Reticle
 @export var map: Map
@@ -41,6 +43,15 @@ func open_loot_menu(window_title: String, player: Entity, entity_to_loot: Entity
 	loot_menu.build(window_title, player, entity_to_loot)
 	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
 	await loot_menu.looting_done
+	await get_tree().physics_frame
+	get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
+
+func open_character_menu(entity: Entity) -> void:
+	var character_panel : CharacterPanel = CHARACTER_PANEL_SCENE.instantiate()
+	add_child(character_panel)
+	character_panel.build(entity)
+	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
+	await character_panel.equipment_done
 	await get_tree().physics_frame
 	get_parent().call_deferred("transition_to", InputHandler.InputHandlers.MAIN_GAME)
 
@@ -166,6 +177,9 @@ func get_action(player: Entity) -> Action:
 			
 			action = RangedAction.new(player, offset.x, offset.y)
 
+	if Input.is_action_just_pressed("display_character_info"):
+		open_character_menu(player)
+		
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)
 	
