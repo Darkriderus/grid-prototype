@@ -5,29 +5,25 @@ const LOOT_ASCII_SYMBOL := "L"
 const MONSTER_ASCII_SYMBOL := "M"
 const CONTAINER_ASCII_SYMBOL := "C"
 
-
 @export_category("Map Dimensions")
 @export var map_width: int = 100
 @export var map_height: int = 100
 
-@export_category("Rooms RNG")
-@export var max_rooms: int = 30
-@export var room_max_size: int = 10
-@export var room_min_size: int = 6
-
 @export_category("Entities RNG")
 
 @export var item_chances = {
-	0: {Entity.EntityKey.NOTHING: 25, Entity.EntityKey.ARROWS: 50, Entity.EntityKey.HEALTH_POTION: 35, Entity.EntityKey.LIGHTNING_SCROLL: 10},
-	2: {Entity.EntityKey.CONFUSION_SCROLL: 10},
-	4: {Entity.EntityKey.LIGHTNING_SCROLL: 25, Entity.EntityKey.SWORD: 5},
-	6: {Entity.EntityKey.FIREBALL_SCROLL: 25, Entity.EntityKey.CHAINMAIL: 15},
+	0: {
+		#Entity.EntityKey.NOTHING: 25, 
+		Entity.EntityKey.ARROWS: 50, 
+		Entity.EntityKey.HEALTH_POTION: 35, 
+		Entity.EntityKey.LIGHTNING_SCROLL: 10
+	},
 }
 @export var enemy_chances = {
-	0: {Entity.EntityKey.NOTHING: 50, Entity.EntityKey.ORC: 80, Entity.EntityKey.TROLL: 5},
-	3: {Entity.EntityKey.TROLL: 15},
-	5: {Entity.EntityKey.TROLL: 30},
-	7: {Entity.EntityKey.TROLL: 60}
+	0: {
+		# Entity.EntityKey.NOTHING: 50, 
+		Entity.EntityKey.ORC: 80, 
+	},
 }
 
 var _rng := RandomNumberGenerator.new()

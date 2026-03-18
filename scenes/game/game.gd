@@ -13,8 +13,8 @@ const level_up_menu_scene: PackedScene = preload("uid://snopwjqg3h3j")
 
 func new_game() -> void:
 	player = Entity.new(null, Vector2i.ZERO, Entity.EntityKey.PLAYER)
-	_add_player_start_equipment(Entity.EntityKey.DAGGER)
-	_add_player_start_equipment(Entity.EntityKey.LEATHER_ARMOR)
+	_add_player_start_equipment(Entity.EntityKey.SWORD)
+	_add_player_start_equipment(Entity.EntityKey.CHAINMAIL)
 	_add_player_start_equipment(Entity.EntityKey.CROSSBOW)
 	player.level_component.level_up_required.connect(_on_player_level_up_requested)
 	player_created.emit(player)

@@ -34,23 +34,23 @@ var willpower: int:
 # Dynamic Stats
 var melee_damage_percentage: int:
 	get:
-		return 100 + (1*strength)
+		return 100 + (2*strength)
 		
 var ranged_damage_percentage: int:
 	get:
-		return 100 + (1*perception)
+		return 100 + (2*perception)
 		
 var accuracy: int:
 	get:
-		return 80 + (1*perception)
+		return 60 + (2*perception)
 		
 var max_health: int:
 	get:
-		return 100 + (5*vitality)
+		return 80 + (5*vitality)
 		
 var dodge_chance: int:
 	get:
-		return 5 + (1*agility)
+		return 2 + (2*agility)
 
 var min_melee_damage: int:
 	get:

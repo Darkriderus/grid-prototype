@@ -6,8 +6,9 @@
 
 [sub_resource type="Resource" id="Resource_tmhhq"]
 script = ExtResource("1_bs4p2")
-equipment_type = 2
-ranged_power_bonus = 3
+equipment_type = 6
+min_damage = 8
+max_damage = 10
 attack_range = 3
 metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
 
