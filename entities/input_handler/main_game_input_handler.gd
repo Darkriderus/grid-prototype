@@ -150,22 +150,21 @@ func get_action(player: Entity) -> Action:
 		await get_grid_position(player, 0, entities_in_sight)
 		
 	if Input.is_action_just_pressed("fire_weapon"):
-		MessageLog.send_message("Not implemented yet.", GameColors.IMPOSSIBLE)
-		#if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
-			#MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
-		#else:
-			#var enemies_in_sight := player.map_data.get_visible_actors()
-			#enemies_in_sight.erase(player)
-			#enemies_in_sight.sort_custom(func (a: Entity, b: Entity):
-				#if player.distance(a.grid_position) < player.distance(b.grid_position):
-					#return true
-				#return false
-			#)
-			#
-			#var target : Vector2i = await get_grid_position(player, 0, enemies_in_sight)
-			#var offset : Vector2i = target - player.grid_position
-			#
-			#action = RangedAction.new(player, offset.x, offset.y)
+		if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
+			MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
+		else:
+			var enemies_in_sight := player.map_data.get_visible_actors()
+			enemies_in_sight.erase(player)
+			enemies_in_sight.sort_custom(func (a: Entity, b: Entity):
+				if player.distance(a.grid_position) < player.distance(b.grid_position):
+					return true
+				return false
+			)
+			
+			var target : Vector2i = await get_grid_position(player, 0, enemies_in_sight)
+			var offset : Vector2i = target - player.grid_position
+			
+			action = RangedAction.new(player, offset.x, offset.y)
 
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)

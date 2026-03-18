@@ -52,6 +52,19 @@ var dodge_chance: int:
 	get:
 		return 2 + (2*agility)
 
+
+var min_ranged_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
+		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 0
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
+		
+var max_ranged_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
+		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 0
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
+
 var min_melee_damage: int:
 	get:
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
@@ -130,8 +143,19 @@ func die(trigger_side_effects := true) -> void:
 	get_map_data().unregister_blocking_entity(entity)
 	
 # TODO: fumble, critical
-
 func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
+	var to_hit_roll := roll()
+	var has_hit := to_hit_roll <= accuracy
+	return {
+		"has_hit": has_hit,
+		"to_hit_roll": to_hit_roll,
+		"hit_threshold": accuracy
+	}
+
+
+# TODO: fumble, critical
+func ranged_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:	
+	# TODO: Distance check
 	var to_hit_roll := roll()
 	var has_hit := to_hit_roll <= accuracy
 	return {
@@ -144,6 +168,12 @@ func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 # TODO: fumble, critical
 func melee_damage(_defender: Entity) -> int:
 	var damage_roll := roll(min_melee_damage, max_melee_damage)
+	return damage_roll
+	
+
+# TODO: fumble, critical
+func ranged_damage(_defender: Entity) -> int:
+	var damage_roll := roll(min_ranged_damage, max_ranged_damage)
 	return damage_roll
 	
 func try_to_dodge(_attacker: Entity) -> Dictionary[String, Variant]:

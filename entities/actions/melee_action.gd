@@ -28,5 +28,10 @@ func perform() -> bool:
 	# step 3 - calculate damage
 	var damage := attacker.fighter_component.melee_damage(defender)
 	var damage_given := defender.fighter_component.take_damage(damage)
+	if damage_given <= 0:
+		MessageLog.send_message("%s hits %s, but deals no damage" % [attacker.get_entity_name(), defender.get_entity_name()], Color.RED)
+		return true
+
+	# step 4 - ???
 	MessageLog.send_message("%s hits %s, dealing %s damage" % [attacker.get_entity_name(), defender.get_entity_name(), damage_given], Color.RED)
 	return true
