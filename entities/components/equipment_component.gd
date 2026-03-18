@@ -5,35 +5,6 @@ signal equipment_changed
 
 var slots : Dictionary[EquippableComponent.EquipmentType, Entity] = {}
 
-
-func get_defense_bonus() -> int:
-	var bonus = 0
-	
-	for item in slots.values():
-		if item.equippable_component:
-			bonus += item.equippable_component.defense_bonus
-	
-	return bonus
-
-
-func get_ranged_power_bonus() -> int:
-	var bonus = 0
-	
-	for item in slots.values():
-		if item.equippable_component:
-			bonus += item.equippable_component.ranged_power_bonus
-	
-	return bonus
-
-func get_melee_power_bonus() -> int:
-	var bonus = 0
-	
-	for item in slots.values():
-		if item.equippable_component:
-			bonus += item.equippable_component.melee_power_bonus
-	
-	return bonus
-	
 	
 func get_item_from_slot(slot: EquippableComponent.EquipmentType):
 	return slots[slot] if slots.has(slot) else null

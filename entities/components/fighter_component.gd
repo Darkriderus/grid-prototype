@@ -2,34 +2,8 @@ class_name FighterComponent
 extends Component
 
 signal changed
-#
-#var max_hp: int
-#var hp: int:
-	#set(value):
-		#hp = clampi(value, 0, max_hp)
-		#hp_changed.emit(hp, max_hp)
-		#if hp <= 0:
-			#var die_silently := false
-			#if not is_inside_tree():
-				#die_silently = true
-				#await ready
-			#die(not die_silently)
-#var base_defense: int
-#var base_ranged_power: int
-#var base_melee_power : int
-#var defense: int: 
-	#get:
-		#return base_defense + get_defense_bonus()
-#var melee_power: int: 
-	#get:
-		#return base_melee_power + get_melee_power_bonus()
-#var ranged_power: int: 
-	#get:
-		#return base_ranged_power + get_ranged_power_bonus()
-#func get_defense_bonus() -> int:
-	#if entity.equipment_component:
-		#return entity.equipment_component.get_defense_bonus()
-	#return 0
+
+var rng = RandomNumberGenerator.new()
 
 # Static Stats
 var base_strength: int 
@@ -74,10 +48,33 @@ var max_health: int:
 	get:
 		return 100 + (5*vitality)
 		
-var dodge: int:
+var dodge_chance: int:
 	get:
 		return 5 + (1*agility)
 
+var min_melee_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
+		# TODO: add unarmed weapon to every fighter
+		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 2
+		return int(base_weapon_damage * melee_damage_percentage)
+		
+var max_melee_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
+		# TODO: add unarmed weapon to every fighter
+		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 5
+		return int(base_weapon_damage * melee_damage_percentage)
+		
+var protection: int:
+	get:
+		# TODO: Split by body part
+		var protection_sum := 0
+		for equipment in entity.equipment_component.slots.values():
+			if equipment.equippable_component:
+				protection_sum += equipment.equippable_component.protection
+				
+		return protection_sum
 
 # Changing stats
 var health: int:
@@ -130,6 +127,31 @@ func die(trigger_side_effects := true) -> void:
 	entity.type = Entity.EntityType.CORPSE
 	get_map_data().unregister_blocking_entity(entity)
 	
+# TODO: fumble, critical
+func melee_try_to_hit(_defender: Entity):
+	var to_hit_roll := roll()
+	var has_hit := accuracy <= to_hit_roll
+	return {
+		"has_hit": has_hit,
+		"to_hit_roll": to_hit_roll,
+		"hit_threshold": accuracy
+	}
+
+# TODO: fumble, critical
+func melee_damage(_defender: Entity):
+	var damage_roll := roll(min_melee_damage, max_melee_damage)
+	return {
+		"damage_roll": damage_roll
+	}
+	
+func try_to_dodge(_attacker: Entity):
+	var to_dodge_roll := roll(0, 100)
+	var has_dodged := dodge_chance <= to_dodge_roll
+	return {
+		"to_dodge_roll": to_dodge_roll,
+		"has_dodged": has_dodged,
+		"dodge_threshold": dodge_chance
+	}
 	
 func heal(amount: int) -> int:
 	if health == max_health:
@@ -167,3 +189,7 @@ func restore(save_data: Dictionary) -> void:
 	base_vitality = save_data["base_vitality"]
 	base_willpower = save_data["base_willpower"]
 	health = save_data["health"]
+
+#TODO: move to other class / helper?
+func roll(min_roll: int = 0, max_roll: int = 100) -> int:
+	return rng.randi_range(min_roll, max_roll)
