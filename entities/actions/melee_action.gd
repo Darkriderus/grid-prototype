@@ -22,7 +22,7 @@ func perform() -> bool:
 	# step 2 - check if defender dodges
 	var dodge_result := defender.fighter_component.try_to_dodge(attacker)
 	if dodge_result["has_dodged"] == true:
-		MessageLog.send_message("%s dodges (rolled %s, needed %s)" % [defender.get_entity_name(), dodge_result["to_dodge_roll"], attack_result["dodge_threshold"]], Color.BLUE)
+		MessageLog.send_message("%s dodges (rolled %s, needed %s)" % [defender.get_entity_name(), dodge_result["to_dodge_roll"], dodge_result["dodge_threshold"]], Color.BLUE)
 		return true
 		
 	# step 3 - calculate damage

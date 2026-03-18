@@ -34,15 +34,15 @@ var willpower: int:
 # Dynamic Stats
 var melee_damage_percentage: int:
 	get:
-		return 100 + (2*strength)
+		return 100 + (1*strength)
 		
 var ranged_damage_percentage: int:
 	get:
-		return 100 + (2*perception)
+		return 100 + (1*perception)
 		
 var accuracy: int:
 	get:
-		return 80 + (2*perception)
+		return 80 + (1*perception)
 		
 var max_health: int:
 	get:
@@ -57,14 +57,14 @@ var min_melee_damage: int:
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 2
-		return int(base_weapon_damage * melee_damage_percentage)
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
 		
 var max_melee_damage: int:
 	get:
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 5
-		return int(base_weapon_damage * melee_damage_percentage)
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
 		
 var protection: int:
 	get:
@@ -100,6 +100,8 @@ func _init(definition: FighterComponentDefinition) -> void:
 	base_vitality = definition.vitality
 	base_willpower = definition.willpower
 	
+	health = max_health
+	
 	death_texture = definition.death_texture
 	death_color = definition.death_color
 	
@@ -131,7 +133,7 @@ func die(trigger_side_effects := true) -> void:
 
 func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var to_hit_roll := roll()
-	var has_hit := accuracy <= to_hit_roll
+	var has_hit := to_hit_roll <= accuracy
 	return {
 		"has_hit": has_hit,
 		"to_hit_roll": to_hit_roll,
@@ -146,7 +148,7 @@ func melee_damage(_defender: Entity) -> int:
 	
 func try_to_dodge(_attacker: Entity) -> Dictionary[String, Variant]:
 	var to_dodge_roll := roll(0, 100)
-	var has_dodged := dodge_chance <= to_dodge_roll
+	var has_dodged := to_dodge_roll <= dodge_chance
 	return {
 		"to_dodge_roll": to_dodge_roll,
 		"has_dodged": has_dodged,
