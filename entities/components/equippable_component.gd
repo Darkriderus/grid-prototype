@@ -2,12 +2,12 @@ class_name EquippableComponent
 extends Component
 
 enum EquipmentType { 
-	MELEE_LEFT_HAND,
-	MELEE_RIGHT_HAND,
 	HEAD,
 	BODY,
 	HANDS,
 	FEET,
+	MELEE_RIGHT_HAND,
+	MELEE_LEFT_HAND,
 	RANGED
 }
 

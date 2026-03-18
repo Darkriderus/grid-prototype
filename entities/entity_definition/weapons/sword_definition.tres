@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_uin21"]
 script = ExtResource("1_1v68p")
-equipment_type = 1
+equipment_type = 4
 min_damage = 6
 max_damage = 9
 metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
