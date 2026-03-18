@@ -128,7 +128,8 @@ func die(trigger_side_effects := true) -> void:
 	get_map_data().unregister_blocking_entity(entity)
 	
 # TODO: fumble, critical
-func melee_try_to_hit(_defender: Entity):
+
+func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var to_hit_roll := roll()
 	var has_hit := accuracy <= to_hit_roll
 	return {
@@ -137,14 +138,13 @@ func melee_try_to_hit(_defender: Entity):
 		"hit_threshold": accuracy
 	}
 
+
 # TODO: fumble, critical
-func melee_damage(_defender: Entity):
+func melee_damage(_defender: Entity) -> int:
 	var damage_roll := roll(min_melee_damage, max_melee_damage)
-	return {
-		"damage_roll": damage_roll
-	}
+	return damage_roll
 	
-func try_to_dodge(_attacker: Entity):
+func try_to_dodge(_attacker: Entity) -> Dictionary[String, Variant]:
 	var to_dodge_roll := roll(0, 100)
 	var has_dodged := dodge_chance <= to_dodge_roll
 	return {
@@ -167,8 +167,10 @@ func heal(amount: int) -> int:
 	return amount_recovered
 
 
-func take_damage(amount: int) -> void:
-	health -= amount
+func take_damage(amount: int) -> int:
+	var damage_given = clampi((amount - protection), 0, amount)
+	health -= damage_given
+	return damage_given
 	
 	
 func get_save_data() -> Dictionary:

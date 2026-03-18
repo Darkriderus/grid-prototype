@@ -8,22 +8,25 @@ func perform() -> bool:
 		if entity == get_map_data().player:
 			MessageLog.send_message("Nothing to attack.", GameColors.IMPOSSIBLE)
 		return false
+		
+	# step 0 - prepare stuff
+	var attacker := entity
+	var defender := target	
 	
-	const ATTACK_ANIM = preload("uid://tbng7bk63fmp")
-	entity.add_child(ATTACK_ANIM.instantiate())
+	# step 1 - check if attacker hits defender
+	var attack_result := attacker.fighter_component.melee_try_to_hit(defender)
+	if attack_result["has_hit"] == false:
+		MessageLog.send_message("%s misses %s (rolled %s, needed %s)" % [attacker.get_entity_name(), defender.get_entity_name(), attack_result["to_hit_roll"], attack_result["hit_threshold"]], Color.GREEN)
+		return true
 	
-	var damage: int = entity.fighter_component.melee_power - target.fighter_component.defense
-	var attack_color: Color
-	if entity == get_map_data().player:
-		attack_color = GameColors.PLAYER_ATTACK
-	else:
-		attack_color = GameColors.ENEMY_ATTACK
-	var attack_description: String = "%s attacks %s" % [entity.get_entity_name(), target.get_entity_name()]
-	if damage > 0:
-		attack_description += " for %d hit points." % damage
-		MessageLog.send_message(attack_description, attack_color)
-		target.fighter_component.hp -= damage
-	else:
-		attack_description += " but does no damage."
-		MessageLog.send_message(attack_description, attack_color)
+	# step 2 - check if defender dodges
+	var dodge_result := defender.fighter_component.try_to_dodge(attacker)
+	if dodge_result["has_dodged"] == true:
+		MessageLog.send_message("%s dodges (rolled %s, needed %s)" % [defender.get_entity_name(), dodge_result["to_dodge_roll"], attack_result["dodge_threshold"]], Color.BLUE)
+		return true
+		
+	# step 3 - calculate damage
+	var damage := attacker.fighter_component.melee_damage(defender)
+	var damage_given := defender.fighter_component.take_damage(damage)
+	MessageLog.send_message("%s hits %s, dealing %s damage" % [attacker.get_entity_name(), defender.get_entity_name(), damage_given], Color.RED)
 	return true
