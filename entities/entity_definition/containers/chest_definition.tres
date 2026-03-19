@@ -7,6 +7,8 @@
 [sub_resource type="Resource" id="Resource_dnabj"]
 script = ExtResource("1_yk183")
 capacity = 99
+weight_limit = 100.0
+volume_limit = 100.0
 metadata/_custom_type_script = "uid://b0q3oxcma5q58"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yk183"]

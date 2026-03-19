@@ -8,7 +8,8 @@ enum EquipmentType {
 	FEET,
 	RIGHT_HAND,
 	LEFT_HAND,
-	RANGED
+	RANGED,
+	BACKPACK,
 }
 
 var equipment_type: EquipmentType
