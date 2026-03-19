@@ -11,6 +11,7 @@ var entity: Entity
 @onready var title_label: Label = %TitleLabel
 @onready var slot_list: VBoxContainer = %SlotList
 @onready var inventory_display: VBoxContainer = %FilteredInventoryDisplay
+@onready var equipment_display: VBoxContainer = %EquipmentDisplay
 
 func _ready() -> void:
 	hide()
@@ -40,6 +41,7 @@ func build(_entity: Entity, rebuild_inventory: bool = true) -> void:
 				item_button.pressed.connect(_on_item_button_pressed.bind(item))
 				inventory_display.add_child(item_button)
 	inventory_display.hide()
+	equipment_display.show()
 	show()
 
 func _on_item_button_pressed(item: Entity):
@@ -50,7 +52,6 @@ func _on_item_button_pressed(item: Entity):
 
 
 func _change_equipment_button_pressed(slot: EquippableComponent.EquipmentType):		
-	
 	var has_items_for_slot := false
 	for item in entity.inventory_component.items:
 		if item.is_equippable():
@@ -61,6 +62,7 @@ func _change_equipment_button_pressed(slot: EquippableComponent.EquipmentType):
 			else:
 				item_button.hide()		
 	
+	equipment_display.visible = not has_items_for_slot
 	inventory_display.visible = has_items_for_slot
 
 func _physics_process(_delta: float) -> void:

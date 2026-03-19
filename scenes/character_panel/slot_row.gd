@@ -12,5 +12,6 @@ func build(entity: Entity, slot: EquippableComponent.EquipmentType):
 	slot_name.text = EquippableComponent.EquipmentType.keys()[slot].replace("_", " ")
 	var equipped_item = entity.equipment_component.get_item_from_slot(slot)
 	equipment_button.text = equipped_item.entity_name if equipped_item else "Empty"
+	equipment_button.icon = equipped_item.texture if equipped_item else null
 	equipment_button.pressed.connect(func(): equipment_change_requested.emit())
 	
