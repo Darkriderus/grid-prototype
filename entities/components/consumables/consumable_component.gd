@@ -1,5 +1,9 @@
 class_name ConsumableComponent
-extends Component
+extends ItemComponent
+
+
+func _init(definition: ItemComponentDefinition) -> void:
+	super._init(definition)
 
 
 func get_action(consumer: Entity) -> Action:

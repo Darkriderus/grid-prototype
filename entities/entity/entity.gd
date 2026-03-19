@@ -32,6 +32,7 @@ enum EntityKey {
 	
 	# Armor
 	CHAINMAIL,
+	BACKPACK,
 
 	# Containers
 	CHEST,
@@ -54,7 +55,8 @@ const ENTITY_DEFINITION_PATHS := {
 	EntityKey.CROSSBOW: "uid://cdmvyyqbt7jow",
 	EntityKey.CHEST: "uid://b4cui42b8sdjs",
 	EntityKey.ARROWS: "uid://demvf2bx0coki",
-	EntityKey.DROPPED: "uid://dopb45xye6uny"
+	EntityKey.DROPPED: "uid://dopb45xye6uny",
+	EntityKey.BACKPACK: "uid://b44fqlc4a688"
 }
 
 var key: EntityKey
@@ -68,6 +70,7 @@ var fighter_component: FighterComponent
 var ai_component: BaseAIComponent
 var consumable_component: ConsumableComponent
 var equippable_component: EquippableComponent
+var item_component: ItemComponent
 var inventory_component: InventoryComponent
 var level_component: LevelComponent
 var equipment_component: EquipmentComponent
@@ -138,8 +141,10 @@ func set_entity_definition(_key: EntityKey) -> void:
 	if item_definition:
 		if item_definition is ConsumableComponentDefinition:
 			_handle_consumable(item_definition)
-		else:
+		elif item_definition is EquippableComponentDefinition:
 			equippable_component = EquippableComponent.new(item_definition)
+			
+		item_component = ItemComponent.new(item_definition)
 
 
 func move(move_offset: Vector2i) -> void:

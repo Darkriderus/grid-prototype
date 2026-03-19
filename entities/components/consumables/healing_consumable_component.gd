@@ -6,6 +6,8 @@ var amount: int
 
 func _init(definition: HealingConsumableComponentDefinition) -> void:
 	amount = definition.healing_amount
+	
+	super._init(definition)
 
 func activate(action: ItemAction) -> bool:
 	var consumer: Entity = action.entity

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bkfdapug4i13k" path="res://scenes/inventory_menu/inventory_menu_item.tscn" id="1_uu20n"]
 
 [node name="SlotRow" type="HBoxContainer"]
+size_flags_horizontal = 3
 script = ExtResource("1_ejbdl")
 
 [node name="SlotName" type="Label" parent="."]

@@ -8,6 +8,8 @@ var maximum_range: int = 0
 func _init(definition: LightningDamageConsumableComponentDefinition) -> void:
 	damage = definition.damage
 	maximum_range = definition.maximum_range
+	
+	super._init(definition)
 
 
 func activate(action: ItemAction) -> bool:

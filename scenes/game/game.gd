@@ -16,6 +16,7 @@ func new_game() -> void:
 	_add_player_start_equipment(Entity.EntityKey.SWORD)
 	_add_player_start_equipment(Entity.EntityKey.CHAINMAIL)
 	_add_player_start_equipment(Entity.EntityKey.CROSSBOW)
+	_add_player_start_equipment(Entity.EntityKey.BACKPACK)
 	_add_player_start_equipment(Entity.EntityKey.ARROWS)
 	_add_player_start_equipment(Entity.EntityKey.ARROWS)
 	_add_player_start_equipment(Entity.EntityKey.ARROWS)

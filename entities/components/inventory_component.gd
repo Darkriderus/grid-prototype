@@ -3,11 +3,47 @@ extends Component
 
 var items: Array[Entity]
 var capacity: int
+
+
+var base_weight_limit : float
+var weight_limit : float:
+	get:
+		var limit = base_weight_limit
+		if entity.equipment_component:
+			for equipment : Entity in entity.equipment_component.slots.values():
+				if equipment.equippable_component:
+					limit += equipment.equippable_component.weight_carry_increase
+		return limit
+var current_weight: float:
+	get:
+		var weight := 0.0
+		for item in items:
+			weight += item.item_component.weight
+		return weight
+
+var base_volume_limit : float
+var volume_limit : float:
+	get:
+		var limit = base_volume_limit
+		if entity.equipment_component:
+			for equipment : Entity in entity.equipment_component.slots.values():
+				if equipment.equippable_component:
+					limit += equipment.equippable_component.volume_carry_increase
+		return limit
+var current_volume: float:
+	get:
+		var volume := 0.0
+		for item in items:
+			volume += item.item_component.volume
+		return volume
+		
 var delete_if_empty: bool
 
 func _init(definition: InventoryComponentDefinition) -> void:
 	items = []
 	capacity = definition.capacity
+	base_weight_limit = definition.weight_limit
+	base_volume_limit = definition.volume_limit
 	delete_if_empty = definition.delete_if_empty
 
 func get_items_by_type(type: Entity.EntityKey) -> Array[Entity]:

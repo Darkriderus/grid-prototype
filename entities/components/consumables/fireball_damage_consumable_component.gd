@@ -8,6 +8,8 @@ var radius: int
 func _init(definition: FireballDamageConsumableComponentDefinition):
 	damage = definition.damage
 	radius = definition.radius
+	
+	super._init(definition)
 
 
 func get_targeting_radius() -> int:

@@ -6,6 +6,8 @@ var number_of_turns: int
 
 func _init(definition: ConfusionConsumableComponentDefinition) -> void:
 	number_of_turns = definition.number_of_turns
+	
+	super._init(definition)
 
 
 func get_targeting_radius() -> int:
