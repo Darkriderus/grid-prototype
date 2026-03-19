@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
@@ -40,8 +40,188 @@ theme_override_styles/separator = SubResource("StyleBoxLine_mxx6d")
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Stats" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="StrengthRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/StrengthRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Strength:"
+
+[node name="StrengthValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/StrengthRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AgilityRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/AgilityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Agility:"
+
+[node name="AgilityValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/AgilityRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VitalityRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/VitalityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Vitality:"
+
+[node name="VitalityValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/VitalityRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PerceptionRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/PerceptionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Perception"
+
+[node name="PerceptionValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/PerceptionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WillpowerRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/WillpowerRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Willpower:"
+
+[node name="WillpowerValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/WillpowerRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_mxx6d")
+
+[node name="HealthRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/HealthRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Health:"
+
+[node name="HealthValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/HealthRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ProtectionRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/ProtectionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Protection:"
+
+[node name="ProtectionValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/ProtectionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AccuracyRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/AccuracyRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accuracy:"
+
+[node name="AccuracyValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/AccuracyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MeleeDamageValueRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/MeleeDamageValueRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Melee Damage:"
+
+[node name="MeleeDamageValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/MeleeDamageValueRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MeleeDamagePercentageRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/MeleeDamagePercentageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "  (Modifier:)"
+
+[node name="MeleeDamagePercentageValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/MeleeDamagePercentageRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RangedDamageValueRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/RangedDamageValueRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ranged Damage:"
+
+[node name="RangedDamageValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/RangedDamageValueRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RangedDamagePercentageRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/RangedDamagePercentageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "  (Modifier:)"
+
+[node name="RangedDamagePercentageValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/RangedDamagePercentageRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RangedAttackRangeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/RangedAttackRangeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Range: "
+
+[node name="RangedAttackRange" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/RangedAttackRangeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DodgeChanceRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/DodgeChanceRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Dodge Chance:"
+
+[node name="DodgeChanceValue" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/Stats/DodgeChanceRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
 [node name="EquipmentDisplay" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 

@@ -45,6 +45,8 @@ func toggle_equip(equippable_item: Entity, add_message: bool = true) -> void:
 	else:
 		_equip_to_slot(slot, equippable_item, add_message)
 		
+	entity.changed.emit()
+		
 
 func get_save_data() -> Dictionary:
 	var equipped_indices := []

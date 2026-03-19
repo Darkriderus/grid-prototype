@@ -39,7 +39,7 @@ var melee_damage_percentage: int:
 var ranged_damage_percentage: int:
 	get:
 		return 100 + (2*perception)
-		
+
 var accuracy: int:
 	get:
 		return 60 + (2*perception)
@@ -50,7 +50,7 @@ var max_health: int:
 		
 var dodge_chance: int:
 	get:
-		return 2 + (2*agility)
+		return 2 + (1*agility)
 
 
 var min_ranged_damage: int:
@@ -64,6 +64,12 @@ var max_ranged_damage: int:
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 0
 		return int(base_weapon_damage * (melee_damage_percentage/100.0))
+
+var ranged_attack_range: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
+		return weapon_used.equippable_component.attack_range if weapon_used else 0
+		
 
 var min_melee_damage: int:
 	get:
@@ -88,6 +94,7 @@ var protection: int:
 				protection_sum += equipment.equippable_component.protection
 				
 		return protection_sum
+
 
 # Changing stats
 var health: int:
