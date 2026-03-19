@@ -62,6 +62,7 @@ func _physics_process(_delta: float) -> void:
 		if action.perform():
 			_handle_enemy_turns()
 			map.update_fov(player.grid_position)
+			SignalBus.player_turn_started.emit()
 
 func _handle_enemy_turns() -> void:
 	for entity in get_map_data().get_actors():

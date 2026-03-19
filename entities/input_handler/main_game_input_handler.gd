@@ -19,6 +19,21 @@ const CHARACTER_PANEL_SCENE = preload("uid://b75nk2pcefvpa")
 
 @export var reticle: Reticle
 @export var map: Map
+var player_enabled := true
+
+
+func _enable_player():
+	player_enabled = true
+
+
+func enter():
+	if not SignalBus.player_turn_started.is_connected(_enable_player):
+		SignalBus.player_turn_started.connect(_enable_player)
+	
+func exit():
+	if SignalBus.player_turn_started.is_connected(_enable_player):
+		SignalBus.player_turn_started.disconnect(_enable_player)
+
 
 func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_next_step: bool = false) -> Entity:
 	if inventory.items.is_empty():
@@ -57,6 +72,9 @@ func open_character_menu(entity: Entity) -> void:
 
 func get_action(player: Entity) -> Action:
 	var action: Action = null
+	
+	if not player_enabled:
+		return
 	
 	for direction in directions:
 		if Input.is_action_just_pressed(direction):
@@ -178,6 +196,9 @@ func get_action(player: Entity) -> Action:
 		
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)
+	
+	if action:
+		player_enabled = false
 	
 	return action
 	
