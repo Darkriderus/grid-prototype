@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dogieybrlqp7h"]
+
+[ext_resource type="Script" uid="uid://bx11y2ydlin02" path="res://scenes/character_panel/slot_row.gd" id="1_ejbdl"]
+[ext_resource type="PackedScene" uid="uid://bkfdapug4i13k" path="res://scenes/inventory_menu/inventory_menu_item.tscn" id="1_uu20n"]
+
+[node name="SlotRow" type="HBoxContainer"]
+script = ExtResource("1_ejbdl")
+
+[node name="SlotName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SLOT"
+vertical_alignment = 1
+
+[node name="EquipmentButton" parent="." instance=ExtResource("1_uu20n")]
+layout_mode = 2
+size_flags_stretch_ratio = 3.0
+text = "Henlo"

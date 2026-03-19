@@ -51,7 +51,7 @@ func load_game() -> bool:
 func _add_player_start_equipment(item_key: Entity.EntityKey) -> void:
 	var item := Entity.new(null, Vector2i.ZERO, item_key)
 	player.inventory_component.items.append(item)
-	player.equipment_component.toggle_equip(item, false)
+	#player.equipment_component.toggle_equip(item, false)
 
 
 func _physics_process(_delta: float) -> void:	

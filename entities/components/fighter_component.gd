@@ -67,14 +67,14 @@ var max_ranged_damage: int:
 
 var min_melee_damage: int:
 	get:
-		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 2
 		return int(base_weapon_damage * (melee_damage_percentage/100.0))
 		
 var max_melee_damage: int:
 	get:
-		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 5
 		return int(base_weapon_damage * (melee_damage_percentage/100.0))

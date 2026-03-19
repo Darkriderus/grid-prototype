@@ -6,8 +6,8 @@ enum EquipmentType {
 	BODY,
 	HANDS,
 	FEET,
-	MELEE_RIGHT_HAND,
-	MELEE_LEFT_HAND,
+	RIGHT_HAND,
+	LEFT_HAND,
 	RANGED
 }
 
