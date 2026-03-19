@@ -4,6 +4,7 @@ extends Node
 const LOOT_ASCII_SYMBOL := "L"
 const MONSTER_ASCII_SYMBOL := "M"
 const CONTAINER_ASCII_SYMBOL := "C"
+const DEBUG_CHEST_ASCII_SYMBOL := "*"
 
 @export_category("Map Dimensions")
 @export var map_width: int = 100
@@ -127,6 +128,9 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 				
 			if ascii_char == CONTAINER_ASCII_SYMBOL:
 				_set_container(coord, item_chances, dungeon, 5)
+				
+			if ascii_char == DEBUG_CHEST_ASCII_SYMBOL:
+				_set_debug_container(coord, dungeon)
 		y += 1
 #
 	file.close()
@@ -134,6 +138,16 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 	dungeon.setup_pathfinding()
 	return dungeon
 	
+	
+func _set_debug_container(coord: Vector2i, dungeon: MapData):
+		var new_container_entity := Entity.new(dungeon, coord, Entity.EntityKey.CHEST)
+		
+		for type : Entity.EntityKey in Entity.ENTITY_DEFINITION_PATHS.keys():
+			var item := Entity.new(null, Vector2i.ZERO, type)
+			if item.type == Entity.EntityType.ITEM:
+				new_container_entity.inventory_component.items.append(item)
+			
+		dungeon.entities.append(new_container_entity)
 
 func _set_container(coord: Vector2i, spawn_chances: Dictionary, dungeon: MapData, amount: int = 1):
 	var items: Array[Entity.EntityKey] = _get_entities_at_random(spawn_chances, amount, dungeon.current_floor)

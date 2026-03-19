@@ -101,7 +101,6 @@ var health: int:
 	set(value):
 		health = clampi(value, 0, max_health)
 		changed.emit()
-		entity.changed.emit()
 		if health <= 0:
 			var die_silently := false
 			if not is_inside_tree():
