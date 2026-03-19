@@ -39,6 +39,26 @@ var current_volume: float:
 		
 var delete_if_empty: bool
 
+
+func has_space_for_item(item: Entity) -> bool:
+	var item_info := item.item_component
+	var has_enough_weight := (current_weight + item_info.weight) <= weight_limit
+	var has_enough_volume := (current_volume + item_info.volume) <= volume_limit
+	
+	return has_enough_volume and has_enough_weight
+
+func drop(item: Entity) -> Entity:
+	if entity.equipment_component != null and item.is_equippable() and entity.equipment_component.get_item_from_slot(item.equippable_component.equipment_type) == item:
+		entity.equipment_component.toggle_equip(item, true)
+	entity.inventory_component.items.erase(item)
+	entity.changed.emit()
+	return item
+	
+func pickup(item: Entity) -> Entity:
+	entity.inventory_component.items.append(item)
+	entity.changed.emit()
+	return item
+
 func _init(definition: InventoryComponentDefinition) -> void:
 	items = []
 	capacity = definition.capacity

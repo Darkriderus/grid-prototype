@@ -16,17 +16,18 @@ var entity_to_loot : Entity
 
 func button_pressed(item: Entity, button: Button) -> void:
 	if player.inventory_component.items.has(item):
-		if item.is_equippable() and player.equipment_component.get_item_from_slot(item.equippable_component.equipment_type) == item:
-			player.equipment_component.toggle_equip(item, true)
-		player.inventory_component.items.erase(item)
-		entity_to_loot.inventory_component.items.append(item)
+		player.inventory_component.drop(item)
+		entity_to_loot.inventory_component.pickup(item)
 		button.reparent(loot_list)
 		loot_list.get_child(-1).grab_focus()
 	else:
-		entity_to_loot.inventory_component.items.erase(item)
-		player.inventory_component.items.append(item)
-		button.reparent(inventory_list)
-		inventory_list.get_child(-1).grab_focus()
+		if not player.inventory_component.has_space_for_item(item):
+			MessageLog.send_message("Not enough space in backpack.", GameColors.IMPOSSIBLE)
+		else:
+			entity_to_loot.inventory_component.drop(item)
+			player.inventory_component.pickup(item)
+			button.reparent(inventory_list)
+			inventory_list.get_child(-1).grab_focus()
 	
 	button.text = "%s" % [item.get_entity_name()]
 	

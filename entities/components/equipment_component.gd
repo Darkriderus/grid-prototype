@@ -20,7 +20,7 @@ func _unequip_from_slot(slot: EquippableComponent.EquipmentType, add_message: bo
 		MessageLog.send_message("You remove the %s." % current_item.get_entity_name(), Color.WHITE)
 	
 	slots.erase(slot)
-	
+	entity.changed.emit()
 	equipment_changed.emit()
 
 
@@ -32,6 +32,7 @@ func _equip_to_slot(slot: EquippableComponent.EquipmentType, item: Entity, add_m
 	if add_message:
 		MessageLog.send_message("You equip the %s." % item.get_entity_name(), Color.WHITE)
 	
+	entity.changed.emit()
 	equipment_changed.emit()
 
 

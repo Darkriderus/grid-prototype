@@ -101,6 +101,7 @@ var health: int:
 	set(value):
 		health = clampi(value, 0, max_health)
 		changed.emit()
+		entity.changed.emit()
 		if health <= 0:
 			var die_silently := false
 			if not is_inside_tree():
@@ -148,6 +149,9 @@ func die(trigger_side_effects := true) -> void:
 	entity.blocks_movement = false
 	entity.type = Entity.EntityType.CORPSE
 	get_map_data().unregister_blocking_entity(entity)
+	
+	entity.changed.emit()
+	
 	
 # TODO: fumble, critical
 func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
