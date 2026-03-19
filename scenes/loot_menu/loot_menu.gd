@@ -38,6 +38,7 @@ func _ready() -> void:
 func _register_item(_index: int, _item: Entity, _is_equipped: bool, _entity: Entity) -> void:
 	var item_button: Button = inventory_menu_item_scene.instantiate()
 	item_button.text = "%s" % [_item.get_entity_name()]
+	item_button.icon = _item.texture
 	if _is_equipped:
 		item_button.text = "(E) " + item_button.text
 	

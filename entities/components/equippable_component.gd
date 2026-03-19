@@ -1,18 +1,30 @@
 class_name EquippableComponent
 extends Component
 
-enum EquipmentType { MELEE_WEAPON, ARMOR, RANGED_WEAPON }
+enum EquipmentType { 
+	HEAD,
+	BODY,
+	HANDS,
+	FEET,
+	MELEE_RIGHT_HAND,
+	MELEE_LEFT_HAND,
+	RANGED
+}
 
 var equipment_type: EquipmentType
-var ranged_power_bonus: int = 0
-var melee_power_bonus: int = 0
-var attack_range: int = 1
-var defense_bonus: int
+var protection: int
+var dodge_chance: float
+var two_handed: bool
+var min_damage: int 
+var max_damage: int 
+var attack_range: int
 
 
 func _init(definition: EquippableComponentDefinition) -> void:
 	equipment_type = definition.equipment_type
-	ranged_power_bonus = definition.ranged_power_bonus
-	melee_power_bonus = definition.melee_power_bonus
+	protection = definition.protection
+	dodge_chance = definition.dodge_chance
+	two_handed = definition.two_handed
+	min_damage = definition.min_damage
+	max_damage = definition.max_damage
 	attack_range = definition.attack_range
-	defense_bonus = definition.defense_bonus

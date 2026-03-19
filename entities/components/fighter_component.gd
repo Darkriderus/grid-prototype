@@ -1,60 +1,120 @@
 class_name FighterComponent
 extends Component
 
-signal hp_changed(hp, max_hp)
+signal changed
 
-var max_hp: int
-var hp: int:
+var rng = RandomNumberGenerator.new()
+
+# Static Stats
+var base_strength: int 
+var strength: int:
+	get:
+		return base_strength	
+	
+var base_agility: int 
+var agility: int:
+	get:
+		return base_agility	
+
+var base_perception: int 
+var perception: int:
+	get:
+		return base_perception	
+
+var base_vitality: int
+var vitality: int:
+	get:
+		return base_vitality	
+		
+var base_willpower: int 
+var willpower: int:
+	get:
+		return base_willpower	
+
+# Dynamic Stats
+var melee_damage_percentage: int:
+	get:
+		return 100 + (2*strength)
+		
+var ranged_damage_percentage: int:
+	get:
+		return 100 + (2*perception)
+		
+var accuracy: int:
+	get:
+		return 60 + (2*perception)
+		
+var max_health: int:
+	get:
+		return 80 + (5*vitality)
+		
+var dodge_chance: int:
+	get:
+		return 2 + (2*agility)
+
+
+var min_ranged_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
+		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 0
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
+		
+var max_ranged_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
+		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 0
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
+
+var min_melee_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
+		# TODO: add unarmed weapon to every fighter
+		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 2
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
+		
+var max_melee_damage: int:
+	get:
+		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.MELEE_RIGHT_HAND)
+		# TODO: add unarmed weapon to every fighter
+		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 5
+		return int(base_weapon_damage * (melee_damage_percentage/100.0))
+		
+var protection: int:
+	get:
+		# TODO: Split by body part
+		var protection_sum := 0
+		for equipment in entity.equipment_component.slots.values():
+			if equipment.equippable_component:
+				protection_sum += equipment.equippable_component.protection
+				
+		return protection_sum
+
+# Changing stats
+var health: int:
 	set(value):
-		hp = clampi(value, 0, max_hp)
-		hp_changed.emit(hp, max_hp)
-		if hp <= 0:
+		health = clampi(value, 0, max_health)
+		changed.emit()
+		if health <= 0:
 			var die_silently := false
 			if not is_inside_tree():
 				die_silently = true
 				await ready
 			die(not die_silently)
-var base_defense: int
-var base_ranged_power: int
-var base_melee_power : int
-var defense: int: 
-	get:
-		return base_defense + get_defense_bonus()
-var melee_power: int: 
-	get:
-		return base_melee_power + get_melee_power_bonus()
-var ranged_power: int: 
-	get:
-		return base_ranged_power + get_ranged_power_bonus()
+
 
 var death_texture: Texture
 var death_color: Color
 
 
-func get_defense_bonus() -> int:
-	if entity.equipment_component:
-		return entity.equipment_component.get_defense_bonus()
-	return 0
-
-
-func get_melee_power_bonus() -> int:
-	if entity.equipment_component:
-		return entity.equipment_component.get_melee_power_bonus()
-	return 0
-	
-
-func get_ranged_power_bonus() -> int:
-	if entity.equipment_component:
-		return entity.equipment_component.get_ranged_power_bonus()
-	return 0
-	
-
 func _init(definition: FighterComponentDefinition) -> void:
-	max_hp = definition.max_hp
-	hp = definition.max_hp
-	base_defense = definition.defense
-	base_melee_power = definition.melee_power
-	base_ranged_power = definition.ranged_power
+	base_strength = definition.strength
+	base_agility = definition.agility
+	base_perception = definition.perception
+	base_vitality = definition.vitality
+	base_willpower = definition.willpower
+	
+	health = max_health
+	
 	death_texture = definition.death_texture
 	death_color = definition.death_color
 	
@@ -82,38 +142,88 @@ func die(trigger_side_effects := true) -> void:
 	entity.type = Entity.EntityType.CORPSE
 	get_map_data().unregister_blocking_entity(entity)
 	
+# TODO: fumble, critical
+func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
+	var to_hit_roll := roll()
+	var has_hit := to_hit_roll <= accuracy
+	return {
+		"has_hit": has_hit,
+		"to_hit_roll": to_hit_roll,
+		"hit_threshold": accuracy
+	}
+
+
+# TODO: fumble, critical
+func ranged_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:	
+	# TODO: Distance check
+	var to_hit_roll := roll()
+	var has_hit := to_hit_roll <= accuracy
+	return {
+		"has_hit": has_hit,
+		"to_hit_roll": to_hit_roll,
+		"hit_threshold": accuracy
+	}
+
+
+# TODO: fumble, critical
+func melee_damage(_defender: Entity) -> int:
+	var damage_roll := roll(min_melee_damage, max_melee_damage)
+	return damage_roll
+	
+
+# TODO: fumble, critical
+func ranged_damage(_defender: Entity) -> int:
+	var damage_roll := roll(min_ranged_damage, max_ranged_damage)
+	return damage_roll
+	
+func try_to_dodge(_attacker: Entity) -> Dictionary[String, Variant]:
+	var to_dodge_roll := roll(0, 100)
+	var has_dodged := to_dodge_roll <= dodge_chance
+	return {
+		"to_dodge_roll": to_dodge_roll,
+		"has_dodged": has_dodged,
+		"dodge_threshold": dodge_chance
+	}
 	
 func heal(amount: int) -> int:
-	if hp == max_hp:
+	if health == max_health:
 		return 0
 	
-	var new_hp_value: int = hp + amount
+	var new_health: int = health + amount
 	
-	if new_hp_value > max_hp:
-		new_hp_value = max_hp
+	if new_health > max_health:
+		new_health = max_health
 		
-	var amount_recovered: int = new_hp_value - hp
-	hp = new_hp_value
+	var amount_recovered: int = new_health - health
+	health = new_health
 	return amount_recovered
 
 
-func take_damage(amount: int) -> void:
-	hp -= amount
+func take_damage(amount: int) -> int:
+	var damage_given = clampi((amount - protection), 0, amount)
+	health -= damage_given
+	return damage_given
 	
 	
 func get_save_data() -> Dictionary:
 	return {
-		"max_hp": max_hp,
-		"hp": hp,
-		"melee_power": base_melee_power,
-		"ranged_power": base_ranged_power,
-		"defense": base_defense
+		"base_strength": base_strength,
+		"base_agility": base_agility,
+		"base_perception": base_perception,
+		"base_vitality": base_vitality,
+		"base_willpower": base_willpower,
+		"health": health
 	}
 
 
 func restore(save_data: Dictionary) -> void:
-	max_hp = save_data["max_hp"]
-	hp = save_data["hp"]
-	base_melee_power = save_data["melee_power"]
-	base_ranged_power = save_data["ranged_power"]
-	base_defense = save_data["defense"]
+	base_strength = save_data["base_strength"]
+	base_agility = save_data["base_agility"]
+	base_perception = save_data["base_perception"]
+	base_vitality = save_data["base_vitality"]
+	base_willpower = save_data["base_willpower"]
+	health = save_data["health"]
+
+#TODO: move to other class / helper?
+func roll(min_roll: int = 0, max_roll: int = 100) -> int:
+	return rng.randi_range(min_roll, max_roll)

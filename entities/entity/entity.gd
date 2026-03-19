@@ -8,38 +8,47 @@ enum AIType {INANIMATE, HOSTILE, NO_AI}
 
 enum EntityType {CORPSE, ITEM, ACTOR}
 
+#TODO: Rename to DefinitionKey
 enum EntityKey {
 	UNKNOWN,
+	# Actors
 	PLAYER,
+	
+	# Enemies
 	ORC,
-	TROLL,
+	
+	# Items
 	HEALTH_POTION,
 	LIGHTNING_SCROLL,
 	CONFUSION_SCROLL,
 	FIREBALL_SCROLL,
-	DAGGER,
+	ARROWS,
+	
+	# Weapons
 	SWORD,
-	CHAINMAIL,
-	LEATHER_ARMOR,
 	CROSSBOW,
+	
+	# Armor
+	CHAINMAIL,
+
+	# Containers
 	CHEST,
 	DROPPED,
-	ARROWS,
+	
+	# Others
 	NOTHING
 }
 
+#TODO: Rename to DefinitionPaths
 const ENTITY_DEFINITION_PATHS := {
 	EntityKey.PLAYER: "uid://dgtkb8ig8pwt0",
 	EntityKey.ORC: "uid://cu5b5e84eg0bu",
-	EntityKey.TROLL: "uid://b4kbg7bx30jwl",
 	EntityKey.HEALTH_POTION: "uid://bghj1pduyucfc",
 	EntityKey.LIGHTNING_SCROLL: "uid://o50ecypopc40",
 	EntityKey.CONFUSION_SCROLL: "uid://b6iuqi6lk2imp",
 	EntityKey.FIREBALL_SCROLL: "uid://bpl0ttrtq0p58",
-	EntityKey.DAGGER: "uid://dj6mgl0pt8ofp",
 	EntityKey.SWORD: "uid://cnvy4inyd8arv",
 	EntityKey.CHAINMAIL: "uid://cvbk872p5bt0d",
-	EntityKey.LEATHER_ARMOR: "uid://467c55dlqcbx",
 	EntityKey.CROSSBOW: "uid://cdmvyyqbt7jow",
 	EntityKey.CHEST: "uid://b4cui42b8sdjs",
 	EntityKey.ARROWS: "uid://demvf2bx0coki",

@@ -6,7 +6,9 @@
 
 [sub_resource type="Resource" id="Resource_uin21"]
 script = ExtResource("1_1v68p")
-melee_power_bonus = 3
+equipment_type = 4
+min_damage = 6
+max_damage = 9
 metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1v68p"]
