@@ -12,7 +12,7 @@ const directions = {
 	"move_down_right": Vector2i.DOWN + Vector2i.RIGHT,
 }
 
-const inventory_menu_scene = preload("uid://dy7s6c7w2b12c")
+const INVENTORY_MENU_SCENE = preload("uid://dy7s6c7w2b12c")
 const LOOT_MENU_SCENE = preload("uid://dh5x356856lj4")
 const CHARACTER_PANEL_SCENE = preload("uid://b75nk2pcefvpa")
 
@@ -25,7 +25,7 @@ func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_
 		await get_tree().physics_frame
 		MessageLog.send_message("No items in inventory.", GameColors.IMPOSSIBLE)
 		return null
-	var inventory_menu: InventoryMenu = inventory_menu_scene.instantiate()
+	var inventory_menu: InventoryMenu = INVENTORY_MENU_SCENE.instantiate()
 	add_child(inventory_menu)
 	inventory_menu.build(window_title, inventory)
 	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
@@ -66,9 +66,6 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("wait"):
 		action = WaitAction.new(player)
 	
-	if Input.is_action_just_pressed("view_history"):
-		get_parent().transition_to(InputHandler.InputHandlers.HISTORY_VIEWER)
-			
 	if Input.is_action_just_pressed("pickup"):
 		var visible_lootables := player.map_data.get_visible_lootable_entities()
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
@@ -76,7 +73,6 @@ func get_action(player: Entity) -> Action:
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
 		
 		if target != Vector2i(-1, -1):
-			#var offset : Vector2i = target - player.grid_position
 			var all_lootables := player.map_data.get_lootable_entities_at_location(target)
 			
 			if all_lootables.size() > 0:
