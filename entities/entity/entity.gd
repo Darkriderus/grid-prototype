@@ -4,7 +4,7 @@ extends Node2D
 signal changed
 
 const ENTITY_SCENE_PREFAB = preload("uid://cc4g2j2qdymr7")
-var entity_scene : Sprite2D
+var entity_scene : EntityScene
 
 enum AIType {INANIMATE, HOSTILE, NO_AI}
 
@@ -150,6 +150,8 @@ func set_entity_definition(_key: EntityKey) -> void:
 func move(move_offset: Vector2i) -> void:
 	map_data.unregister_blocking_entity(self)
 	grid_position += move_offset
+	entity_scene.animation_player.stop()
+	entity_scene.animation_player.play("walk")
 	map_data.register_blocking_entity(self)
 
 

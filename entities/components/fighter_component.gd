@@ -212,6 +212,10 @@ func heal(amount: int) -> int:
 func take_damage(amount: int) -> int:
 	var damage_given = clampi((amount - protection), 0, amount)
 	health -= damage_given
+	if damage_given > 0:
+		# TODO: Helper
+		entity.entity_scene.animation_player.stop()
+		entity.entity_scene.animation_player.play("damage")
 	return damage_given
 	
 	
