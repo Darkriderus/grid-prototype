@@ -73,8 +73,8 @@ func open_character_menu(entity: Entity) -> void:
 func get_action(player: Entity) -> Action:
 	var action: Action = null
 	
-	if not player_enabled:
-		return
+	#if not player_enabled:
+		#return
 	
 	for direction in directions:
 		if Input.is_action_just_pressed(direction):

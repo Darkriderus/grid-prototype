@@ -4,6 +4,7 @@ extends RefCounted
 signal entity_placed(entity)
 signal entity_removed(entity)
 
+# TODO: Relict - Remove
 const tile_types = {
 	"floor": preload("uid://bby8nrjwno8kf"),
 	"wall": preload("uid://cxxd6wrpw0pu7"),
