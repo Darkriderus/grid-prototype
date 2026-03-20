@@ -3,6 +3,8 @@ extends Component
 
 signal changed
 
+const POPUP_ANIMATION_SCENE = preload("uid://tbng7bk63fmp")
+
 var rng = RandomNumberGenerator.new()
 
 # Static Stats
@@ -156,6 +158,17 @@ func die(trigger_side_effects := true) -> void:
 func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var to_hit_roll := roll()
 	var has_hit := to_hit_roll <= accuracy
+	
+	var effect := POPUP_ANIMATION_SCENE.instantiate()
+	var offset := (_defender.grid_position - entity.grid_position) * 8
+	var animation_position := offset 
+	
+	print(entity.entity_name, offset)
+	print(effect.position)
+	effect.position += Vector2(animation_position)
+	
+	entity.add_child(effect)
+	
 	return {
 		"has_hit": has_hit,
 		"to_hit_roll": to_hit_roll,

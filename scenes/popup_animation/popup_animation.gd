@@ -1,4 +1,4 @@
-class_name AttackAnim
+class_name PopupAnimation
 extends Sprite2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
