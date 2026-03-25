@@ -2,6 +2,7 @@ class_name Entity
 extends Node2D
 
 signal changed
+signal turn_done
 
 const ENTITY_SCENE_PREFAB = preload("uid://cc4g2j2qdymr7")
 var entity_scene : EntityScene
