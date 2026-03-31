@@ -163,8 +163,6 @@ func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var offset := (_defender.grid_position - entity.grid_position) * 8
 	var animation_position := offset 
 	
-	print(entity.entity_name, offset)
-	print(effect.position)
 	effect.position += Vector2(animation_position)
 	
 	entity.add_child(effect)

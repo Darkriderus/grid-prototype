@@ -153,7 +153,10 @@ func move(move_offset: Vector2i) -> void:
 	grid_position += move_offset
 	entity_scene.animation_player.stop()
 	entity_scene.animation_player.play("walk")
+	entity_scene.animation_player.animation_finished.connect(func(_name): turn_done.emit(), CONNECT_ONE_SHOT)
 	map_data.register_blocking_entity(self)
+	
+	
 
 
 func is_blocking_movement() -> bool:
