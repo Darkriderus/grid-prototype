@@ -159,13 +159,14 @@ func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var to_hit_roll := roll()
 	var has_hit := to_hit_roll <= accuracy
 	
-	var effect := POPUP_ANIMATION_SCENE.instantiate()
-	var offset := (_defender.grid_position - entity.grid_position) * 8
-	var animation_position := offset 
+	entity.play_animation("attack")
+	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
 	
-	effect.position += Vector2(animation_position)
-	
-	entity.add_child(effect)
+	#var effect := POPUP_ANIMATION_SCENE.instantiate()
+	#var offset := (_defender.grid_position - entity.grid_position) * 8
+	#var animation_position := offset 
+	#effect.position += Vector2(animation_position)
+	#entity.add_child(effect)
 	
 	return {
 		"has_hit": has_hit,
