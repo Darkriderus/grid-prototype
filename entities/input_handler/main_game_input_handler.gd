@@ -78,9 +78,9 @@ func get_action(player: Entity) -> Action:
 			var offset: Vector2i = directions[direction]
 			action = BumpAction.new(player, offset.x, offset.y)
 		#
-	#if Input.is_action_just_pressed("wait"):
-		#action = WaitAction.new(player)
-	#
+	if Input.is_action_just_pressed("wait"):
+		action = WaitAction.new(player)
+	
 	#if Input.is_action_just_pressed("pickup"):
 		#var visible_lootables := player.map_data.get_visible_lootable_entities()
 		#var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
