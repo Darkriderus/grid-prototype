@@ -59,10 +59,15 @@ func _physics_process(_delta: float) -> void:
 	var action: Action = await input_handler.get_action(player)
 	if action:
 		# var previous_player_position: Vector2i = player.grid_position
-		if action.perform():
+		var success := action.perform()
+		if success:
+			get_map_data().is_player_turn = false
+			await player.turn_done
+			print("ENEMY_TURN")
 			_handle_enemy_turns()
 			map.update_fov(player.grid_position)
-			SignalBus.player_turn_started.emit()
+			get_map_data().is_player_turn = true
+			print("PLAYER_TURN")
 
 func _handle_enemy_turns() -> void:
 	for entity in get_map_data().get_actors():

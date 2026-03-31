@@ -10,6 +10,7 @@ const tile_types = {
 	"wall": preload("uid://cxxd6wrpw0pu7"),
 }
 
+
 const entity_pathfinding_weight = 10.0
 
 var width: int
@@ -20,7 +21,7 @@ var player: Entity
 var down_stairs_location: Vector2i
 var current_floor: int = 0
 var pathfinder: AStarGrid2D
-
+var is_player_turn := true
 
 func _init(_map_width: int, _map_height: int, _player: Entity) -> void:
 	width = _map_width

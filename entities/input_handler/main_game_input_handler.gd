@@ -19,20 +19,13 @@ const CHARACTER_PANEL_SCENE = preload("uid://b75nk2pcefvpa")
 
 @export var reticle: Reticle
 @export var map: Map
-var player_enabled := true
-
-
-func _enable_player():
-	player_enabled = true
 
 
 func enter():
-	if not SignalBus.player_turn_started.is_connected(_enable_player):
-		SignalBus.player_turn_started.connect(_enable_player)
+	pass
 	
 func exit():
-	if SignalBus.player_turn_started.is_connected(_enable_player):
-		SignalBus.player_turn_started.disconnect(_enable_player)
+	pass
 
 
 func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_next_step: bool = false) -> Entity:
@@ -72,15 +65,19 @@ func open_character_menu(entity: Entity) -> void:
 
 func get_action(player: Entity) -> Action:
 	var action: Action = null
+	var map_data := player.map_data
+	
+	if not map_data.is_player_turn:
+		return
 	
 	#if not player_enabled:
 		#return
 	
 	for direction in directions:
-		if Input.is_action_just_pressed(direction):
+		if Input.is_action_pressed(direction):
 			var offset: Vector2i = directions[direction]
 			action = BumpAction.new(player, offset.x, offset.y)
-		
+		#
 	if Input.is_action_just_pressed("wait"):
 		action = WaitAction.new(player)
 	
@@ -100,6 +97,9 @@ func get_action(player: Entity) -> Action:
 				if entity_to_loot.inventory_component.items.size() == 0 and entity_to_loot.inventory_component.delete_if_empty:
 					player.map_data.entities.erase(entity_to_loot)
 					player.map_data.entity_removed.emit(entity_to_loot)
+					
+				# TODO: move it to right position
+				action = WaitAction.new(player)
 			else:
 				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
 		
@@ -115,7 +115,7 @@ func get_action(player: Entity) -> Action:
 			target = player.grid_position
 		
 		action = OpenDoorAction.new(player, target.x, target.y)
-		
+		#
 	if Input.is_action_just_pressed("close_door"):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR_OPEN)
 		var doors_in_range : Array[Tile] = visible_doors.filter(func (t : Tile): return player.distance(t.grid_position) == 1)
@@ -124,12 +124,11 @@ func get_action(player: Entity) -> Action:
 		if doors_in_range.size() == 1:
 			target = doors_in_range[0].grid_position
 		elif doors_in_range.size() > 1:
-			#await get_grid_position(player, 0, doors_in_range)
 			# TODO: Add possibility to select door
 			target = player.grid_position
 		
 		action = CloseDoorAction.new(player, target.x, target.y)
-	
+	#
 	if Input.is_action_just_pressed("drop"):
 		var visible_lootables := player.map_data.get_visible_lootable_entities()
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
@@ -153,13 +152,21 @@ func get_action(player: Entity) -> Action:
 				if container.inventory_component.items.size() == 0 and container.inventory_component.delete_if_empty:
 					player.map_data.entities.erase(container)
 					player.map_data.entity_removed.emit(container)
-	
+					
+				# TODO: move it to right position
+				action = WaitAction.new(player)
+	#
 	if Input.is_action_just_pressed("activate"):
 		action = await activate_item(player)
+		# TODO: move it to right position
+		action = WaitAction.new(player)
 		
+		#
 	if Input.is_action_just_pressed("inventory"):
 		await get_item("Inventory", player.inventory_component)
-		
+		# TODO: move it to right position
+		action = WaitAction.new(player)
+		#
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
 		
@@ -173,7 +180,9 @@ func get_action(player: Entity) -> Action:
 		)
 		
 		await get_grid_position(player, 0, entities_in_sight)
-		
+		# TODO: move it to right position
+		action = WaitAction.new(player)
+		#
 	if Input.is_action_just_pressed("fire_weapon"):
 		if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
 			MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
@@ -190,16 +199,17 @@ func get_action(player: Entity) -> Action:
 			var offset : Vector2i = target - player.grid_position
 			
 			action = RangedAction.new(player, offset.x, offset.y)
-
+#
 	if Input.is_action_just_pressed("display_character_info"):
 		open_character_menu(player)
+		# TODO: move it to right position
+		action = WaitAction.new(player)
 		
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)
-	
-	if action:
-		player_enabled = false
-	
+		# TODO: move it to right position
+		action = WaitAction.new(player)
+		
 	return action
 	
 

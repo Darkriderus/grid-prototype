@@ -2,6 +2,7 @@ class_name Entity
 extends Node2D
 
 signal changed
+signal turn_done
 
 const ENTITY_SCENE_PREFAB = preload("uid://cc4g2j2qdymr7")
 var entity_scene : EntityScene
@@ -150,10 +151,14 @@ func set_entity_definition(_key: EntityKey) -> void:
 func move(move_offset: Vector2i) -> void:
 	map_data.unregister_blocking_entity(self)
 	grid_position += move_offset
-	entity_scene.animation_player.stop()
-	entity_scene.animation_player.play("walk")
+	play_animation("walk")
+	entity_scene.animation_player.animation_finished.connect(func(_name): turn_done.emit(), CONNECT_ONE_SHOT)
 	map_data.register_blocking_entity(self)
-
+	
+	
+func play_animation(animation_name: String):
+	entity_scene.animation_player.stop()
+	entity_scene.animation_player.play(animation_name)
 
 func is_blocking_movement() -> bool:
 	return blocks_movement
