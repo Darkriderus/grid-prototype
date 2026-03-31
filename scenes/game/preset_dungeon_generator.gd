@@ -83,10 +83,10 @@ func _ready() -> void:
 	_rng.randomize()
 
 
-func _set_tile(dungeon: MapData, x: int, y: int, tile_type: Tile.TileTypeKeys) -> void:
+func _set_tile(dungeon: MapData, x: int, y: int, tile_type: Tile.TileTypeKeys, alt_key: String = "") -> void:
 	var tile_position = Vector2i(x, y)
 	var tile: Tile = dungeon.get_tile(tile_position)
-	tile.set_tile_type(tile_type)
+	tile.set_tile_type(tile_type, alt_key)
 
 
 func generate_dungeon(player: Entity, current_floor: int) -> MapData:
@@ -109,13 +109,22 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 			var ascii_char := line[x]
 			var found := false
 			for key in Tile.TileTypeKeys.values():
-				if ascii_char == Tile.tile_types[key].ascii_char:
+				var tile_type := Tile.tile_types[key] as TileDefinition
+				if ascii_char == tile_type.ascii_char:
 					_set_tile(dungeon, x, y, key)
 					found = true
 					if key == Tile.TileTypeKeys.UP_STAIRS:
 						player.grid_position = coord
 						player.map_data = dungeon
-						
+				else:
+					for alt_key in tile_type.alternative_tiles.keys():
+						if ascii_char == alt_key:
+							_set_tile(dungeon, x, y, key, alt_key)
+							found = true
+							if key == Tile.TileTypeKeys.UP_STAIRS:
+								player.grid_position = coord
+								player.map_data = dungeon
+					
 			## TODO: Change default if necessary
 			if not found:
 				_set_tile(dungeon, x, y, Tile.TileTypeKeys.FLOOR)

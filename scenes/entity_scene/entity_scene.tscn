@@ -80,8 +80,8 @@ tracks/0/keys = {
 "values": [0.0, 0.2617994, 0.0, -0.2617994, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_s3xc8"]
-resource_name = "walk"
+[sub_resource type="Animation" id="Animation_0m8hh"]
+resource_name = "shoot"
 length = 0.2
 step = 0.05
 tracks/0/type = "value"
@@ -97,8 +97,8 @@ tracks/0/keys = {
 "values": [0.0, 0.2617994, 0.0, -0.2617994, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_0m8hh"]
-resource_name = "shoot"
+[sub_resource type="Animation" id="Animation_s3xc8"]
+resource_name = "walk"
 length = 0.2
 step = 0.05
 tracks/0/type = "value"

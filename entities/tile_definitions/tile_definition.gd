@@ -7,6 +7,8 @@ extends Resource
 @export_color_no_alpha var color_dark: Color = Color.WHITE
 @export var ascii_char : String = ' '
 
+@export var alternative_tiles: Dictionary[String, AtlasTexture] = {}
+
 @export_category("Mechanics")
 @export var is_walkable: bool = true
 @export var is_transparent: bool = true

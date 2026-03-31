@@ -47,10 +47,13 @@ func _init(_grid_position: Vector2i, _key: TileTypeKeys) -> void:
 	set_tile_type(_key)
 	
 
-func set_tile_type(_key: TileTypeKeys) -> void:
+func set_tile_type(_key: TileTypeKeys, alt_key: String = "") -> void:
 	key = _key
 	_definition = tile_types[key]
-	texture = _definition.texture
+	if alt_key:
+		texture = _definition.alternative_tiles[alt_key]
+	else:
+		texture = _definition.texture
 	modulate = _definition.color_dark
 
 
