@@ -159,6 +159,7 @@ func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var to_hit_roll := roll()
 	var has_hit := to_hit_roll <= accuracy
 	
+	# TODO: Cleanup - only fire after everythin is calculated	
 	entity.play_animation("attack")
 	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
 	
