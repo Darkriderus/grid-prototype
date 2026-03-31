@@ -81,25 +81,28 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("wait"):
 		action = WaitAction.new(player)
 	
-	#if Input.is_action_just_pressed("pickup"):
-		#var visible_lootables := player.map_data.get_visible_lootable_entities()
-		#var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
-		#
-		#var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
-		#
-		#if target != Vector2i(-1, -1):
-			#var all_lootables := player.map_data.get_lootable_entities_at_location(target)
-			#
-			#if all_lootables.size() > 0:
-				#var entity_to_loot := all_lootables[0]
-				#await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
-				#
-				#if entity_to_loot.inventory_component.items.size() == 0 and entity_to_loot.inventory_component.delete_if_empty:
-					#player.map_data.entities.erase(entity_to_loot)
-					#player.map_data.entity_removed.emit(entity_to_loot)
-			#else:
-				#MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
-		#
+	if Input.is_action_just_pressed("pickup"):
+		var visible_lootables := player.map_data.get_visible_lootable_entities()
+		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
+		
+		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
+		
+		if target != Vector2i(-1, -1):
+			var all_lootables := player.map_data.get_lootable_entities_at_location(target)
+			
+			if all_lootables.size() > 0:
+				var entity_to_loot := all_lootables[0]
+				await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
+				
+				if entity_to_loot.inventory_component.items.size() == 0 and entity_to_loot.inventory_component.delete_if_empty:
+					player.map_data.entities.erase(entity_to_loot)
+					player.map_data.entity_removed.emit(entity_to_loot)
+					
+				# TODO: move it to right position
+				action = WaitAction.new(player)
+			else:
+				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
+		
 	if Input.is_action_just_pressed("open_door"):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR)
 		var doors_in_range : Array[Tile] = visible_doors.filter(func (t : Tile): return player.distance(t.grid_position) == 1)
@@ -126,76 +129,87 @@ func get_action(player: Entity) -> Action:
 		
 		action = CloseDoorAction.new(player, target.x, target.y)
 	#
-	#if Input.is_action_just_pressed("drop"):
-		#var visible_lootables := player.map_data.get_visible_lootable_entities()
-		#var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
-		#
-		#var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
-		#if player.distance(target) > 1:
-			#MessageLog.send_message("Too far away.", GameColors.IMPOSSIBLE)
-		#else:
-			#if target != Vector2i(-1, -1):
-				#var all_lootables := player.map_data.get_lootable_entities_at_location(target)
-				#var container : Entity
-				#if all_lootables.size() == 0:
-					#container = Entity.new(player.map_data, target, Entity.EntityKey.DROPPED)
-					#player.map_data.entities.append(container)
-					#player.map_data.entity_placed.emit(container)
-				#else:
-					#container = all_lootables[0]
-				#
-				#await open_loot_menu(container.entity_name, player, container)
-				#
-				#if container.inventory_component.items.size() == 0 and container.inventory_component.delete_if_empty:
-					#player.map_data.entities.erase(container)
-					#player.map_data.entity_removed.emit(container)
+	if Input.is_action_just_pressed("drop"):
+		var visible_lootables := player.map_data.get_visible_lootable_entities()
+		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
+		
+		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
+		if player.distance(target) > 1:
+			MessageLog.send_message("Too far away.", GameColors.IMPOSSIBLE)
+		else:
+			if target != Vector2i(-1, -1):
+				var all_lootables := player.map_data.get_lootable_entities_at_location(target)
+				var container : Entity
+				if all_lootables.size() == 0:
+					container = Entity.new(player.map_data, target, Entity.EntityKey.DROPPED)
+					player.map_data.entities.append(container)
+					player.map_data.entity_placed.emit(container)
+				else:
+					container = all_lootables[0]
+				
+				await open_loot_menu(container.entity_name, player, container)
+				
+				if container.inventory_component.items.size() == 0 and container.inventory_component.delete_if_empty:
+					player.map_data.entities.erase(container)
+					player.map_data.entity_removed.emit(container)
+					
+				# TODO: move it to right position
+				action = WaitAction.new(player)
 	#
-	#if Input.is_action_just_pressed("activate"):
-		#action = await activate_item(player)
+	if Input.is_action_just_pressed("activate"):
+		action = await activate_item(player)
+		# TODO: move it to right position
+		action = WaitAction.new(player)
+		
 		#
-	#if Input.is_action_just_pressed("inventory"):
-		#await get_item("Inventory", player.inventory_component)
+	if Input.is_action_just_pressed("inventory"):
+		await get_item("Inventory", player.inventory_component)
+		# TODO: move it to right position
+		action = WaitAction.new(player)
 		#
-	#if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
-		#action = EscapeAction.new(player)
+	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
+		action = EscapeAction.new(player)
+		
+	if Input.is_action_just_pressed("look"):
+		var entities_in_sight := player.map_data.get_visible_entities()
+		
+		entities_in_sight.sort_custom(func (a: Entity, b: Entity):
+			if player.distance(a.grid_position) < player.distance(b.grid_position):
+				return true
+			return false
+		)
+		
+		await get_grid_position(player, 0, entities_in_sight)
+		# TODO: move it to right position
+		action = WaitAction.new(player)
 		#
-	#if Input.is_action_just_pressed("look"):
-		#var entities_in_sight := player.map_data.get_visible_entities()
-		#
-		#entities_in_sight.sort_custom(func (a: Entity, b: Entity):
-			#if player.distance(a.grid_position) < player.distance(b.grid_position):
-				#return true
-			#return false
-		#)
-		#
-		#await get_grid_position(player, 0, entities_in_sight)
-		#
-	#if Input.is_action_just_pressed("fire_weapon"):
-		#if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
-			#MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
-		#else:
-			#var enemies_in_sight := player.map_data.get_visible_actors()
-			#enemies_in_sight.erase(player)
-			#enemies_in_sight.sort_custom(func (a: Entity, b: Entity):
-				#if player.distance(a.grid_position) < player.distance(b.grid_position):
-					#return true
-				#return false
-			#)
-			#
-			#var target : Vector2i = await get_grid_position(player, 0, enemies_in_sight)
-			#var offset : Vector2i = target - player.grid_position
-			#
-			#action = RangedAction.new(player, offset.x, offset.y)
+	if Input.is_action_just_pressed("fire_weapon"):
+		if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
+			MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
+		else:
+			var enemies_in_sight := player.map_data.get_visible_actors()
+			enemies_in_sight.erase(player)
+			enemies_in_sight.sort_custom(func (a: Entity, b: Entity):
+				if player.distance(a.grid_position) < player.distance(b.grid_position):
+					return true
+				return false
+			)
+			
+			var target : Vector2i = await get_grid_position(player, 0, enemies_in_sight)
+			var offset : Vector2i = target - player.grid_position
+			
+			action = RangedAction.new(player, offset.x, offset.y)
 #
-	#if Input.is_action_just_pressed("display_character_info"):
-		#open_character_menu(player)
-		#
-	#if Input.is_action_just_pressed("descend"):
-		#action = TakeStairsAction.new(player)
-	
-	#if action:
-		#player_enabled = false
-	
+	if Input.is_action_just_pressed("display_character_info"):
+		open_character_menu(player)
+		# TODO: move it to right position
+		action = WaitAction.new(player)
+		
+	if Input.is_action_just_pressed("descend"):
+		action = TakeStairsAction.new(player)
+		# TODO: move it to right position
+		action = WaitAction.new(player)
+		
 	return action
 	
 

@@ -181,6 +181,11 @@ func ranged_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	# TODO: Distance check
 	var to_hit_roll := roll()
 	var has_hit := to_hit_roll <= accuracy
+	
+	# TODO: Cleanup - only fire after everythin is calculated	
+	entity.play_animation("shoot")
+	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
+
 	return {
 		"has_hit": has_hit,
 		"to_hit_roll": to_hit_roll,
