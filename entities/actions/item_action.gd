@@ -21,4 +21,9 @@ func perform() -> bool:
 		return false
 	if item.equippable_component:
 		return EquipAction.new(entity, item).perform()
+		
+	# TODO: Make nice
+	entity.play_animation("walk")
+	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
+	
 	return item.consumable_component.activate(self)
