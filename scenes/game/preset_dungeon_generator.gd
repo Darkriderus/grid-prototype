@@ -94,7 +94,7 @@ func generate_dungeon(player: Entity, current_floor: int) -> MapData:
 	dungeon.current_floor = current_floor
 	dungeon.entities.append(player)
 		
-	var file = FileAccess.open("res://assets/dungeons/dungeon_1.txt", FileAccess.READ)
+	var file = FileAccess.open("res://assets/dungeons/dungeon_bunker.txt", FileAccess.READ)
 
 	var y := 0
 	while not file.eof_reached():
