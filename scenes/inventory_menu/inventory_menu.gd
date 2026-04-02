@@ -36,7 +36,7 @@ func build(title_text: String, inventory: InventoryComponent) -> void:
 	title_label.text = title_text
 	for i in inventory.items.size():
 		var item: Entity = inventory.items[i]
-		var is_equipped: bool = equipment.is_item_equipped(item)
+		var is_equipped: bool = equipment.is_item_equipped(item) if equipment else false
 		_register_item(i, item, is_equipped)
 	inventory_list.get_child(0).grab_focus()
 	show()

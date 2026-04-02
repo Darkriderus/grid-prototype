@@ -152,11 +152,18 @@ func move(move_offset: Vector2i) -> void:
 	map_data.unregister_blocking_entity(self)
 	grid_position += move_offset
 	play_animation("walk")
-	entity_scene.animation_player.animation_finished.connect(func(_name): turn_done.emit(), CONNECT_ONE_SHOT)
+	entity_scene.animation_player.animation_finished.connect(func(_name): end_turn(), CONNECT_ONE_SHOT)
 	map_data.register_blocking_entity(self)
 	
 	
+	
+func end_turn():
+	print("Ending Turn!")
+	turn_done.emit()
+	print("!")
+	
 func play_animation(animation_name: String):
+	print("playing ", animation_name)
 	entity_scene.animation_player.stop()
 	entity_scene.animation_player.play(animation_name)
 

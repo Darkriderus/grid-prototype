@@ -92,14 +92,12 @@ func get_action(player: Entity) -> Action:
 			
 			if all_lootables.size() > 0:
 				var entity_to_loot := all_lootables[0]
-				await open_loot_menu(entity_to_loot.entity_name, player, entity_to_loot)
 				
-				if entity_to_loot.inventory_component.items.size() == 0 and entity_to_loot.inventory_component.delete_if_empty:
-					player.map_data.entities.erase(entity_to_loot)
-					player.map_data.entity_removed.emit(entity_to_loot)
-					
-				# TODO: move it to right position
-				action = WaitAction.new(player)
+				var loot_target = await get_entity_from_container(entity_to_loot)
+				
+				print("Pickup ", loot_target)
+				
+				action = PickupAction.new(player, loot_target)
 			else:
 				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
 		
@@ -158,8 +156,6 @@ func get_action(player: Entity) -> Action:
 	#
 	if Input.is_action_just_pressed("activate"):
 		action = await activate_item(player)
-		
-		#
 	if Input.is_action_just_pressed("inventory"):
 		await get_item("Inventory", player.inventory_component)
 		# TODO: move it to right position
@@ -167,7 +163,6 @@ func get_action(player: Entity) -> Action:
 		#
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
-		
 	if Input.is_action_just_pressed("look"):
 		var entities_in_sight := player.map_data.get_visible_entities()
 		
@@ -197,12 +192,10 @@ func get_action(player: Entity) -> Action:
 			var offset : Vector2i = target - player.grid_position
 			
 			action = RangedAction.new(player, offset.x, offset.y)
-#
 	if Input.is_action_just_pressed("display_character_info"):
 		open_character_menu(player)
 		# TODO: move it to right position
 		action = WaitAction.new(player)
-		
 	if Input.is_action_just_pressed("descend"):
 		action = TakeStairsAction.new(player)
 		# TODO: move it to right position
@@ -210,6 +203,13 @@ func get_action(player: Entity) -> Action:
 		
 	return action
 	
+
+func get_entity_from_container(container: Entity) -> Entity:
+	var selected_item: Entity = await get_item("Select an item to pick up", container.inventory_component, true)
+	if selected_item == null:
+		return null
+	
+	return selected_item
 
 func activate_item(player: Entity) -> Action:
 	var selected_item: Entity = await get_item("Select an item to use", player.inventory_component, true)
