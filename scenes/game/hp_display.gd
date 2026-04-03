@@ -6,7 +6,7 @@ extends MarginContainer
 func initialize(player: Entity) -> void:
 	if not is_inside_tree():
 		await ready
-	player.fighter_component.hp_changed.connect(player_hp_changed)
+	player.stat_component.hp_changed.connect(player_hp_changed)
 	var player_hp: int = player.fighter_component.health
 	var player_max_hp: int = player.fighter_component.max_health
 	player_hp_changed(player_hp, player_max_hp)

@@ -1,4 +1,4 @@
-class_name FighterComponent
+class_name StatComponent
 extends Component
 
 signal changed
@@ -115,7 +115,7 @@ var death_texture: Texture
 var death_color: Color
 
 
-func _init(definition: FighterComponentDefinition) -> void:
+func _init(definition: StatComponentDefinition) -> void:
 	base_strength = definition.strength
 	base_agility = definition.agility
 	base_perception = definition.perception

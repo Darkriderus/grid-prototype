@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://b44fqlc4a688"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://b44fqlc4a688"]
 
 [ext_resource type="Script" uid="uid://dhqk57o0wm5s0" path="res://entities/component_definitions/equippable_component_definition.gd" id="1_bur4e"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="2_qdmly"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="3_7qgpi"]
 [ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_ysngk"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="4_5tjti"]
 
 [sub_resource type="Resource" id="Resource_va1o4"]
 script = ExtResource("1_bur4e")
@@ -10,6 +12,15 @@ equipment_type = 7
 weight_carry_increase = 25.0
 volume_carry_increase = 25.0
 metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
+
+[sub_resource type="Resource" id="Resource_nkbw3"]
+script = ExtResource("4_5tjti")
+strength = 0
+agility = 0
+perception = 0
+vitality = 0
+willpower = 0
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ly6a2"]
 atlas = ExtResource("3_ysngk")
@@ -22,5 +33,6 @@ texture = SubResource("AtlasTexture_ly6a2")
 color = Color(0.8081914, 0.32666567, 0.085174344, 1)
 is_blocking_movement = false
 type = 1
+stat_definition = SubResource("Resource_nkbw3")
 item_definition = SubResource("Resource_va1o4")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

@@ -15,7 +15,7 @@ extends Resource
 
 #TODO: Naming Convention
 @export_category("Components")
-@export var fighter_definition: FighterComponentDefinition
+@export var stat_definition: StatComponentDefinition
 @export var ai_type: Entity.AIType
 @export var item_definition: ItemComponentDefinition
 @export var inventory_definition: InventoryComponentDefinition

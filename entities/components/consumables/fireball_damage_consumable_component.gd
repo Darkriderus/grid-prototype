@@ -39,7 +39,7 @@ func activate(action: ItemAction) -> bool:
 	
 	for target in targets:
 		MessageLog.send_message("The %s is engulfed in a fiery explosion, taking %d damage!" % [target.get_entity_name(), damage], GameColors.PLAYER_ATTACK)
-		target.fighter_component.take_damage(damage)
+		target.stat_component.take_damage(damage)
 	
 	consume(action.entity)
 	return true

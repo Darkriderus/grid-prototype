@@ -73,7 +73,7 @@ var entity_name: String
 var blocks_movement: bool
 var map_data: MapData
 
-var fighter_component: FighterComponent
+var stat_component: StatComponent
 var ai_component: BaseAIComponent
 var consumable_component: ConsumableComponent
 var equippable_component: EquippableComponent
@@ -127,9 +127,9 @@ func set_entity_definition(_key: EntityKey) -> void:
 			ai_component = NoAIComponent.new()
 			add_child(ai_component)
 	
-	if entity_definition.fighter_definition:
-		fighter_component = FighterComponent.new(entity_definition.fighter_definition)
-		add_child(fighter_component)
+	if entity_definition.stat_definition:
+		stat_component = StatComponent.new(entity_definition.stat_definition)
+		add_child(stat_component)
 	
 	if entity_definition.inventory_definition:
 		inventory_component = InventoryComponent.new(entity_definition.inventory_definition)
@@ -214,8 +214,8 @@ func get_save_data() -> Dictionary:
 		"y": grid_position.y,
 		"key": key,
 	}
-	if fighter_component:
-		save_data["fighter_component"] = fighter_component.get_save_data()
+	if stat_component:
+		save_data["stat_component"] = stat_component.get_save_data()
 	if ai_component:
 		save_data["ai_component"] = ai_component.get_save_data()
 	if inventory_component:
@@ -230,8 +230,8 @@ func get_save_data() -> Dictionary:
 func restore(save_data: Dictionary) -> void:
 	grid_position = Vector2i(save_data["x"], save_data["y"])
 	set_entity_definition(save_data["key"])
-	if fighter_component and save_data.has("fighter_component"):
-		fighter_component.restore(save_data["fighter_component"])
+	if stat_component and save_data.has("stat_component"):
+		stat_component.restore(save_data["stat_component"])
 	if ai_component and save_data.has("ai_component"):
 		var ai_data: Dictionary = save_data["ai_component"]
 		if ai_data["type"] == "ConfusedEnemyAI":
