@@ -36,15 +36,15 @@ var willpower: int:
 # Dynamic Stats
 var melee_damage_percentage: int:
 	get:
-		return 100 + (2*strength)
+		return 100 + (2*strength) if strength > 0 else 0
 		
 var ranged_damage_percentage: int:
 	get:
-		return 100 + (2*perception)
+		return 100 + (2*perception) if perception > 0 else 0
 
 var accuracy: int:
 	get:
-		return 60 + (2*perception)
+		return 60 + (2*perception) if perception > 0 else 0
 		
 var max_health: int:
 	get:
@@ -57,24 +57,35 @@ var dodge_chance: int:
 
 var min_ranged_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 0
 		return int(base_weapon_damage * (melee_damage_percentage/100.0))
 		
 var max_ranged_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 0
 		return int(base_weapon_damage * (melee_damage_percentage/100.0))
 
 var ranged_attack_range: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		return weapon_used.equippable_component.attack_range if weapon_used else 0
 		
 
 var min_melee_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 2
@@ -82,6 +93,9 @@ var min_melee_damage: int:
 		
 var max_melee_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 5
@@ -89,6 +103,9 @@ var max_melee_damage: int:
 		
 var protection: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		# TODO: Split by body part
 		var protection_sum := 0
 		for equipment in entity.equipment_component.slots.values():
