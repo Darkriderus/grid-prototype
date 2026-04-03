@@ -66,8 +66,8 @@ func _physics_process(_delta: float) -> void:
 			print("ENEMY_TURN")
 			_handle_enemy_turns()
 			map.update_fov(player.grid_position)
-			player.start_turn()
 			get_map_data().is_player_turn = true
+			player.start_turn()
 			print("PLAYER_TURN")
 
 func _handle_enemy_turns() -> void:

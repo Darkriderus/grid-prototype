@@ -91,9 +91,9 @@ func get_action(player: Entity) -> Action:
 			if all_lootables.size() > 0:
 				var entity_to_loot := all_lootables[0]
 				
-				var loot_target = await get_entity_from_container(entity_to_loot)
-				
-				action = PickupAction.new(player, loot_target)
+				var loot_target = await get_entity_from_container(entity_to_loot, "Select item to pickup")
+				if loot_target:					
+					action = PickupAction.new(player, loot_target)
 			else:
 				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
 		
@@ -125,44 +125,31 @@ func get_action(player: Entity) -> Action:
 	#
 	if Input.is_action_just_pressed("drop"):
 		# TODO: REWRITE
-		print("TBI")
-		pass
-		#var visible_lootables := player.map_data.get_visible_lootable_entities()
-		#var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
+		var visible_lootables := player.map_data.get_visible_lootable_entities()
+		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
 		#
-		#var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
-		#if player.distance(target) > 1:
-			#MessageLog.send_message("Too far away.", GameColors.IMPOSSIBLE)
-		#else:
-			#if target != Vector2i(-1, -1):
-				#var all_lootables := player.map_data.get_lootable_entities_at_location(target)
-				#var container : Entity
-				#if all_lootables.size() == 0:
-					#container = Entity.new(player.map_data, target, Entity.EntityKey.DROPPED)
-					#player.map_data.entities.append(container)
-					#player.map_data.entity_placed.emit(container)
-				#else:
-					#container = all_lootables[0]
-				#
-				#await open_loot_menu(container.entity_name, player, container)
-				#
-				#if container.inventory_component.items.size() == 0 and container.inventory_component.delete_if_empty:
-					#player.map_data.entities.erase(container)
-					#player.map_data.entity_removed.emit(container)
-					#
-				## TODO: move it to right position
-				#action = WaitAction.new(player)
+		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
+		if player.distance(target) > 1:
+			MessageLog.send_message("Too far away.", GameColors.IMPOSSIBLE)
+		else:
+			if target != Vector2i(-1, -1):
+				var all_lootables := player.map_data.get_lootable_entities_at_location(target)
+				var container : Entity
+				if all_lootables.size() == 0:
+					container = Entity.new(player.map_data, target, Entity.EntityKey.DROPPED)
+					player.map_data.entities.append(container)
+					player.map_data.entity_placed.emit(container)
+				else:
+					container = all_lootables[0]
+								
+				var loot_target = await get_entity_from_container(player, "Select item to drop")
+				if loot_target:	
+					# TODO: workaround - dirty
+					loot_target.grid_position = container.grid_position
+					action = DropAction.new(player, loot_target)
 	#
 	if Input.is_action_just_pressed("activate"):
 		action = await activate_item(player)
-	if Input.is_action_just_pressed("inventory"):
-		# TODO: Reimplement
-		print("TBI")
-		pass
-		#await get_item("Inventory", player.inventory_component)
-		## TODO: move it to right position
-		#action = WaitAction.new(player)
-		#
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
 	if Input.is_action_just_pressed("look"):
@@ -200,8 +187,8 @@ func get_action(player: Entity) -> Action:
 	return action
 	
 
-func get_entity_from_container(container: Entity) -> Entity:
-	var selected_item: Entity = await get_item("Select an item to pick up", container.inventory_component, true)
+func get_entity_from_container(container: Entity, title: String) -> Entity:
+	var selected_item: Entity = await get_item(title, container.inventory_component, true)
 	if selected_item == null:
 		return null
 	
