@@ -15,8 +15,9 @@ func perform() -> bool:
 				"You picked up the %s!" % target.get_entity_name(),
 				Color.WHITE
 			)	
-			
+
+	entity.end_turn()
 	# TODO: Make clean
-	entity.play_animation("walk")
-	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.end_turn(), CONNECT_ONE_SHOT)
+	#entity.play_animation("walk")
+	#entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.end_turn(), CONNECT_ONE_SHOT)
 	return true

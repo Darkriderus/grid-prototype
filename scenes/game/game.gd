@@ -13,13 +13,13 @@ const level_up_menu_scene: PackedScene = preload("uid://snopwjqg3h3j")
 
 func new_game() -> void:
 	player = Entity.new(null, Vector2i.ZERO, Entity.EntityKey.PLAYER)
-	#_add_player_start_equipment(Entity.EntityKey.SWORD)
-	#_add_player_start_equipment(Entity.EntityKey.CHAINMAIL)
-	#_add_player_start_equipment(Entity.EntityKey.CROSSBOW)
+	_add_player_start_equipment(Entity.EntityKey.SWORD)
+	_add_player_start_equipment(Entity.EntityKey.CHAINMAIL)
+	_add_player_start_equipment(Entity.EntityKey.CROSSBOW)
 	#_add_player_start_equipment(Entity.EntityKey.BACKPACK)
-	#_add_player_start_equipment(Entity.EntityKey.ARROWS)
-	#_add_player_start_equipment(Entity.EntityKey.ARROWS)
-	#_add_player_start_equipment(Entity.EntityKey.ARROWS)
+	_add_player_start_equipment(Entity.EntityKey.ARROWS)
+	_add_player_start_equipment(Entity.EntityKey.ARROWS)
+	_add_player_start_equipment(Entity.EntityKey.ARROWS)
 	player.level_component.level_up_required.connect(_on_player_level_up_requested)
 	player_created.emit(player)
 	remove_child(camera)
@@ -58,14 +58,15 @@ func _add_player_start_equipment(item_key: Entity.EntityKey) -> void:
 func _physics_process(_delta: float) -> void:	
 	var action: Action = await input_handler.get_action(player)
 	if action:
-		# var previous_player_position: Vector2i = player.grid_position
 		var success := action.perform()
 		if success:
 			get_map_data().is_player_turn = false
-			await player.turn_done
+			if not player.has_finished_turn:
+				await player.turn_done
 			print("ENEMY_TURN")
 			_handle_enemy_turns()
 			map.update_fov(player.grid_position)
+			player.start_turn()
 			get_map_data().is_player_turn = true
 			print("PLAYER_TURN")
 

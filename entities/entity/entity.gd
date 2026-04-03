@@ -4,6 +4,12 @@ extends Node2D
 signal changed
 signal turn_done
 
+var has_finished_turn: bool:
+	set(value):
+		has_finished_turn = value
+		if has_finished_turn:
+			turn_done.emit()
+		
 const ENTITY_SCENE_PREFAB = preload("uid://cc4g2j2qdymr7")
 var entity_scene : EntityScene
 
@@ -151,19 +157,17 @@ func set_entity_definition(_key: EntityKey) -> void:
 func move(move_offset: Vector2i) -> void:
 	map_data.unregister_blocking_entity(self)
 	grid_position += move_offset
-	play_animation("walk")
-	entity_scene.animation_player.animation_finished.connect(func(_name): end_turn(), CONNECT_ONE_SHOT)
+	#play_animation("walk")
+	#entity_scene.animation_player.animation_finished.connect(func(_name): end_turn(), CONNECT_ONE_SHOT)
 	map_data.register_blocking_entity(self)
 	
-	
-	
 func end_turn():
-	print("Ending Turn!")
-	turn_done.emit()
-	print("!")
+	has_finished_turn = true
+	
+func start_turn():
+	has_finished_turn = false
 	
 func play_animation(animation_name: String):
-	print("playing ", animation_name)
 	entity_scene.animation_player.stop()
 	entity_scene.animation_player.play(animation_name)
 

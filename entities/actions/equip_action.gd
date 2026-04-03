@@ -11,5 +11,5 @@ func _init(_entity: Entity, _item: Entity) -> void:
 
 func perform() -> bool:
 	entity.equipment_component.toggle_equip(item)
-	
+	entity.end_turn()
 	return true
