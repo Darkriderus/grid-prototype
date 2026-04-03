@@ -52,7 +52,7 @@ var max_health: int:
 		
 var dodge_chance: int:
 	get:
-		return 2 + (1*agility)
+		return 2 + (1*agility) if agility > 0 else 0
 
 
 var min_ranged_damage: int:

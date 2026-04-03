@@ -17,12 +17,20 @@ func button_pressed(item: Entity = null) -> void:
 	item_selected.emit(item)
 	queue_free()
 	
-
+	
 func _register_item(_index: int, _item: Entity, _is_equipped: bool) -> void:
 	var item_button: Button = inventory_menu_item_scene.instantiate()
-	item_button.text = "%s" % [_item.get_entity_name()]
+	var shortcut_char: String = String.chr("a".unicode_at(0) + _index)
+	
+	item_button.text = "( %s ) %s" % [shortcut_char, _item.get_entity_name()]
 	if _is_equipped:
 		item_button.text = "(E) " + item_button.text
+		
+	var shortcut_event := InputEventKey.new()
+	shortcut_event.keycode = KEY_A + _index
+	item_button.shortcut = Shortcut.new()
+	item_button.shortcut.events = [shortcut_event]
+	
 	item_button.pressed.connect(button_pressed.bind(_item))
 	inventory_list.add_child(item_button)
 
@@ -38,7 +46,6 @@ func build(title_text: String, inventory: InventoryComponent) -> void:
 		var item: Entity = inventory.items[i]
 		var is_equipped: bool = equipment.is_item_equipped(item) if equipment else false
 		_register_item(i, item, is_equipped)
-	inventory_list.get_child(0).grab_focus()
 	show()
 	
 func _physics_process(_delta: float) -> void:

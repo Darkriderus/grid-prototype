@@ -127,7 +127,7 @@ func get_action(player: Entity) -> Action:
 		# TODO: REWRITE
 		var visible_lootables := player.map_data.get_visible_lootable_entities()
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
-		#
+		
 		var target : Vector2i = await get_grid_position(player, 0, lootable_in_range)
 		if player.distance(target) > 1:
 			MessageLog.send_message("Too far away.", GameColors.IMPOSSIBLE)
