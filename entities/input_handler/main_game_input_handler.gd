@@ -69,17 +69,16 @@ func get_action(player: Entity) -> Action:
 	
 	if player.has_finished_turn:
 		return
-
 	
 	for direction in directions:
-		if Input.is_action_just_pressed(direction):
+		if Input.is_action_just_pressed(direction, true):
 			var offset: Vector2i = directions[direction]
 			action = BumpAction.new(player, offset.x, offset.y)
 		#
-	if Input.is_action_just_pressed("wait"):
+	if Input.is_action_just_pressed("wait", true):
 		action = WaitAction.new(player)
 	
-	if Input.is_action_just_pressed("pickup"):
+	if Input.is_action_just_pressed("pickup", true):
 		var visible_lootables := player.map_data.get_visible_lootable_entities()
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
 		
@@ -97,7 +96,7 @@ func get_action(player: Entity) -> Action:
 			else:
 				MessageLog.send_message("There is nothing here to pick up.", GameColors.IMPOSSIBLE)
 		
-	if Input.is_action_just_pressed("open_door"):
+	if Input.is_action_just_pressed("open_door", true):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR)
 		var doors_in_range : Array[Tile] = visible_doors.filter(func (t : Tile): return player.distance(t.grid_position) == 1)
 		#await get_grid_position(player, 0, doors_in_range)
@@ -110,7 +109,7 @@ func get_action(player: Entity) -> Action:
 		
 		action = OpenDoorAction.new(player, target.x, target.y)
 		#
-	if Input.is_action_just_pressed("close_door"):
+	if Input.is_action_just_pressed("close_door", true):
 		var visible_doors := player.map_data.get_visible_tiles_by_type(Tile.TileTypeKeys.DOOR_OPEN)
 		var doors_in_range : Array[Tile] = visible_doors.filter(func (t : Tile): return player.distance(t.grid_position) == 1)
 		var target : Vector2i = Vector2i(-1,-1)
@@ -123,7 +122,7 @@ func get_action(player: Entity) -> Action:
 		
 		action = CloseDoorAction.new(player, target.x, target.y)
 	#
-	if Input.is_action_just_pressed("drop"):
+	if Input.is_action_just_pressed("drop", true):
 		# TODO: REWRITE
 		var visible_lootables := player.map_data.get_visible_lootable_entities()
 		var lootable_in_range : Array[Entity] = visible_lootables.filter(func (e : Entity): return e != player and player.distance(e.grid_position) <= 1)
@@ -148,11 +147,11 @@ func get_action(player: Entity) -> Action:
 					loot_target.grid_position = container.grid_position
 					action = DropAction.new(player, loot_target)
 	#
-	if Input.is_action_just_pressed("activate"):
+	if Input.is_action_just_pressed("activate", true):
 		action = await activate_item(player)
-	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
+	if Input.is_action_just_pressed("quit", true) or Input.is_action_just_pressed("ui_back", true):
 		action = EscapeAction.new(player)
-	if Input.is_action_just_pressed("look"):
+	if Input.is_action_just_pressed("look", true):
 		var entities_in_sight := player.map_data.get_visible_entities()
 		
 		entities_in_sight.sort_custom(func (a: Entity, b: Entity):
@@ -163,7 +162,7 @@ func get_action(player: Entity) -> Action:
 		
 		await get_grid_position(player, 0, entities_in_sight)
 		#
-	if Input.is_action_just_pressed("fire_weapon"):
+	if Input.is_action_just_pressed("fire_weapon", true):
 		if not player.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED):
 			MessageLog.send_message("No ranged weapon equipped.", GameColors.IMPOSSIBLE)
 		else:
@@ -179,9 +178,9 @@ func get_action(player: Entity) -> Action:
 			var offset : Vector2i = target - player.grid_position
 			
 			action = RangedAction.new(player, offset.x, offset.y)
-	if Input.is_action_just_pressed("display_character_info"):
+	if Input.is_action_just_pressed("display_character_info", true):
 		open_character_menu(player)
-	if Input.is_action_just_pressed("descend"):
+	if Input.is_action_just_pressed("descend", true):
 		action = TakeStairsAction.new(player)
 				
 	return action
