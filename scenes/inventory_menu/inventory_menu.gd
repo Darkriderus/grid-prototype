@@ -22,7 +22,7 @@ func _register_item(_index: int, _item: Entity, _is_equipped: bool) -> void:
 	var item_button: Button = inventory_menu_item_scene.instantiate()
 	var shortcut_char: String = String.chr("a".unicode_at(0) + _index)
 	
-	item_button.text = "( %s ) %s" % [shortcut_char, _item.get_entity_name()]
+	item_button.text = "( %s ) %s" % [shortcut_char, _item.get_item_name()]
 	if _is_equipped:
 		item_button.text = "(E) " + item_button.text
 		

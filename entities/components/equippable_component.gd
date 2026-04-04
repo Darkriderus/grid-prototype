@@ -12,6 +12,12 @@ enum EquipmentType {
 	BACKPACK,
 }
 
+const WeaponEquipmentTypes := [
+	EquipmentType.RIGHT_HAND,
+	EquipmentType.LEFT_HAND,
+	EquipmentType.RANGED,
+]
+
 const ArmorEquipmentTypes := [
 	EquipmentType.HEAD,
 	EquipmentType.BODY,

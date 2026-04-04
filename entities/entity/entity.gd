@@ -194,6 +194,8 @@ func is_equippable():
 func is_armor():
 	return is_equippable() and EquippableComponent.ArmorEquipmentTypes.has(equippable_component.equipment_type)
 
+func is_weapon():
+	return is_equippable() and EquippableComponent.WeaponEquipmentTypes.has(equippable_component.equipment_type)
 
 func get_entity_name() -> String:
 	var full_entity_name = entity_name
@@ -204,6 +206,19 @@ func get_entity_name() -> String:
 		else:
 			full_entity_name += " (Empty)"
 			
+	return full_entity_name
+
+func get_item_name() -> String:
+	var full_entity_name := entity_name
+	
+	if is_armor():
+		full_entity_name += " [P: %s]" % equippable_component.protection
+	if is_weapon():
+		if equippable_component.attack_range > 1:
+			full_entity_name += " [Dmg: %s-%s, Rng: %s]" % [equippable_component.min_damage, equippable_component.max_damage, equippable_component.attack_range]
+		else:
+			full_entity_name += " [Dmg: %s-%s]" % [equippable_component.min_damage, equippable_component.max_damage]
+	
 	return full_entity_name
 
 

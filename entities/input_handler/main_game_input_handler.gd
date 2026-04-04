@@ -154,6 +154,9 @@ func get_action(player: Entity) -> Action:
 					action = DropAction.new(player, loot_target)
 		return action
 	#
+	if Input.is_action_just_pressed("equip_weapon", true):
+		action = await equip_weapon(player)
+		return action
 	if Input.is_action_just_pressed("wear_armor", true):
 		action = await wear_armor(player)
 		return action
@@ -161,9 +164,11 @@ func get_action(player: Entity) -> Action:
 		action = await take_off_armor(player)
 		return action
 	
-	if Input.is_action_just_pressed("activate", true):
-		action = await activate_item(player)
-		return action
+	
+	
+	#if Input.is_action_just_pressed("activate", true):
+		#action = await activate_item(player)
+		#return action
 	if Input.is_action_just_pressed("quit", true) or Input.is_action_just_pressed("ui_back", true):
 		action = EscapeAction.new(player)
 		return action
@@ -216,6 +221,14 @@ func get_entity_from_container(container: Entity, title: String) -> Entity:
 	return selected_item
 
 
+func equip_weapon(player: Entity) -> Action:
+	var weapon_filter := (func(a: Entity): return a.is_weapon())
+	var selected_item: Entity = await get_item("Select weapon to (un-)equip", player.inventory_component, true, weapon_filter)
+	if selected_item == null:
+		return null
+	return ItemAction.new(player, selected_item)
+
+
 func wear_armor(player: Entity) -> Action:
 	var armor_filter := (func(a: Entity): return a.is_armor() and not player.equipment_component.slots.values().has(a))
 	var selected_item: Entity = await get_item("Select armor to wear", player.inventory_component, true, armor_filter)
@@ -230,19 +243,19 @@ func take_off_armor(player: Entity) -> Action:
 		return null
 	return ItemAction.new(player, selected_item)
 
-func activate_item(player: Entity) -> Action:
-	var selected_item: Entity = await get_item("Select an item to use", player.inventory_component, true)
-	if selected_item == null:
-		return null
-	var target_radius: int = -1
-	if selected_item.consumable_component != null:
-		target_radius = selected_item.consumable_component.get_targeting_radius()
-	if target_radius == -1:
-		return ItemAction.new(player, selected_item)
-	var target_position: Vector2i = await get_grid_position(player, target_radius)
-	if target_position == Vector2i(-1, -1):
-		return null
-	return ItemAction.new(player, selected_item, target_position)
+#func activate_item(player: Entity) -> Action:
+	#var selected_item: Entity = await get_item("Select an item to use", player.inventory_component, true)
+	#if selected_item == null:
+		#return null
+	#var target_radius: int = -1
+	#if selected_item.consumable_component != null:
+		#target_radius = selected_item.consumable_component.get_targeting_radius()
+	#if target_radius == -1:
+		#return ItemAction.new(player, selected_item)
+	#var target_position: Vector2i = await get_grid_position(player, target_radius)
+	#if target_position == Vector2i(-1, -1):
+		#return null
+	#return ItemAction.new(player, selected_item, target_position)
 
 
 func get_grid_position(player: Entity, radius: int, tabbable_targets: Array[Entity] = []) -> Vector2i:
