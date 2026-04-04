@@ -35,15 +35,19 @@ func _register_item(_index: int, _item: Entity, _is_equipped: bool) -> void:
 	inventory_list.add_child(item_button)
 
 
-func build(title_text: String, inventory: InventoryComponent) -> void:
+func build(title_text: String, inventory: InventoryComponent, filter: Callable = (func (): return true)) -> void:
 	if inventory.items.is_empty():
 		button_pressed.call_deferred()
 		MessageLog.send_message("No items in inventory.", GameColors.IMPOSSIBLE)
 		return
+		
 	var equipment: EquipmentComponent = inventory.entity.equipment_component
 	title_label.text = title_text
-	for i in inventory.items.size():
-		var item: Entity = inventory.items[i]
+	
+	var items = inventory.items
+	items = items.filter(filter)
+	for i in items.size():
+		var item: Entity = items[i]
 		var is_equipped: bool = equipment.is_item_equipped(item) if equipment else false
 		_register_item(i, item, is_equipped)
 	show()

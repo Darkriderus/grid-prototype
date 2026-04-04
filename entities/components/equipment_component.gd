@@ -4,7 +4,6 @@ extends Component
 signal equipment_changed
 
 var slots : Dictionary[EquippableComponent.EquipmentType, Entity] = {}
-
 	
 func get_item_from_slot(slot: EquippableComponent.EquipmentType):
 	return slots[slot] if slots.has(slot) else null

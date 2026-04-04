@@ -191,6 +191,10 @@ func is_equippable():
 	return equippable_component != null
 	
 
+func is_armor():
+	return is_equippable() and EquippableComponent.ArmorEquipmentTypes.has(equippable_component.equipment_type)
+
+
 func get_entity_name() -> String:
 	var full_entity_name = entity_name
 	

@@ -28,14 +28,14 @@ func exit():
 	pass
 
 
-func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_next_step: bool = false) -> Entity:
+func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_next_step: bool = false, filter: Callable = (func (_e : Entity): return true)) -> Entity:
 	if inventory.items.is_empty():
 		await get_tree().physics_frame
 		MessageLog.send_message("No items in inventory.", GameColors.IMPOSSIBLE)
 		return null
 	var inventory_menu: InventoryMenu = INVENTORY_MENU_SCENE.instantiate()
 	add_child(inventory_menu)
-	inventory_menu.build(window_title, inventory)
+	inventory_menu.build(window_title, inventory, filter)
 	get_parent().transition_to(InputHandler.InputHandlers.DUMMY)
 	var selected_item: Entity = await inventory_menu.item_selected
 	var has_item: bool = selected_item != null
@@ -147,6 +147,9 @@ func get_action(player: Entity) -> Action:
 					loot_target.grid_position = container.grid_position
 					action = DropAction.new(player, loot_target)
 	#
+	if Input.is_action_just_pressed("wear_armor", true):
+		action = await wear_armor(player)
+	
 	if Input.is_action_just_pressed("activate", true):
 		action = await activate_item(player)
 	if Input.is_action_just_pressed("quit", true) or Input.is_action_just_pressed("ui_back", true):
@@ -192,6 +195,14 @@ func get_entity_from_container(container: Entity, title: String) -> Entity:
 		return null
 	
 	return selected_item
+
+
+func wear_armor(player: Entity) -> Action:
+	var armor_filter := (func(a: Entity): return a.is_armor())
+	var selected_item: Entity = await get_item("Select armor to wear", player.inventory_component, true, armor_filter)
+	if selected_item == null:
+		return null
+	return ItemAction.new(player, selected_item)
 
 func activate_item(player: Entity) -> Action:
 	var selected_item: Entity = await get_item("Select an item to use", player.inventory_component, true)
