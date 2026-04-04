@@ -18,11 +18,11 @@ func button_pressed(item: Entity = null) -> void:
 	queue_free()
 	
 	
-func _register_item(_index: int, _item: Entity, _is_equipped: bool) -> void:
+func _register_item(_index: int, _item: Entity, _amount: int = 1, _is_equipped: bool = false) -> void:
 	var item_button: Button = inventory_menu_item_scene.instantiate()
 	var shortcut_char: String = String.chr("a".unicode_at(0) + _index)
 	
-	item_button.text = "( %s ) %s" % [shortcut_char, _item.get_item_name()]
+	item_button.text = "( %s ) %s x %s" % [shortcut_char, _amount, _item.get_item_name()]
 	if _is_equipped:
 		item_button.text = "(E) " + item_button.text
 		
@@ -44,7 +44,7 @@ func build(title_text: String, inventory: InventoryComponent, filter: Callable =
 	var equipment: EquipmentComponent = inventory.entity.equipment_component
 	title_label.text = title_text
 	
-	var items = inventory.items
+	var items := inventory.items
 	items = items.filter(filter)
 	
 	if items.is_empty():
@@ -52,11 +52,28 @@ func build(title_text: String, inventory: InventoryComponent, filter: Callable =
 		MessageLog.send_message("No items in inventory.", GameColors.IMPOSSIBLE)
 		return
 	
-	for i in items.size():
-		var item: Entity = items[i]
+	
+	var button_items: Dictionary[Entity, int] = {}
+	var key_to_entity: Dictionary = {} 
+
+	# 1. Group and count items efficiently
+	for item : Entity in items:
+		var k = item.key
+		if not key_to_entity.has(k) or not item.item_component.stackable:
+			key_to_entity[k] = item
+			button_items[item] = 0
+		
+		var actual_entity = key_to_entity[k]
+		button_items[actual_entity] += 1
+
+	# 2. Register items
+	var index := 0
+	for item in button_items:
+		var count = button_items[item]
 		var is_equipped: bool = equipment.is_item_equipped(item) if equipment else false
-		_register_item(i, item, is_equipped)
-	show()
+		_register_item(index, item, count, is_equipped)
+		index += 1
+		show()
 	
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_back"):

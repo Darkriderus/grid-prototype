@@ -9,6 +9,7 @@
 [sub_resource type="Resource" id="Resource_x05ji"]
 script = ExtResource("1_x05ji")
 healing_amount = 4
+stackable = true
 metadata/_custom_type_script = "uid://brkrt0ts6wl45"
 
 [sub_resource type="Resource" id="Resource_12uv4"]

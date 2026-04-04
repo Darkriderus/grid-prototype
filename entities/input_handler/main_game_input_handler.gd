@@ -163,12 +163,9 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("take_off_armor", true):
 		action = await take_off_armor(player)
 		return action
-	
-	
-	
-	#if Input.is_action_just_pressed("activate", true):
-		#action = await activate_item(player)
-		#return action
+	if Input.is_action_just_pressed("inventory", true):
+		await show_inventory(player)
+		
 	if Input.is_action_just_pressed("quit", true) or Input.is_action_just_pressed("ui_back", true):
 		action = EscapeAction.new(player)
 		return action
@@ -219,6 +216,10 @@ func get_entity_from_container(container: Entity, title: String) -> Entity:
 		return null
 	
 	return selected_item
+
+func show_inventory(player: Entity):
+	await get_item("Inventory", player.inventory_component)
+	return
 
 
 func equip_weapon(player: Entity) -> Action:
