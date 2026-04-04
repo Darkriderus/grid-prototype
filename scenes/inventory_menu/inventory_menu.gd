@@ -46,6 +46,12 @@ func build(title_text: String, inventory: InventoryComponent, filter: Callable =
 	
 	var items = inventory.items
 	items = items.filter(filter)
+	
+	if items.is_empty():
+		button_pressed.call_deferred()
+		MessageLog.send_message("No items in inventory.", GameColors.IMPOSSIBLE)
+		return
+	
 	for i in items.size():
 		var item: Entity = items[i]
 		var is_equipped: bool = equipment.is_item_equipped(item) if equipment else false

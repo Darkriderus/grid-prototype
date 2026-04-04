@@ -157,6 +157,9 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("wear_armor", true):
 		action = await wear_armor(player)
 		return action
+	if Input.is_action_just_pressed("take_off_armor", true):
+		action = await take_off_armor(player)
+		return action
 	
 	if Input.is_action_just_pressed("activate", true):
 		action = await activate_item(player)
@@ -214,8 +217,15 @@ func get_entity_from_container(container: Entity, title: String) -> Entity:
 
 
 func wear_armor(player: Entity) -> Action:
-	var armor_filter := (func(a: Entity): return a.is_armor())
+	var armor_filter := (func(a: Entity): return a.is_armor() and not player.equipment_component.slots.values().has(a))
 	var selected_item: Entity = await get_item("Select armor to wear", player.inventory_component, true, armor_filter)
+	if selected_item == null:
+		return null
+	return ItemAction.new(player, selected_item)
+	
+func take_off_armor(player: Entity) -> Action:
+	var armor_filter := (func(a: Entity): return a.is_armor() and player.equipment_component.slots.values().has(a))
+	var selected_item: Entity = await get_item("Select armor to take off", player.inventory_component, true, armor_filter)
 	if selected_item == null:
 		return null
 	return ItemAction.new(player, selected_item)
