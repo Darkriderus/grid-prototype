@@ -2,6 +2,7 @@ class_name StatComponentDefinition
 extends Resource
 
 @export_category("Stats")
+@export var base_health: int = 75
 @export var strength: int = 0
 @export var agility: int = 0
 @export var perception: int = 0

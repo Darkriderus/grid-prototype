@@ -8,6 +8,8 @@ const POPUP_ANIMATION_SCENE = preload("uid://tbng7bk63fmp")
 var rng = RandomNumberGenerator.new()
 
 # Static Stats
+var base_health: int
+
 var base_strength: int 
 var strength: int:
 	get:
@@ -48,7 +50,7 @@ var accuracy: int:
 		
 var max_health: int:
 	get:
-		return 80 + (5*vitality)
+		return base_health + (5*vitality)
 		
 var dodge_chance: int:
 	get:
@@ -133,6 +135,8 @@ var death_color: Color
 
 
 func _init(definition: StatComponentDefinition) -> void:
+	base_health = definition.base_health
+	
 	base_strength = definition.strength
 	base_agility = definition.agility
 	base_perception = definition.perception
