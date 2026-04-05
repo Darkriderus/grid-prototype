@@ -13,7 +13,7 @@ var entity: Entity
 @onready var inventory_display: VBoxContainer = %FilteredInventoryDisplay
 @onready var equipment_display: VBoxContainer = %EquipmentDisplay
 @onready var weight_value: Label = %WeightValue
-@onready var volume_value: Label = %VolumeValue
+@onready var carry_slot_value: Label = %VolumeValue
 
 
 @onready var strength_value: Label = %StrengthValue
@@ -78,7 +78,7 @@ func _refresh_stats():
 	var inventory := entity.inventory_component
 	
 	weight_value.text = "%s / %s kg" % [inventory.current_weight, inventory.weight_limit]
-	volume_value.text = "%s / %s lt" % [inventory.current_volume, inventory.volume_limit]
+	carry_slot_value.text = "%s / %s slots" % [inventory.current_carry_slots, inventory.carry_slot_limit]
 
 
 	strength_value.text = "%s" % stats.strength

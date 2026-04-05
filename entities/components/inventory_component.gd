@@ -21,21 +21,21 @@ var current_weight: float:
 			weight += item.item_component.weight
 		return weight
 
-var base_volume_limit : float
-var volume_limit : float:
+var base_carry_slot_limit : int
+var carry_slot_limit : int:
 	get:
-		var limit = base_volume_limit
+		var limit := base_carry_slot_limit
 		if entity.equipment_component:
 			for equipment : Entity in entity.equipment_component.slots.values():
 				if equipment.equippable_component:
-					limit += equipment.equippable_component.volume_carry_increase
+					limit += equipment.equippable_component.carry_slot_increase
 		return limit
-var current_volume: float:
+var current_carry_slots: int:
 	get:
-		var volume := 0.0
+		var carry_slots := 0
 		for item in items:
-			volume += item.item_component.volume
-		return volume
+			carry_slots += item.item_component.slots
+		return carry_slots
 		
 var delete_if_empty: bool
 
@@ -43,9 +43,9 @@ var delete_if_empty: bool
 func has_space_for_item(item: Entity) -> bool:
 	var item_info := item.item_component
 	var has_enough_weight := (current_weight + item_info.weight) <= weight_limit
-	var has_enough_volume := (current_volume + item_info.volume) <= volume_limit
+	var has_enough_carry_slots := (current_carry_slots + item_info.slots) <= carry_slot_limit
 	
-	return has_enough_volume and has_enough_weight
+	return has_enough_carry_slots and has_enough_weight
 
 func drop(item: Entity) -> Entity:
 	if entity.equipment_component != null and item.is_equippable() and entity.equipment_component.get_item_from_slot(item.equippable_component.equipment_type) == item:
@@ -63,7 +63,7 @@ func _init(definition: InventoryComponentDefinition) -> void:
 	items = []
 	capacity = definition.capacity
 	base_weight_limit = definition.weight_limit
-	base_volume_limit = definition.volume_limit
+	base_carry_slot_limit = definition.carry_slot_limit
 	delete_if_empty = definition.delete_if_empty
 
 func get_items_by_type(type: Entity.EntityKey) -> Array[Entity]:

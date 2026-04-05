@@ -17,4 +17,4 @@ extends ItemComponentDefinition
 
 @export_subgroup("Backpack")
 @export var weight_carry_increase : float = 0.0
-@export var volume_carry_increase : float = 0.0
+@export var carry_slot_increase : int = 0
