@@ -27,7 +27,7 @@ func activate(action: ItemAction) -> bool:
 	
 	if target:
 		MessageLog.send_message("A lightning bolt strikes %s with a loud thunder, for %d damage!" % [target.get_entity_name(), damage], Color.WHITE)
-		target.fighter_component.take_damage(damage)
+		target.stat_component.take_damage(damage)
 		consume(consumer)
 		return true
 	

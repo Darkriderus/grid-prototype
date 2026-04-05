@@ -1,20 +1,11 @@
 [gd_resource type="Resource" script_class="EntityDefinition" load_steps=11 format=3 uid="uid://cu5b5e84eg0bu"]
 
-[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/fighter_component_definition.gd" id="1_bs7th"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="1_bs7th"]
 [ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="1_fc86u"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_kbxxg"]
 [ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/component_definitions/level_component_definition.gd" id="3_e73v8"]
 [ext_resource type="Script" uid="uid://b0q3oxcma5q58" path="res://entities/component_definitions/inventory_component_definition.gd" id="3_pxftb"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="5_rmiyk"]
-
-[sub_resource type="Resource" id="Resource_fc86u"]
-script = ExtResource("1_bs7th")
-strength = 12
-agility = 8
-perception = 7
-vitality = 12
-willpower = 6
-metadata/_custom_type_script = "uid://x0nxlyvawv7n"
 
 [sub_resource type="Resource" id="Resource_f5leb"]
 script = ExtResource("3_pxftb")
@@ -27,6 +18,15 @@ level_up_factor = 1
 xp_given = 35
 metadata/_custom_type_script = "uid://dmgr051d8ffd1"
 
+[sub_resource type="Resource" id="Resource_pxftb"]
+script = ExtResource("1_bs7th")
+strength = 15
+agility = 7
+perception = 5
+vitality = 10
+willpower = 3
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_bs7th"]
 atlas = ExtResource("5_rmiyk")
 region = Rect2(464, 32, 16, 16)
@@ -36,7 +36,7 @@ script = ExtResource("1_kbxxg")
 name = "Ork"
 texture = SubResource("AtlasTexture_bs7th")
 color = Color(0.24705882, 0.49803922, 0.24705882, 1)
-fighter_definition = SubResource("Resource_fc86u")
+stat_definition = SubResource("Resource_pxftb")
 ai_type = 1
 inventory_definition = SubResource("Resource_f5leb")
 level_info = SubResource("Resource_1dw78")

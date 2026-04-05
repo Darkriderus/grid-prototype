@@ -1,4 +1,4 @@
-class_name FighterComponent
+class_name StatComponent
 extends Component
 
 signal changed
@@ -8,6 +8,8 @@ const POPUP_ANIMATION_SCENE = preload("uid://tbng7bk63fmp")
 var rng = RandomNumberGenerator.new()
 
 # Static Stats
+var base_health: int
+
 var base_strength: int 
 var strength: int:
 	get:
@@ -36,45 +38,56 @@ var willpower: int:
 # Dynamic Stats
 var melee_damage_percentage: int:
 	get:
-		return 100 + (2*strength)
+		return 100 + (2*strength) if strength > 0 else 0
 		
 var ranged_damage_percentage: int:
 	get:
-		return 100 + (2*perception)
+		return 100 + (2*perception) if perception > 0 else 0
 
 var accuracy: int:
 	get:
-		return 60 + (2*perception)
+		return 60 + (2*perception) if perception > 0 else 0
 		
 var max_health: int:
 	get:
-		return 80 + (5*vitality)
+		return base_health + (5*vitality)
 		
 var dodge_chance: int:
 	get:
-		return 2 + (1*agility)
+		return 2 + (1*agility) if agility > 0 else 0
 
 
 var min_ranged_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 0
 		return int(base_weapon_damage * (melee_damage_percentage/100.0))
 		
 var max_ranged_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 0
 		return int(base_weapon_damage * (melee_damage_percentage/100.0))
 
 var ranged_attack_range: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
 		return weapon_used.equippable_component.attack_range if weapon_used else 0
 		
 
 var min_melee_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.min_damage if weapon_used is Entity else 2
@@ -82,6 +95,9 @@ var min_melee_damage: int:
 		
 var max_melee_damage: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		var weapon_used = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RIGHT_HAND)
 		# TODO: add unarmed weapon to every fighter
 		var base_weapon_damage = weapon_used.equippable_component.max_damage if weapon_used is Entity else 5
@@ -89,6 +105,9 @@ var max_melee_damage: int:
 		
 var protection: int:
 	get:
+		if not entity.equipment_component:
+			return 0
+			
 		# TODO: Split by body part
 		var protection_sum := 0
 		for equipment in entity.equipment_component.slots.values():
@@ -115,7 +134,9 @@ var death_texture: Texture
 var death_color: Color
 
 
-func _init(definition: FighterComponentDefinition) -> void:
+func _init(definition: StatComponentDefinition) -> void:
+	base_health = definition.base_health
+	
 	base_strength = definition.strength
 	base_agility = definition.agility
 	base_perception = definition.perception
@@ -160,8 +181,8 @@ func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var has_hit := to_hit_roll <= accuracy
 	
 	# TODO: Cleanup - only fire after everythin is calculated	
-	entity.play_animation("attack")
-	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
+	#entity.play_animation("attack")
+	#entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
 	
 	#var effect := POPUP_ANIMATION_SCENE.instantiate()
 	#var offset := (_defender.grid_position - entity.grid_position) * 8
@@ -230,10 +251,10 @@ func heal(amount: int) -> int:
 func take_damage(amount: int) -> int:
 	var damage_given = clampi((amount - protection), 0, amount)
 	health -= damage_given
-	if damage_given > 0:
-		# TODO: Helper
-		entity.entity_scene.animation_player.stop()
-		entity.entity_scene.animation_player.play("damage")
+	#if damage_given > 0:
+		## TODO: Helper
+		#entity.entity_scene.animation_player.stop()
+		#entity.entity_scene.animation_player.play("damage")
 	return damage_given
 	
 	

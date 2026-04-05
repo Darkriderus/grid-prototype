@@ -26,4 +26,7 @@ func perform() -> bool:
 	entity.play_animation("walk")
 	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
 	
-	return item.consumable_component.activate(self)
+	var success = item.consumable_component.activate(self)
+	if success:
+		entity.end_turn()
+	return success

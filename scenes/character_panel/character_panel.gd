@@ -74,7 +74,7 @@ func _on_item_button_pressed(item: Entity):
 	build(entity, false)
 
 func _refresh_stats():
-	var stats := entity.fighter_component
+	var stats := entity.stat_component
 	var inventory := entity.inventory_component
 	
 	weight_value.text = "%s / %s kg" % [inventory.current_weight, inventory.weight_limit]

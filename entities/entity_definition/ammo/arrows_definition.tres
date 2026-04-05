@@ -1,14 +1,21 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://demvf2bx0coki"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://demvf2bx0coki"]
 
 [ext_resource type="Script" uid="uid://cc6dmm5ui2f0" path="res://entities/component_definitions/item_component_definition.gd" id="1_1mu2s"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="2_dtk6k"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="3_468qn"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="3_lopmy"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="4_l4dev"]
 
 [sub_resource type="Resource" id="Resource_dtk6k"]
 script = ExtResource("1_1mu2s")
 weight = 0.5
 volume = 0.5
+stackable = true
 metadata/_custom_type_script = "uid://cc6dmm5ui2f0"
+
+[sub_resource type="Resource" id="Resource_wlvbi"]
+script = ExtResource("4_l4dev")
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s16lc"]
 atlas = ExtResource("3_lopmy")
@@ -21,5 +28,6 @@ texture = SubResource("AtlasTexture_s16lc")
 color = Color(0.6165652, 0.6038508, 0, 1)
 is_blocking_movement = false
 type = 1
+stat_definition = SubResource("Resource_wlvbi")
 item_definition = SubResource("Resource_dtk6k")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

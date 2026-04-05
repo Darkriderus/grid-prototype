@@ -1,14 +1,20 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://bpl0ttrtq0p58"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://bpl0ttrtq0p58"]
 
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_tva5y"]
 [ext_resource type="Script" uid="uid://djrlkbvs4htwx" path="res://entities/component_definitions/consumables/fireball_damage_consumable_component_definition.gd" id="1_v1nkb"]
 [ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_v1nkb"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="3_vrdak"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="4_g0pcj"]
 
 [sub_resource type="Resource" id="Resource_v1nkb"]
 script = ExtResource("1_v1nkb")
 damage = 12
 radius = 3
 metadata/_custom_type_script = "uid://djrlkbvs4htwx"
+
+[sub_resource type="Resource" id="Resource_04ppc"]
+script = ExtResource("4_g0pcj")
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pcs1e"]
 atlas = ExtResource("3_v1nkb")
@@ -21,5 +27,6 @@ texture = SubResource("AtlasTexture_pcs1e")
 color = Color(1, 0, 0, 1)
 is_blocking_movement = false
 type = 1
+stat_definition = SubResource("Resource_04ppc")
 item_definition = SubResource("Resource_v1nkb")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

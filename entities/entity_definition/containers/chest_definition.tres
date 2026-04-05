@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://b4cui42b8sdjs"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://b4cui42b8sdjs"]
 
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_rehbu"]
 [ext_resource type="Script" uid="uid://b0q3oxcma5q58" path="res://entities/component_definitions/inventory_component_definition.gd" id="1_yk183"]
 [ext_resource type="Texture2D" uid="uid://c42ofi7n35wik" path="res://assets/tilemap/monochrome-transparent_packed.png" id="2_solwr"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="3_0kj3o"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="4_nn570"]
 
 [sub_resource type="Resource" id="Resource_dnabj"]
 script = ExtResource("1_yk183")
@@ -10,6 +12,10 @@ capacity = 99
 weight_limit = 100.0
 volume_limit = 100.0
 metadata/_custom_type_script = "uid://b0q3oxcma5q58"
+
+[sub_resource type="Resource" id="Resource_3hb38"]
+script = ExtResource("4_nn570")
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yk183"]
 atlas = ExtResource("2_solwr")
@@ -21,5 +27,6 @@ name = "Chest"
 texture = SubResource("AtlasTexture_yk183")
 color = Color(0.5075168, 0.4683934, 3.85046e-07, 1)
 type = 1
+stat_definition = SubResource("Resource_3hb38")
 inventory_definition = SubResource("Resource_dnabj")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

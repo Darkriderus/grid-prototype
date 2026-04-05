@@ -12,8 +12,10 @@ func perform() -> bool:
 	
 	target_tile.set_tile_type(Tile.TileTypeKeys.DOOR_OPEN)
 	
-	entity.play_animation("interact_door")
-	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
+	#TODO: Cleanup
+	#entity.play_animation("interact_door")
+	#entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
+	entity.end_turn()
 
 	entity.map_data.setup_pathfinding()
 	return true

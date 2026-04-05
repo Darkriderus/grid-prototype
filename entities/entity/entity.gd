@@ -4,6 +4,12 @@ extends Node2D
 signal changed
 signal turn_done
 
+var has_finished_turn: bool:
+	set(value):
+		has_finished_turn = value
+		if has_finished_turn:
+			turn_done.emit()
+		
 const ENTITY_SCENE_PREFAB = preload("uid://cc4g2j2qdymr7")
 var entity_scene : EntityScene
 
@@ -67,7 +73,7 @@ var entity_name: String
 var blocks_movement: bool
 var map_data: MapData
 
-var fighter_component: FighterComponent
+var stat_component: StatComponent
 var ai_component: BaseAIComponent
 var consumable_component: ConsumableComponent
 var equippable_component: EquippableComponent
@@ -121,9 +127,9 @@ func set_entity_definition(_key: EntityKey) -> void:
 			ai_component = NoAIComponent.new()
 			add_child(ai_component)
 	
-	if entity_definition.fighter_definition:
-		fighter_component = FighterComponent.new(entity_definition.fighter_definition)
-		add_child(fighter_component)
+	if entity_definition.stat_definition:
+		stat_component = StatComponent.new(entity_definition.stat_definition)
+		add_child(stat_component)
 	
 	if entity_definition.inventory_definition:
 		inventory_component = InventoryComponent.new(entity_definition.inventory_definition)
@@ -151,10 +157,15 @@ func set_entity_definition(_key: EntityKey) -> void:
 func move(move_offset: Vector2i) -> void:
 	map_data.unregister_blocking_entity(self)
 	grid_position += move_offset
-	play_animation("walk")
-	entity_scene.animation_player.animation_finished.connect(func(_name): turn_done.emit(), CONNECT_ONE_SHOT)
+	#play_animation("walk")
+	#entity_scene.animation_player.animation_finished.connect(func(_name): end_turn(), CONNECT_ONE_SHOT)
 	map_data.register_blocking_entity(self)
 	
+func end_turn():
+	has_finished_turn = true
+	
+func start_turn():
+	has_finished_turn = false
 	
 func play_animation(animation_name: String):
 	entity_scene.animation_player.stop()
@@ -180,6 +191,12 @@ func is_equippable():
 	return equippable_component != null
 	
 
+func is_armor():
+	return is_equippable() and EquippableComponent.ArmorEquipmentTypes.has(equippable_component.equipment_type)
+
+func is_weapon():
+	return is_equippable() and EquippableComponent.WeaponEquipmentTypes.has(equippable_component.equipment_type)
+
 func get_entity_name() -> String:
 	var full_entity_name = entity_name
 	
@@ -189,6 +206,19 @@ func get_entity_name() -> String:
 		else:
 			full_entity_name += " (Empty)"
 			
+	return full_entity_name
+
+func get_item_name() -> String:
+	var full_entity_name := entity_name
+	
+	if is_armor():
+		full_entity_name += " [P: %s]" % equippable_component.protection
+	if is_weapon():
+		if equippable_component.attack_range > 1:
+			full_entity_name += " [Dmg: %s-%s, Rng: %s]" % [equippable_component.min_damage, equippable_component.max_damage, equippable_component.attack_range]
+		else:
+			full_entity_name += " [Dmg: %s-%s]" % [equippable_component.min_damage, equippable_component.max_damage]
+	
 	return full_entity_name
 
 
@@ -203,8 +233,8 @@ func get_save_data() -> Dictionary:
 		"y": grid_position.y,
 		"key": key,
 	}
-	if fighter_component:
-		save_data["fighter_component"] = fighter_component.get_save_data()
+	if stat_component:
+		save_data["stat_component"] = stat_component.get_save_data()
 	if ai_component:
 		save_data["ai_component"] = ai_component.get_save_data()
 	if inventory_component:
@@ -219,8 +249,8 @@ func get_save_data() -> Dictionary:
 func restore(save_data: Dictionary) -> void:
 	grid_position = Vector2i(save_data["x"], save_data["y"])
 	set_entity_definition(save_data["key"])
-	if fighter_component and save_data.has("fighter_component"):
-		fighter_component.restore(save_data["fighter_component"])
+	if stat_component and save_data.has("stat_component"):
+		stat_component.restore(save_data["stat_component"])
 	if ai_component and save_data.has("ai_component"):
 		var ai_data: Dictionary = save_data["ai_component"]
 		if ai_data["type"] == "ConfusedEnemyAI":

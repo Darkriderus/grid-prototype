@@ -1,13 +1,19 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://b6iuqi6lk2imp"]
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://b6iuqi6lk2imp"]
 
 [ext_resource type="Script" uid="uid://dqk2547lmguav" path="res://entities/component_definitions/consumables/confusion_consumable_component_definition.gd" id="1_xia7n"]
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="2_jwuhg"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="3_2n8v5"]
 [ext_resource type="Texture2D" uid="uid://bcf27mt7ddc3n" path="res://assets/tilemap/monochrome_packed.png" id="3_jwuhg"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="4_u313h"]
 
 [sub_resource type="Resource" id="Resource_jwuhg"]
 script = ExtResource("1_xia7n")
 number_of_turns = 10
 metadata/_custom_type_script = "uid://dqk2547lmguav"
+
+[sub_resource type="Resource" id="Resource_ayicg"]
+script = ExtResource("4_u313h")
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jwuhg"]
 atlas = ExtResource("3_jwuhg")
@@ -20,5 +26,6 @@ texture = SubResource("AtlasTexture_jwuhg")
 color = Color(0.8117647, 0.24705882, 1, 1)
 is_blocking_movement = false
 type = 1
+stat_definition = SubResource("Resource_ayicg")
 item_definition = SubResource("Resource_jwuhg")
 metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

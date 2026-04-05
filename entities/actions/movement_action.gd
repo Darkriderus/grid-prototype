@@ -18,4 +18,6 @@ func perform() -> bool:
 		return false
 	
 	entity.move(offset)
+	entity.end_turn()
+	
 	return true

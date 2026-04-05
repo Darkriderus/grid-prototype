@@ -12,6 +12,19 @@ enum EquipmentType {
 	BACKPACK,
 }
 
+const WeaponEquipmentTypes := [
+	EquipmentType.RIGHT_HAND,
+	EquipmentType.LEFT_HAND,
+	EquipmentType.RANGED,
+]
+
+const ArmorEquipmentTypes := [
+	EquipmentType.HEAD,
+	EquipmentType.BODY,
+	EquipmentType.HANDS,
+	EquipmentType.FEET
+]
+
 var equipment_type: EquipmentType
 var protection: int
 var dodge_chance: float

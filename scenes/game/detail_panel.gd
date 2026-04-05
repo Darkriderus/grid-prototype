@@ -18,10 +18,10 @@ func _on_entities_focussed(entities_list: Array[Entity]):
 		var entity_to_show := entities_list[0]
 		title_label.text = entities_list[0].get_entity_name()
 		
-		detail_hp_display.visible = entity_to_show.fighter_component != null
-		if entity_to_show.fighter_component:
-			detail_hp_bar.max_value = entity_to_show.fighter_component.max_health
-			detail_hp_bar.value = entity_to_show.fighter_component.health
-			detail_hp_label.text = "HP: %d/%d" % [entity_to_show.fighter_component.health, entity_to_show.fighter_component.max_health]	
+		detail_hp_display.visible = entity_to_show.stat_component != null
+		if entity_to_show.stat_component:
+			detail_hp_bar.max_value = entity_to_show.stat_component.max_health
+			detail_hp_bar.value = entity_to_show.stat_component.health
+			detail_hp_label.text = "HP: %d/%d" % [entity_to_show.stat_component.health, entity_to_show.stat_component.max_health]	
 	else:
 		hide()
