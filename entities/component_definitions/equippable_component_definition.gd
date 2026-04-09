@@ -14,6 +14,7 @@ extends ItemComponentDefinition
 @export var min_damage: int = 0
 @export var max_damage: int = 0
 @export var attack_range: int = 1
+@export var ammo_type: Entity.EntityKey
 
 @export_subgroup("Backpack")
 @export var weight_carry_increase : float = 0.0
