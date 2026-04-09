@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=11 format=3 uid="uid://bx7hkrlvbtfii"]
+
+[ext_resource type="Script" uid="uid://b0q3oxcma5q58" path="res://entities/component_definitions/inventory_component_definition.gd" id="1_6i4pj"]
+[ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_cgk1f"]
+[ext_resource type="Script" uid="uid://dmgr051d8ffd1" path="res://entities/component_definitions/level_component_definition.gd" id="2_mp0r0"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="4_i5b2m"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="5_rpi7l"]
+[ext_resource type="Texture2D" uid="uid://d3adyumvsjtt8" path="res://assets/tilemap/creatures_transparent.png" id="6_c4noq"]
+
+[sub_resource type="Resource" id="Resource_3ni02"]
+script = ExtResource("1_6i4pj")
+capacity = 10
+weight_limit = 10.0
+metadata/_custom_type_script = "uid://b0q3oxcma5q58"
+
+[sub_resource type="Resource" id="Resource_yv1ab"]
+script = ExtResource("2_mp0r0")
+xp_given = 15
+metadata/_custom_type_script = "uid://dmgr051d8ffd1"
+
+[sub_resource type="Resource" id="Resource_nshfd"]
+script = ExtResource("5_rpi7l")
+base_health = 50
+strength = 6
+agility = 12
+perception = 6
+vitality = 4
+willpower = 5
+death_color = Color(1, 0.73583084, 0.6784913, 1)
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3no3x"]
+atlas = ExtResource("6_c4noq")
+region = Rect2(128, 240, 16, 16)
+
+[resource]
+script = ExtResource("1_cgk1f")
+name = "Goblin Grunt"
+texture = SubResource("AtlasTexture_3no3x")
+color = Color(0.74658525, 2.0094587e-06, 8.663535e-07, 1)
+stat_definition = SubResource("Resource_nshfd")
+ai_type = 1
+inventory_definition = SubResource("Resource_3ni02")
+level_info = SubResource("Resource_yv1ab")
+has_equipment = true
+metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

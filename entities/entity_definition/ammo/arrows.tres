@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://b648m8ilj8brl"]
+
+[ext_resource type="Script" uid="uid://cc6dmm5ui2f0" path="res://entities/component_definitions/item_component_definition.gd" id="1_bixx2"]
+[ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_mm5an"]
+[ext_resource type="Texture2D" uid="uid://4s1b2i2dbdsv" path="res://assets/tilemap/items_transparent.png" id="3_oseo2"]
+
+[sub_resource type="Resource" id="Resource_tgqmu"]
+script = ExtResource("1_bixx2")
+weight = 0.1
+stackable = true
+metadata/_custom_type_script = "uid://cc6dmm5ui2f0"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ug1o"]
+atlas = ExtResource("3_oseo2")
+region = Rect2(160, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_mm5an")
+name = "Arrows"
+texture = SubResource("AtlasTexture_3ug1o")
+is_blocking_movement = false
+type = 1
+item_definition = SubResource("Resource_tgqmu")
+metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

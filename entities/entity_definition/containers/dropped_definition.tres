@@ -10,7 +10,6 @@
 script = ExtResource("1_hquam")
 capacity = 99
 weight_limit = 100.0
-volume_limit = 100.0
 delete_if_empty = true
 metadata/_custom_type_script = "uid://b0q3oxcma5q58"
 
@@ -26,7 +25,7 @@ region = Rect2(720, 64, 16, 16)
 script = ExtResource("1_qwsuo")
 name = "Dropped Stuff"
 texture = SubResource("AtlasTexture_hquam")
-color = Color(0.45177007, 0.43642756, 0.98286134, 1)
+color = Color(0.16454154, 0.3798566, 1, 1)
 is_blocking_movement = false
 type = 1
 stat_definition = SubResource("Resource_2a5ev")

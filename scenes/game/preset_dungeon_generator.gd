@@ -14,16 +14,16 @@ const DEBUG_CHEST_ASCII_SYMBOL := "*"
 
 @export var item_chances = {
 	0: {
-		#Entity.EntityKey.NOTHING: 25, 
-		Entity.EntityKey.ARROWS: 50, 
-		Entity.EntityKey.HEALTH_POTION: 35, 
-		Entity.EntityKey.LIGHTNING_SCROLL: 10
+		Entity.EntityKey.NOTHING: 25, 
+		#Entity.EntityKey.ARROWS: 50, 
+		#Entity.EntityKey.HEALTH_POTION: 35, 
+		#Entity.EntityKey.LIGHTNING_SCROLL: 10
 	},
 }
 @export var enemy_chances = {
 	0: {
-		# Entity.EntityKey.NOTHING: 50, 
-		Entity.EntityKey.ORC: 80, 
+		Entity.EntityKey.NOTHING: 50, 
+		#Entity.EntityKey.ORC: 80, 
 	},
 }
 

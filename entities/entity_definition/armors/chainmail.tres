@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://b30i43g57dutp"]
+
+[ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_42tdj"]
+[ext_resource type="Script" uid="uid://dhqk57o0wm5s0" path="res://entities/component_definitions/equippable_component_definition.gd" id="1_trn6w"]
+[ext_resource type="Texture2D" uid="uid://cikrfsq0axk2j" path="res://assets/tilemap/death_atlas.tres" id="3_bbwo2"]
+[ext_resource type="Script" uid="uid://x0nxlyvawv7n" path="res://entities/component_definitions/stat_component_definition.gd" id="4_niwmw"]
+[ext_resource type="Texture2D" uid="uid://4s1b2i2dbdsv" path="res://assets/tilemap/items_transparent.png" id="5_6ajj8"]
+
+[sub_resource type="Resource" id="Resource_rbwpu"]
+script = ExtResource("1_trn6w")
+equipment_type = 1
+protection = 3
+dodge_chance = -1.0
+weight = 2.0
+slots = 2
+metadata/_custom_type_script = "uid://dhqk57o0wm5s0"
+
+[sub_resource type="Resource" id="Resource_oaap0"]
+script = ExtResource("4_niwmw")
+base_health = 50
+metadata/_custom_type_script = "uid://x0nxlyvawv7n"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ues8r"]
+atlas = ExtResource("5_6ajj8")
+region = Rect2(16, 32, 16, 16)
+
+[resource]
+script = ExtResource("1_42tdj")
+name = "Chainmail"
+texture = SubResource("AtlasTexture_ues8r")
+color = Color(0.16454154, 0.3798566, 1, 1)
+type = 1
+stat_definition = SubResource("Resource_oaap0")
+item_definition = SubResource("Resource_rbwpu")
+metadata/_custom_type_script = "uid://dicrn4lo1fk4x"

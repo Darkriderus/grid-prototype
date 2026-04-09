@@ -10,7 +10,6 @@
 script = ExtResource("1_yk183")
 capacity = 99
 weight_limit = 100.0
-volume_limit = 100.0
 metadata/_custom_type_script = "uid://b0q3oxcma5q58"
 
 [sub_resource type="Resource" id="Resource_3hb38"]
@@ -25,7 +24,7 @@ region = Rect2(128, 96, 16, 16)
 script = ExtResource("1_rehbu")
 name = "Chest"
 texture = SubResource("AtlasTexture_yk183")
-color = Color(0.5075168, 0.4683934, 3.85046e-07, 1)
+color = Color(0.16454154, 0.3798566, 1, 1)
 type = 1
 stat_definition = SubResource("Resource_3hb38")
 inventory_definition = SubResource("Resource_dnabj")
