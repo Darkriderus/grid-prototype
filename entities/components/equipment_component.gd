@@ -5,8 +5,29 @@ signal equipment_changed
 
 var slots : Dictionary[EquippableComponent.EquipmentType, Entity] = {}
 	
+func _init(definition: EquipmentComponentDefinition) -> void:
+	pass
+	
+func generate_items(definition: EquipmentComponentDefinition) -> void:
+	for slot_key in definition.slots:
+		var entity_def := definition.slots[slot_key]
+		if entity_def:
+			var item := Entity.new(entity.map_data, entity.grid_position, Entity.EntityKey.UNKNOWN)
+			item.set_entity_definition_by_resource(entity_def)
+			slots[slot_key] = item
+		
+	
 func get_item_from_slot(slot: EquippableComponent.EquipmentType):
-	return slots[slot] if slots.has(slot) else null
+	if slots.has(slot):
+		return slots[slot]
+
+	var asking_for_left_hand := slot == EquippableComponent.EquipmentType.LEFT_HAND
+	var has_right_hand_equipped := slots.has(EquippableComponent.EquipmentType.RIGHT_HAND)
+	
+	if asking_for_left_hand and has_right_hand_equipped:
+		var right_hand_item := slots[EquippableComponent.EquipmentType.RIGHT_HAND]
+		return right_hand_item if right_hand_item.equippable_component.two_handed else null
+	
 
 func is_item_equipped(item: Entity) -> bool:
 	return item in slots.values()

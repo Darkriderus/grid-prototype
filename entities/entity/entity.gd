@@ -22,28 +22,20 @@ enum EntityKey {
 	UNKNOWN,
 	# Actors
 	PLAYER,
-	
-	# Enemies
-	ORC,
-	
-	# Items
-	HEALTH_POTION,
-	LIGHTNING_SCROLL,
-	CONFUSION_SCROLL,
-	FIREBALL_SCROLL,
-	ARROWS,
+	GOBLIN,
 	
 	# Weapons
-	SWORD,
-	CROSSBOW,
-	
-	# Armor
+	SHORT_SWORD,
+
+	# Armors
 	CHAINMAIL,
-	BACKPACK,
 
 	# Containers
 	CHEST,
 	DROPPED,
+	
+	# Ammo
+	ARROWS,
 	
 	# Others
 	NOTHING
@@ -52,18 +44,12 @@ enum EntityKey {
 #TODO: Rename to DefinitionPaths
 const ENTITY_DEFINITION_PATHS := {
 	EntityKey.PLAYER: "uid://dgtkb8ig8pwt0",
-	EntityKey.ORC: "uid://cu5b5e84eg0bu",
-	EntityKey.HEALTH_POTION: "uid://bghj1pduyucfc",
-	EntityKey.LIGHTNING_SCROLL: "uid://o50ecypopc40",
-	EntityKey.CONFUSION_SCROLL: "uid://b6iuqi6lk2imp",
-	EntityKey.FIREBALL_SCROLL: "uid://bpl0ttrtq0p58",
-	EntityKey.SWORD: "uid://cnvy4inyd8arv",
-	EntityKey.CHAINMAIL: "uid://cvbk872p5bt0d",
-	EntityKey.CROSSBOW: "uid://cdmvyyqbt7jow",
 	EntityKey.CHEST: "uid://b4cui42b8sdjs",
-	EntityKey.ARROWS: "uid://demvf2bx0coki",
+	EntityKey.CHAINMAIL: "uid://b30i43g57dutp",
 	EntityKey.DROPPED: "uid://dopb45xye6uny",
-	EntityKey.BACKPACK: "uid://b44fqlc4a688"
+	EntityKey.SHORT_SWORD: "uid://bap1hnuwsn3ei",
+	EntityKey.GOBLIN: "uid://bx7hkrlvbtfii",
+	EntityKey.ARROWS: "uid://b648m8ilj8brl"
 }
 
 var key: EntityKey
@@ -109,9 +95,7 @@ func _init(_map_data: MapData, _start_position: Vector2i, _key: EntityKey = Enti
 		set_entity_definition(_key)
 	
 	
-func set_entity_definition(_key: EntityKey) -> void:
-	key = _key
-	var entity_definition: EntityDefinition = load(ENTITY_DEFINITION_PATHS[key])
+func set_entity_definition_by_resource(entity_definition: EntityDefinition) -> void:
 	_definition = entity_definition
 	type = _definition.type
 	blocks_movement = _definition.is_blocking_movement
@@ -139,10 +123,11 @@ func set_entity_definition(_key: EntityKey) -> void:
 		level_component = LevelComponent.new(entity_definition.level_info)
 		add_child(level_component)
 		
-	if entity_definition.has_equipment:
-		equipment_component = EquipmentComponent.new()
+	if entity_definition.equipment_definition:
+		equipment_component = EquipmentComponent.new(entity_definition.equipment_definition)
 		add_child(equipment_component)
 		equipment_component.entity = self
+		equipment_component.generate_items(entity_definition.equipment_definition)
 		
 	var item_definition: ItemComponentDefinition = entity_definition.item_definition
 	if item_definition:
@@ -152,6 +137,12 @@ func set_entity_definition(_key: EntityKey) -> void:
 			equippable_component = EquippableComponent.new(item_definition)
 			
 		item_component = ItemComponent.new(item_definition)
+
+	
+func set_entity_definition(_key: EntityKey) -> void:
+	key = _key
+	var entity_definition: EntityDefinition = load(ENTITY_DEFINITION_PATHS[key])
+	set_entity_definition_by_resource(entity_definition)
 
 
 func move(move_offset: Vector2i) -> void:

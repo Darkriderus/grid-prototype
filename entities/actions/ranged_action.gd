@@ -10,7 +10,9 @@ func perform() -> bool:
 		return false
 	
 	# TODO: Change to specific ammo
-	if not entity.inventory_component.has_item_type(Entity.EntityKey.ARROWS):
+	var ranged_weapon : Entity = entity.equipment_component.get_item_from_slot(EquippableComponent.EquipmentType.RANGED)
+	var ammo_type := ranged_weapon.equippable_component.ammo_type
+	if not entity.inventory_component.has_item_type(ammo_type):
 		if entity == get_map_data().player:
 			MessageLog.send_message("No ammo left.", GameColors.IMPOSSIBLE)
 		return false
@@ -28,8 +30,8 @@ func perform() -> bool:
 		return false
 	
 	
-	var arrow_entity = entity.inventory_component.get_items_by_type(Entity.EntityKey.ARROWS)[0]
-	entity.inventory_component.items.erase(arrow_entity)
+	var ammo_entity = entity.inventory_component.get_items_by_type(ammo_type)[0]
+	entity.inventory_component.items.erase(ammo_entity)
 	
 	# step 0 - prepare stuff
 	var attacker := entity
