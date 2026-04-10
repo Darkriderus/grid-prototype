@@ -52,14 +52,6 @@ const ENTITY_DEFINITION_PATHS := {
 	EntityKey.ARROWS: "uid://b648m8ilj8brl"
 }
 
-static func get_entity_key(definition: EntityDefinition):
-	for def_key in ENTITY_DEFINITION_PATHS.keys():
-		var def_path = ENTITY_DEFINITION_PATHS[def_key]
-		var a = ResourceLoader.get_resource_uid(definition.resource_path)
-		if definition.get_rid() == def_path:
-			return def_key
-	return null
-
 var key: EntityKey
 
 var _definition: EntityDefinition
