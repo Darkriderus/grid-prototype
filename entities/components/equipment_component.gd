@@ -18,7 +18,16 @@ func generate_items(definition: EquipmentComponentDefinition) -> void:
 		
 	
 func get_item_from_slot(slot: EquippableComponent.EquipmentType):
-	return slots[slot] if slots.has(slot) else null
+	if slots.has(slot):
+		return slots[slot]
+
+	var asking_for_left_hand := slot == EquippableComponent.EquipmentType.LEFT_HAND
+	var has_right_hand_equipped := slots.has(EquippableComponent.EquipmentType.RIGHT_HAND)
+	
+	if asking_for_left_hand and has_right_hand_equipped:
+		var right_hand_item := slots[EquippableComponent.EquipmentType.RIGHT_HAND]
+		return right_hand_item if right_hand_item.equippable_component.two_handed else null
+	
 
 func is_item_equipped(item: Entity) -> bool:
 	return item in slots.values()
