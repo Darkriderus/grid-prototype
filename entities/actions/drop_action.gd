@@ -19,7 +19,4 @@ func perform() -> bool:
 		map_data.entity_removed.emit(loot_container)
 
 	entity.end_turn()
-	# TODO: Make clean
-	#entity.play_animation("walk")
-	#entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.end_turn(), CONNECT_ONE_SHOT)
 	return true
