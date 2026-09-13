@@ -148,8 +148,6 @@ func set_entity_definition(_key: EntityKey) -> void:
 func move(move_offset: Vector2i) -> void:
 	map_data.unregister_blocking_entity(self)
 	grid_position += move_offset
-	#play_animation("walk")
-	#entity_scene.animation_player.animation_finished.connect(func(_name): end_turn(), CONNECT_ONE_SHOT)
 	map_data.register_blocking_entity(self)
 	
 func end_turn():

@@ -3,8 +3,6 @@ extends Component
 
 signal changed
 
-const POPUP_ANIMATION_SCENE = preload("uid://tbng7bk63fmp")
-
 var rng = RandomNumberGenerator.new()
 
 # Static Stats
@@ -180,15 +178,6 @@ func melee_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var to_hit_roll := roll()
 	var has_hit := to_hit_roll <= accuracy
 	
-	# TODO: Cleanup - only fire after everythin is calculated	
-	#entity.play_animation("attack")
-	#entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
-	
-	#var effect := POPUP_ANIMATION_SCENE.instantiate()
-	#var offset := (_defender.grid_position - entity.grid_position) * 8
-	#var animation_position := offset 
-	#effect.position += Vector2(animation_position)
-	#entity.add_child(effect)
 	
 	return {
 		"has_hit": has_hit,
@@ -203,9 +192,6 @@ func ranged_try_to_hit(_defender: Entity) -> Dictionary[String, Variant]:
 	var to_hit_roll := roll()
 	var has_hit := to_hit_roll <= accuracy
 	
-	# TODO: Cleanup - only fire after everythin is calculated	
-	entity.play_animation("shoot")
-	entity.entity_scene.animation_player.animation_finished.connect(func(_name): entity.turn_done.emit(), CONNECT_ONE_SHOT)
 
 	return {
 		"has_hit": has_hit,
@@ -251,10 +237,6 @@ func heal(amount: int) -> int:
 func take_damage(amount: int) -> int:
 	var damage_given = clampi((amount - protection), 0, amount)
 	health -= damage_given
-	#if damage_given > 0:
-		## TODO: Helper
-		#entity.entity_scene.animation_player.stop()
-		#entity.entity_scene.animation_player.play("damage")
 	return damage_given
 	
 	
