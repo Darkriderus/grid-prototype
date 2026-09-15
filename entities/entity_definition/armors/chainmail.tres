@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EntityDefinition" load_steps=9 format=3 uid="uid://b30i43g57dutp"]
+[gd_resource type="Resource" script_class="EntityDefinition" format=3 uid="uid://b30i43g57dutp"]
 
 [ext_resource type="Script" uid="uid://dicrn4lo1fk4x" path="res://entities/entity_definition/entity_definition.gd" id="1_42tdj"]
 [ext_resource type="Script" uid="uid://dhqk57o0wm5s0" path="res://entities/component_definitions/equippable_component_definition.gd" id="1_trn6w"]

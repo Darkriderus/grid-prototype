@@ -29,6 +29,10 @@ func activate(action: ItemAction) -> bool:
 		return false
 	
 	MessageLog.send_message("The eyes of the %s look vacant, as it starts to stumble around!" % target.get_entity_name(), GameColors.STATUS_EFFECT_APPLIED)
-	target.add_child(ConfusedEnemyAIComponent.new(number_of_turns))
+	
+	var confused_ai := ConfusedEnemyAIComponent.new(number_of_turns)
+	confused_ai.set_owner_entity(target)
+	target.add_child(confused_ai)
+	
 	consume(consumer)
 	return true

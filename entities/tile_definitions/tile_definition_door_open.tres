@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TileDefinition" load_steps=4 format=3 uid="uid://bo7y1wultg05s"]
+[gd_resource type="Resource" script_class="TileDefinition" format=3 uid="uid://bo7y1wultg05s"]
 
 [ext_resource type="Script" uid="uid://dlg72a6rbcla5" path="res://entities/tile_definitions/tile_definition.gd" id="1_u0tfs"]
 

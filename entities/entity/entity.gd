@@ -106,27 +106,32 @@ func set_entity_definition_by_resource(entity_definition: EntityDefinition) -> v
 	match entity_definition.ai_type:
 		AIType.HOSTILE:
 			ai_component = HostileEnemyAIComponent.new()
+			ai_component.set_owner_entity(self)
 			add_child(ai_component)
 		AIType.NO_AI:
 			ai_component = NoAIComponent.new()
+			ai_component.set_owner_entity(self)
 			add_child(ai_component)
 	
 	if entity_definition.stat_definition:
 		stat_component = StatComponent.new(entity_definition.stat_definition)
+		stat_component.set_owner_entity(self)
 		add_child(stat_component)
 	
 	if entity_definition.inventory_definition:
 		inventory_component = InventoryComponent.new(entity_definition.inventory_definition)
+		inventory_component.set_owner_entity(self)
 		add_child(inventory_component)
 		
 	if entity_definition.level_info:
 		level_component = LevelComponent.new(entity_definition.level_info)
+		level_component.set_owner_entity(self)
 		add_child(level_component)
 		
 	if entity_definition.equipment_definition:
 		equipment_component = EquipmentComponent.new(entity_definition.equipment_definition)
+		equipment_component.set_owner_entity(self)
 		add_child(equipment_component)
-		equipment_component.entity = self
 		equipment_component.generate_items(entity_definition.equipment_definition)
 		
 	var item_definition: ItemComponentDefinition = entity_definition.item_definition
@@ -135,9 +140,10 @@ func set_entity_definition_by_resource(entity_definition: EntityDefinition) -> v
 			_handle_consumable(item_definition)
 		elif item_definition is EquippableComponentDefinition:
 			equippable_component = EquippableComponent.new(item_definition)
+			equippable_component.set_owner_entity(self)
 			
 		item_component = ItemComponent.new(item_definition)
-
+		item_component.set_owner_entity(self)
 	
 func set_entity_definition(_key: EntityKey) -> void:
 	key = _key
@@ -244,6 +250,7 @@ func restore(save_data: Dictionary) -> void:
 		var ai_data: Dictionary = save_data["ai_component"]
 		if ai_data["type"] == "ConfusedEnemyAI":
 			var confused_enemy_ai := ConfusedEnemyAIComponent.new(ai_data["turns_remaining"])
+			confused_enemy_ai.set_owner_entity(self)
 			add_child(confused_enemy_ai)
 	if level_component and save_data.has("level_component"):
 		level_component.restore(save_data["level_component"])
@@ -263,6 +270,6 @@ func _handle_consumable(consumable_definition: ConsumableComponentDefinition) ->
 	elif consumable_definition is FireballDamageConsumableComponentDefinition:
 		consumable_component = FireballDamageConsumableComponent.new(consumable_definition)
 	
+	consumable_component.set_owner_entity(self)
 	if consumable_component:
 		add_child(consumable_component)
-	consumable_component.entity = self
