@@ -16,7 +16,6 @@ var entity_to_loot : Entity
 
 func button_pressed(item: Entity, button: Button) -> void:
 	if player.inventory_component.items.has(item):
-		player.inventory_component.drop(item)
 		entity_to_loot.inventory_component.pickup(item)
 		button.reparent(loot_list)
 		loot_list.get_child(-1).grab_focus()

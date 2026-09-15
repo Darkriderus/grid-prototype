@@ -68,21 +68,18 @@ func toggle_equip(equippable_item: Entity, add_message: bool = true) -> void:
 		
 	entity.changed.emit()
 		
-
-func get_save_data() -> Dictionary:
+		
+func get_save_data(inventory_items: Array[Entity]) -> Dictionary:
 	var equipped_indices := []
-	var inventory: InventoryComponent = entity.inventory_component
-	for i in inventory.items.size():
-		var item: Entity = inventory.items[i]
+	for i in inventory_items.size():
+		var item: Entity = inventory_items[i]
 		if is_item_equipped(item):
 			equipped_indices.append(i)
 	return {"equipped_indices": equipped_indices}
-	
 
-func restore(save_data: Dictionary) -> void:
+func restore(save_data: Dictionary, inventory_items: Array[Entity]) -> void:
 	var equipped_indices: Array = save_data["equipped_indices"]
-	var inventory: InventoryComponent = entity.inventory_component
-	for i in inventory.items.size():
+	for i in inventory_items.size():
 		if equipped_indices.any(func(index): return int(index) == i):
-			var item: Entity = inventory.items[i]
+			var item: Entity = inventory_items[i]
 			toggle_equip(item, false)

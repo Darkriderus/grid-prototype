@@ -48,14 +48,12 @@ func has_space_for_item(item: Entity) -> bool:
 	return has_enough_carry_slots and has_enough_weight
 
 func drop(item: Entity) -> Entity:
-	if entity.equipment_component != null and item.is_equippable() and entity.equipment_component.get_item_from_slot(item.equippable_component.equipment_type) == item:
-		entity.equipment_component.toggle_equip(item, true)
-	entity.inventory_component.items.erase(item)
+	items.erase(item)
 	entity.changed.emit()
 	return item
 	
 func pickup(item: Entity) -> Entity:
-	entity.inventory_component.items.append(item)
+	items.append(item)
 	entity.changed.emit()
 	return item
 

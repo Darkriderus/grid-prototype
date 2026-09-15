@@ -7,7 +7,8 @@ func perform() -> bool:
 
 	var target_containers : Array[Entity] = map_data.get_lootable_entities_at_location(target.grid_position)
 	var loot_container := target_containers[0]
-	entity.inventory_component.drop(target)
+	if entity.equipment_component != null and entity.equipment_component.get_item_from_slot(target.equippable_component.equipment_type) == target:
+		entity.equipment_component.toggle_equip(target, true)
 	loot_container.inventory_component.pickup(target)
 	MessageLog.send_message(
 				"You dropped %s!" % target.get_entity_name(),
